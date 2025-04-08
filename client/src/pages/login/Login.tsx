@@ -6,6 +6,7 @@ import PrimaryButton from "../../components/buttons/PrimaryButton";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { FcGoogle } from "react-icons/fc";
 import Paragraph from "../../components/typography/Paragraph";
+import { AUTH_ROUTE } from "../auth/authRoute";
 
 const Login = () => {
   return (
@@ -44,7 +45,7 @@ const Login = () => {
         </SecondaryButton>
         <HStack w={"full"} mt={2}>
           <Paragraph>Don't you have an account yet?</Paragraph>
-          <Link href="#" color={"#94ADC7"}>
+          <Link href={AUTH_ROUTE.SIGNUP} color={"#94ADC7"}>
             Sign up
           </Link>
         </HStack>

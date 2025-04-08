@@ -8,7 +8,6 @@ interface ParagraphProps {
   children?: ReactNode;
   mt?: number;
   mb?: number;
-  bg?: string
 }
 
 const Paragraph: React.FC<ParagraphProps> = ({
@@ -18,7 +17,6 @@ const Paragraph: React.FC<ParagraphProps> = ({
   textAlign,
   mt,
   mb,
-  bg
 }) => {
   return (
     <Text
