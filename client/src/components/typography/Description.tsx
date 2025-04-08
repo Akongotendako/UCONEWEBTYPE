@@ -5,15 +5,17 @@ interface DescriptionProps {
   color?: string;
   textStyle?: string;
   children?: ReactNode;
+  textAlign?: string;
 }
 
 const Description: React.FC<DescriptionProps> = ({
   color,
   textStyle,
   children,
+  textAlign
 }) => {
   return (
-    <Text color={color || "#FFFFFF80"} textStyle={textStyle || "xl"}>
+    <Text color={color || "#FFFFFF80"} textStyle={textStyle || "md"} textAlign={textAlign || "start"}>
       {children}
     </Text>
   );
