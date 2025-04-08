@@ -25,7 +25,7 @@ const Signup = () => {
             formType={"signin"}
             name={"email"}
             mt={7}
-          />
+          />  
           <InputField
             mt={1}
             title={"Password"}
