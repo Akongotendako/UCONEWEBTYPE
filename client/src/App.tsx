@@ -1,13 +1,18 @@
 
-import { Button, HStack } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
+import { Route, Routes } from 'react-router-dom'
+import { AUTH_ROUTE } from './pages/auth/authRoute'
+import Login from './pages/login/Login'
 
 function App() {
 
   return (
-    <HStack>
-      <Button>Click me</Button>
-      <Button>Click me</Button>
-    </HStack>
+    <Box w={'full'} h={'100vh'} bg={'#121A21'}>
+      <Routes>
+        {/** Login route */}
+        <Route index path={AUTH_ROUTE.LOGIN} element={<Login/>}/>
+      </Routes>
+    </Box>
   )
 }
 
