@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { IUserDocument } from "../types/user.type";
+import { profile } from "console";
 
 const userSchema: Schema = new Schema({
     email: {
@@ -17,7 +18,8 @@ const userSchema: Schema = new Schema({
     role: {
         type: String,
         required: true
-    }
+    },
+    profileSchema: profile
 }, {
     timestamps: true
 })
