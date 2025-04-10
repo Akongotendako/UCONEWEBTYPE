@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
-import Product from "../models/product.model";
+import Product from "../models/product.model.js";
 import {
   addImages,
   areAllFieldsEmpty,
   arePriceAndStockNumbers,
   isImageFileEmpty,
-} from "../utils/validateProduct.util";
-import cloudinary from "../config/cloudinary";
+} from "../utils/validateProduct.util.js";
+import cloudinary from "../config/cloudinary.js";
 import { Readable } from "stream";
-import { ICloudinary } from "../types/cloudinary.type";
-import { IOriginalImages } from "../types/originalImages.type";
+import { ICloudinary } from "../types/cloudinary.type.js";
+import { IOriginalImages } from "../types/originalImages.type.js";
 
 // Get all products
 export const getProducts = async (

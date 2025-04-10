@@ -1,6 +1,16 @@
 import mongoose, { Schema } from "mongoose";
-import { IUserDocument } from "../types/user.type";
-import { profile } from "console";
+import { IUserDocument } from "../types/user.type.js";
+import { IProfile } from "../types/profile.type.js";
+
+const profileSchema: Schema = new Schema<IProfile>({
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    profilePic: {
+        url: { type: String, required: true },
+        publicId: { type: String, required: true }
+    }
+})
 
 const userSchema: Schema = new Schema({
     email: {
@@ -19,7 +29,7 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true
     },
-    profileSchema: profile
+    profileSchema: profileSchema
 }, {
     timestamps: true
 })

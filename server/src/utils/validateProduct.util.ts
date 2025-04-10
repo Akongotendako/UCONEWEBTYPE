@@ -1,6 +1,6 @@
 import { Readable } from "stream";
-import cloudinary from "../config/cloudinary";
-import { IOriginalImages } from "../types/originalImages.type";
+import cloudinary from "../config/cloudinary.js";
+import { IOriginalImages } from "../types/originalImages.type.js";
 
 export const areAllFieldsEmpty = ({
   productName,

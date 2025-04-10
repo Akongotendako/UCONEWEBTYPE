@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import User from "../models/user.model";
-import { areAllFieldsEmpty, isPasswordMatch } from "../utils/validateUser.util";
+import User from "../models/user.model.js";
+import { areAllFieldsEmpty, isPasswordMatch } from "../utils/validateUser.util.js";
 
 export const signUp = async (req: Request, res: Response): Promise<void> => {
   try {
