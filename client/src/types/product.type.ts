@@ -1,6 +1,11 @@
 export interface IImage {
-  file?: File,
-  url?: string
+  file?: File;
+  url?: string;
+}
+
+export interface IOriginalImages {
+  url?: string;
+  publicId?: string;
 }
 
 interface IProduct {
@@ -14,14 +19,9 @@ interface IProduct {
   products: string[];
   sizes: string[];
   category: string;
-  originalImages: [
-    {
-      url?: string;
-      publicId?: string;
-    }
-  ];
+  originalImages: IOriginalImages[];
 }
 
 export interface IProductStore {
-    product: IProduct
+  product: IProduct;
 }
