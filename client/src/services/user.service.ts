@@ -1,17 +1,36 @@
+import { IProfile } from "../types/user.type";
 import axiosInstance from "./axiosInstance";
 
-export const signUp = async ({ email, password, confirmPassword, role, profile }) => {
+export const signUp = async ({
+  email,
+  password,
+  confirmPassword,
+  role,
+  profile,
+}: {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role: string;
+  profile: IProfile;
+}) => {
   const response = await axiosInstance.post("/users", {
     email,
     password,
     confirmPassword,
     role,
-    profile
+    profile,
   });
   return response;
 };
 
-export const signIn = async ({ email, password }) => {
+export const signIn = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   const response = await axiosInstance.post("/users/sign-in", {
     email,
     password,
@@ -19,17 +38,16 @@ export const signIn = async ({ email, password }) => {
   return response;
 };
 
-
-export const fetchProfile = async(id) => {
-  const response = await axiosInstance.get(`/users/${id}`)
+export const fetchProfile = async (id: string) => {
+  const response = await axiosInstance.get(`/users/${id}`);
   return response;
-}
+};
 
-export const updateProfile = async(id, data) => {
+export const updateProfile = async (id: string, data: FormData) => {
   const response = await axiosInstance.post(`/users/${id}`, data, {
     headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return response;
-}
+};
