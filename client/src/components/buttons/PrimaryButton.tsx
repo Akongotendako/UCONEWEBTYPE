@@ -4,10 +4,11 @@ import React, { ReactNode } from "react";
 interface PrimaryButtonProps {
   children?: ReactNode;
   width?: string;
-  marginTop?: string
+  marginTop?: string,
+  onclick?: () => void
 }
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, width, marginTop }) => {
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, width, marginTop, onclick }) => {
   return (
     <Button
       size={"sm"}
@@ -15,6 +16,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, width, marginTo
       bg={"#2985E5"}
       _hover={{ bg: "#121A21", borderColor: "#FFF" }}
       mt={marginTop || "5"}
+      onClick={onclick}
     >
       {children}
     </Button>

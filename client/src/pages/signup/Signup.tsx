@@ -7,8 +7,10 @@ import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { FcGoogle } from "react-icons/fc";
 import Paragraph from "../../components/typography/Paragraph";
 import { AUTH_ROUTE } from "../auth/authRoute";
+import userStore from "../../stores/userStore";
 
 const Signup = () => {
+  const { user, setField } = userStore();
   return (
     <Flex
       w={"full"}
@@ -21,30 +23,36 @@ const Signup = () => {
       <FormContainer>
         <VStack gap={7} w={"full"}>
           <InputField
-            title={"Email"}
-            formType={"signin"}
-            name={"email"}
+            obj={user.signup}
+            field="email"
+            value={user.signup.email}
             mt={7}
-          />  
-          <InputField
-            mt={1}
-            title={"Password"}
-            formType={"signin"}
-            name={"password"}
+            title={""}
+            onChange={(value) => setField("signup", "email", value)}
           />
           <InputField
-            mt={1}
+            title={"Password"}
+            obj={user.signup}
+            field="password"
+            value={user.signup.password}
+            onChange={(value) => setField("signup", "password", value)}
+          />
+          <InputField
             title={"Confirm Password"}
-            formType={"signin"}
-            name={"confirmPassword"}
+            obj={user.signup}
+            field="password"
+            value={user.signup.confirmPassword}
+            onChange={(value) => setField("signup", "confirmPassword", value)}
           />
         </VStack>
         <Checkbox.Root w={"full"} mt={3}>
-            <Checkbox.HiddenInput />
-            <Checkbox.Control />
-            <Checkbox.Label color={"#FFFFFF80"}>Agree with terms and Conditions</Checkbox.Label>
-          </Checkbox.Root>
-        <PrimaryButton>SIGN IN</PrimaryButton>
+          <Checkbox.HiddenInput />
+          <Checkbox.Control />
+          <Checkbox.Label color={"#FFFFFF80"}>
+            Agree with terms and Conditions
+          </Checkbox.Label>
+        </Checkbox.Root>
+        <PrimaryButton>SIGN UP</PrimaryButton>
         <SecondaryButton marginTop="2">
           <FcGoogle />
           SIGN IN WITH GOOGLE

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IProfilePic, IUserStore } from "../types/user.type";
+import { IProfilePic, IUserState } from "../types/user.type";
 import {
   fetchProfile,
   signIn,
@@ -7,51 +7,55 @@ import {
   updateProfile,
 } from "../services/user.service";
 
-export const userStore = create<IUserStore>((set, get) => ({
-  signup: {
-    email: "",
-    password: "",
-    confirmPassword: "",
-    role: "user",
-  },
-  signin: {
-    email: "",
-    password: "",
-    role: "",
-  },
-  profile: {
-    firstName: "John",
-    lastName: "Doe",
-    age: "32",
-    profilePic: {
-      url: "",
-      publicId: "",
+const userStore = create<IUserState>((set, get) => ({
+  user: {
+    signup: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      role: "user",
     },
-    phoneNumber: "",
+    signin: {
+      email: "",
+      password: "",
+      role: "",
+    },
+    profile: {
+      firstName: "John",
+      lastName: "Doe",
+      age: "32",
+      profilePic: {
+        url: "",
+        publicId: "",
+      },
+      phoneNumber: "",
+    },
   },
 
   setImage: (newImage: IProfilePic) =>
     set((state) => ({
       ...state,
-      profile: {
-        ...state.profile,
-        profilePic: newImage,
+      user: {
+        ...state.user,
+        profile: {
+          ...state.user.profile,
+          profilePic: newImage,
+        },
       },
     })),
 
-  setField: ({
-    formType,
-    field,
-    value,
-  }: {
-    formType: keyof IUserStore;
-    field: string;
-    value: string;
-  }) =>
+  setField: <
+    T extends keyof IUserState["user"],
+    K extends keyof IUserState["user"][T]
+  >(
+    obj: T,
+    field: K,
+    value: IUserState["user"][T][K]
+  ) =>
     set((state) => ({
       ...state,
-      [formType]: {
-        ...state[formType],
+      [obj]: {
+        ...state.user[obj],
         [field]: value,
       },
     })),
@@ -59,11 +63,11 @@ export const userStore = create<IUserStore>((set, get) => ({
   signUp: async () => {
     try {
       const response = await signUp({
-        email: get().signup.email,
-        password: get().signup.password,
-        confirmPassword: get().signup.confirmPassword,
-        role: get().signup.role,
-        profile: get().profile,
+        email: get().user.signup.email,
+        password: get().user.signup.password,
+        confirmPassword: get().user.signup.confirmPassword,
+        role: get().user.signup.role,
+        profile: get().user.profile,
       });
       return response;
     } catch (error) {
@@ -74,8 +78,8 @@ export const userStore = create<IUserStore>((set, get) => ({
   signIn: async () => {
     try {
       const response = await signIn({
-        email: get().signin.email,
-        password: get().signin.password,
+        email: get().user.signin.email,
+        password: get().user.signin.password,
       });
       return response;
     } catch (error) {
@@ -83,43 +87,47 @@ export const userStore = create<IUserStore>((set, get) => ({
     }
   },
 
-  fetchProfile: async (id: string) => {
+  fetchProfile: async (id) => {
     try {
       const response = await fetchProfile(id);
       console.log(response.data.response);
-      set({
-        signin: {
-          email: response.data.response.email,
-          password: response.data.response.password,
-          role: response.data.response.role,
+      set((state) => ({
+        ...state,
+        user: {
+          ...state.user,
+          signin: {
+            email: response.data.response.email,
+            password: response.data.response.password,
+            role: response.data.response.role,
+          },
+          profile: {
+            firstName: response.data.response.profile.firstName,
+            lastName: response.data.response.profile.lastName,
+            age: response.data.response.profile.age,
+            profilePic: response.data.response.profile.profilePic,
+            phoneNumber: response.data.response.profile.phoneNumber,
+          },
         },
-        profile: {
-          firstName: response.data.response.profile.firstName,
-          lastName: response.data.response.profile.lastName,
-          age: response.data.response.profile.age,
-          profilePic: response.data.response.profile.profilePic,
-          phoneNumber: response.data.response.profile.phoneNumber,
-        },
-      });
+      }));
     } catch (error) {
       return error;
     }
   },
 
-  updateProfile: async (id: string) => {
+  updateProfile: async (id) => {
     try {
-      console.log(get().profile.profilePic);
+      console.log(get().user.profile.profilePic);
       const formData = new FormData();
-      formData.append("email", get().signin.email);
-      formData.append("password", get().signin.password);
-      formData.append("firstName", get().profile.firstName);
-      formData.append("lastName", get().profile.lastName);
-      formData.append("age", get().profile.age);
-      const file = get().profile.profilePic?.file;
+      formData.append("email", get().user.signin.email);
+      formData.append("password", get().user.signin.password);
+      formData.append("firstName", get().user.profile.firstName);
+      formData.append("lastName", get().user.profile.lastName);
+      formData.append("age", get().user.profile.age);
+      const file = get().user.profile.profilePic?.file;
       if (file) {
         formData.append("profilePic", file);
       }
-      formData.append("phoneNumber", get().profile.phoneNumber);
+      formData.append("phoneNumber", get().user.profile.phoneNumber);
 
       const response = await updateProfile(id, formData);
       return response;
@@ -128,14 +136,30 @@ export const userStore = create<IUserStore>((set, get) => ({
     }
   },
 
-  clearAllProperties: (formType: keyof IUserStore) =>
+  clearAllProperties: <T extends keyof IUserState["user"]>(obj: T) =>
     set((state) => ({
       ...state,
-      [formType]: {
-        email: "",
-        password: "",
-        confirmPassword: "",
-        role: "user",
+      user: {
+        ...state.user,
+        [obj]:
+          obj === "signin"
+            ? { email: "", password: "", confirmPassword: "", role: "" }
+            : obj === "signup"
+            ? { email: "", password: "", confirmPassword: "", role: "user" }
+            : obj === "profile"
+            ? {
+                firstName: "John",
+                lastName: "Doe",
+                age: "32",
+                profilePic: {
+                  url: "",
+                  publicId: "",
+                },
+                phoneNumber: "",
+              }
+            : state.user[obj],
       },
     })),
 }));
+
+export default userStore;
