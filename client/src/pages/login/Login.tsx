@@ -7,8 +7,12 @@ import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { FcGoogle } from "react-icons/fc";
 import Paragraph from "../../components/typography/Paragraph";
 import { AUTH_ROUTE } from "../auth/authRoute";
+import userStore from "../../stores/userStore";
 
 const Login = () => {
+
+  const {user, setField} = userStore();
+
   return (
     <Flex
       w={"full"}
@@ -20,12 +24,21 @@ const Login = () => {
       <LogoContainer />
       <FormContainer>
         <VStack gap={7} w={"full"}>
-          <InputField title={"Email"} formType={"signin"} name={"email"} mt={7}/>
           <InputField
-          mt={1}
-            title={"Password"}
-            formType={"signin"}
-            name={"password"}
+            mt={7}
+            title={"Email"}
+            obj={user.signin}
+            field="email"
+            value={user.signin.email}
+            onChange={(value) => setField("signin", "email", value)}
+          />
+          <InputField
+             mt={1}
+             title={"Password"}
+             obj={user.signin}
+             field="password"
+             value={user.signin.password}
+             onChange={(value) => setField("signin", "password", value)}
           />
         </VStack>
         <HStack w={"full"} justify={"space-between"} mt={3}>

@@ -54,9 +54,12 @@ const userStore = create<IUserState>((set, get) => ({
   ) =>
     set((state) => ({
       ...state,
-      [obj]: {
-        ...state.user[obj],
-        [field]: value,
+      user: {
+        ...state.user,
+        [obj]: {
+          ...state.user[obj],
+          [field]: value
+        }
       },
     })),
 

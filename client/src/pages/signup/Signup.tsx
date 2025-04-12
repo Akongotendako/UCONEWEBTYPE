@@ -10,7 +10,7 @@ import { AUTH_ROUTE } from "../auth/authRoute";
 import userStore from "../../stores/userStore";
 
 const Signup = () => {
-  const { user, setField } = userStore();
+  const { user, setField, signUp } = userStore();
   return (
     <Flex
       w={"full"}
@@ -27,13 +27,14 @@ const Signup = () => {
             field="email"
             value={user.signup.email}
             mt={7}
-            title={""}
+            title={"Email"}
             onChange={(value) => setField("signup", "email", value)}
           />
           <InputField
             title={"Password"}
             obj={user.signup}
             field="password"
+            mt={1}
             value={user.signup.password}
             onChange={(value) => setField("signup", "password", value)}
           />
@@ -41,6 +42,7 @@ const Signup = () => {
             title={"Confirm Password"}
             obj={user.signup}
             field="password"
+            mt={1}
             value={user.signup.confirmPassword}
             onChange={(value) => setField("signup", "confirmPassword", value)}
           />
@@ -52,7 +54,7 @@ const Signup = () => {
             Agree with terms and Conditions
           </Checkbox.Label>
         </Checkbox.Root>
-        <PrimaryButton>SIGN UP</PrimaryButton>
+        <PrimaryButton onclick={() => signUp()}>SIGN UP</PrimaryButton>
         <SecondaryButton marginTop="2">
           <FcGoogle />
           SIGN IN WITH GOOGLE

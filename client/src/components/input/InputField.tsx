@@ -3,11 +3,11 @@ import Title from "../typography/Title";
 import { Input, VStack } from "@chakra-ui/react";
 
 interface InputFieldProps<T, K extends keyof T> {
-  mt?: number,
-  title: string,
+  mt?: number;
+  title: string;
   obj: T;
   field: K;
-  value: T[K]
+  value: T[K];
   onChange: (value: T[K]) => void;
 }
 

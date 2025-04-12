@@ -29,19 +29,20 @@ export interface IUserState {
   user: {
     signin: ISignIn;
     signup: ISignUp;
-    profile: IProfile
+    profile: IProfile;
   };
-  setField: <T extends keyof IUserState['user'], K extends keyof IUserState['user'][T]>(
+  setField: <
+    T extends keyof IUserState["user"],
+    K extends keyof IUserState["user"][T]
+  >(
     obj: T,
     field: K,
-    value: IUserState['user'][T][K]
+    value: IUserState["user"][T][K]
   ) => void;
   setImage: (newImage: IProfilePic) => void;
   signUp: () => Promise<unknown>;
   signIn: () => Promise<unknown>;
   fetchProfile: (id: string) => Promise<unknown>;
   updateProfile: (id: string) => Promise<unknown>;
-  clearAllProperties: <T extends keyof IUserState['user']>(
-    obj: T,
-  ) => void
+  clearAllProperties: <T extends keyof IUserState["user"]>(obj: T) => void;
 }
