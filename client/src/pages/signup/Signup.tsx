@@ -8,9 +8,25 @@ import { FcGoogle } from "react-icons/fc";
 import Paragraph from "../../components/typography/Paragraph";
 import { AUTH_ROUTE } from "../auth/authRoute";
 import userStore from "../../stores/userStore";
+import generalToast from "../../components/utils/toaster";
 
 const Signup = () => {
-  const { user, setField, signUp } = userStore();
+  const { user, setField, signUp, clearAllProperties } = userStore();
+
+  const handleSubmission = async () => {
+    const response = await signUp();
+
+    generalToast({
+      status: response.status,
+      message: response.message
+    })
+
+    if (response.status === 200) {
+      clearAllProperties("signup")
+    }
+
+    
+  };
   return (
     <Flex
       w={"full"}
@@ -54,7 +70,7 @@ const Signup = () => {
             Agree with terms and Conditions
           </Checkbox.Label>
         </Checkbox.Root>
-        <PrimaryButton onclick={() => signUp()}>SIGN UP</PrimaryButton>
+        <PrimaryButton onclick={handleSubmission}>SIGN UP</PrimaryButton>
         <SecondaryButton marginTop="2">
           <FcGoogle />
           SIGN IN WITH GOOGLE

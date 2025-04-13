@@ -6,6 +6,7 @@ import {
   signUp,
   updateProfile,
 } from "../services/user.service";
+import { interceptorError } from "../types/interceptor.error.type";
 
 const userStore = create<IUserState>((set, get) => ({
   user: {
@@ -58,31 +59,42 @@ const userStore = create<IUserState>((set, get) => ({
         ...state.user,
         [obj]: {
           ...state.user[obj],
-          [field]: value
-        }
+          [field]: value,
+        },
       },
     })),
 
   signUp: async () => {
     try {
+      const { signup, profile } = get().user;
       const response = await signUp({
-        email: get().user.signup.email,
-        password: get().user.signup.password,
-        confirmPassword: get().user.signup.confirmPassword,
-        role: get().user.signup.role,
-        profile: get().user.profile,
+        email: signup.email,
+        password: signup.password,
+        confirmPassword: signup.confirmPassword,
+        role: signup.role,
+        profile: profile,
       });
-      return response;
-    } catch (error) {
-      return error;
+      return {
+        success: response.data.success,
+        status: response.status,
+        message: response.data.message,
+      };
+    } catch (error: unknown) {
+      const { status, message } = error as interceptorError;
+      return {
+        success: false,
+        status: status,
+        message: message
+      };
     }
   },
 
   signIn: async () => {
     try {
+      const { signin } = get().user;
       const response = await signIn({
-        email: get().user.signin.email,
-        password: get().user.signin.password,
+        email: signin.email,
+        password: signin.password,
       });
       return response;
     } catch (error) {
@@ -119,18 +131,19 @@ const userStore = create<IUserState>((set, get) => ({
 
   updateProfile: async (id) => {
     try {
+      const { signin, profile } = get().user;
       console.log(get().user.profile.profilePic);
       const formData = new FormData();
-      formData.append("email", get().user.signin.email);
-      formData.append("password", get().user.signin.password);
-      formData.append("firstName", get().user.profile.firstName);
-      formData.append("lastName", get().user.profile.lastName);
-      formData.append("age", get().user.profile.age);
-      const file = get().user.profile.profilePic?.file;
+      formData.append("email", signin.email);
+      formData.append("password", signin.password);
+      formData.append("firstName", profile.firstName);
+      formData.append("lastName", profile.lastName);
+      formData.append("age", profile.age);
+      const file = profile.profilePic?.file;
       if (file) {
         formData.append("profilePic", file);
       }
-      formData.append("phoneNumber", get().user.profile.phoneNumber);
+      formData.append("phoneNumber", profile.phoneNumber);
 
       const response = await updateProfile(id, formData);
       return response;

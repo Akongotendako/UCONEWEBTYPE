@@ -40,7 +40,7 @@ export interface IUserState {
     value: IUserState["user"][T][K]
   ) => void;
   setImage: (newImage: IProfilePic) => void;
-  signUp: () => Promise<unknown>;
+  signUp: () => Promise<{success: boolean; status: number; error?: string; message: string}>;
   signIn: () => Promise<unknown>;
   fetchProfile: (id: string) => Promise<unknown>;
   updateProfile: (id: string) => Promise<unknown>;
