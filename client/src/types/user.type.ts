@@ -41,7 +41,7 @@ export interface IUserState {
   ) => void;
   setImage: (newImage: IProfilePic) => void;
   signUp: () => Promise<{success: boolean; status: number; error?: string; message: string}>;
-  signIn: () => Promise<unknown>;
+  signIn: () => Promise<{success: boolean; status: number; error?: string; message: string}>;
   fetchProfile: (id: string) => Promise<unknown>;
   updateProfile: (id: string) => Promise<unknown>;
   clearAllProperties: <T extends keyof IUserState["user"]>(obj: T) => void;

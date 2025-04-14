@@ -5,7 +5,7 @@ export const areAllFieldsEmpty = ({
 }: {
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 }) => {
   return Boolean(email && password && confirmPassword);
 };

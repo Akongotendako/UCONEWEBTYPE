@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import { IProfilePic, IUserState } from "../types/user.type";
+import { IProfilePic, IUserState } from "../user.type";
 import {
   fetchProfile,
   signIn,
   signUp,
   updateProfile,
-} from "../services/user.service";
-import { interceptorError } from "../types/interceptor.error.type";
+} from "../../services/user.service";
+import { interceptorError } from "../interceptor.error.type";
 
 const userStore = create<IUserState>((set, get) => ({
   user: {
@@ -96,9 +96,18 @@ const userStore = create<IUserState>((set, get) => ({
         email: signin.email,
         password: signin.password,
       });
-      return response;
+      return {
+        status: response.status,
+        message: response.data.message,
+        success: true
+      };
     } catch (error) {
-      return error;
+      const {status, message} = error as interceptorError
+      return {
+        success: false,
+        message: message,
+        status: status
+      };
     }
   },
 

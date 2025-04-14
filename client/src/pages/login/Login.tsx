@@ -7,11 +7,36 @@ import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { FcGoogle } from "react-icons/fc";
 import Paragraph from "../../components/typography/Paragraph";
 import { AUTH_ROUTE } from "../auth/authRoute";
-import userStore from "../../stores/userStore";
+import userStore from "../../types/stores/userStore";
+import generalToast from "../../components/utils/toaster";
+import { useNavigate } from "react-router-dom";
+import { ADMIN_ROUTE } from "../../routes/admin/adminRoute";
 
 const Login = () => {
 
-  const {user, setField} = userStore();
+  const {user, setField, signIn, clearAllProperties} = userStore();
+  const navigate = useNavigate()
+
+  const handleSubmission = async() => {
+
+    const response = await signIn()
+
+    generalToast({
+      status: response.status,
+      message: response.message,
+      duration: 3000
+    });
+
+    setTimeout(() => {
+      if (response.status === 200) {
+        clearAllProperties("signin")
+      }
+    }, 3500);
+
+    setTimeout(() => {
+      navigate(ADMIN_ROUTE.ADMIN)
+    }, 3600);
+  }
 
   return (
     <Flex
@@ -51,7 +76,7 @@ const Login = () => {
             Forgot password?
           </Link>
         </HStack>
-        <PrimaryButton>SIGN IN</PrimaryButton>
+        <PrimaryButton onclick={handleSubmission}>SIGN IN</PrimaryButton>
         <SecondaryButton marginTop="2">
           <FcGoogle />
           SIGN IN WITH GOOGLE

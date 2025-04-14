@@ -4,11 +4,19 @@ import { areAllFieldsEmpty, isPasswordMatch } from "../utils/validateUser.util.j
 
 export const signUp = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password, confirmPassword } = req.body;
+    const { email, password, confirmPassword, role, profile } = req.body;
 
     const isUserExist = await User.findOne({ email: email });
 
-    if (areAllFieldsEmpty({ email, password, confirmPassword })) {
+    if (!email.includes("@gmail.com")) {
+      res
+        .status(400)
+        .json({ success: false, message: "Missing '@gmail.com' in your email'" });
+      return;
+    }
+    
+
+    if (!areAllFieldsEmpty({ email, password, confirmPassword })) {
       res
         .status(400)
         .json({ success: false, message: "All fields must not be empty" });
@@ -20,7 +28,7 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    if (isPasswordMatch({ password, confirmPassword })) {
+    if (!isPasswordMatch({ password, confirmPassword })) {
       res.status(400).json({ success: false, message: "Password don't match" });
       return;
     }
@@ -29,6 +37,8 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
       email,
       password,
       confirmPassword,
+      role,
+      profile
     });
 
     const response = await user.save();
@@ -43,6 +53,58 @@ export const signUp = async (req: Request, res: Response): Promise<void> => {
       success: false,
       message: "Internal server error",
       error: error instanceof Error ? error.message : "Unknown error"
+    });
+  }
+};
+
+// sign in
+export const signIn = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email, password } = req.body;
+
+    const isUserExist = await User.findOne({ email: email });
+
+    if (!email.includes("@gmail.com")) {
+      res.status(400).json({
+        message: "Missing '@gmail.com' in your email",
+        success: false,
+      });
+      return;
+    }
+
+    if (!email || !password) {
+       res.status(400).json({
+        message: "All fields must not be empty",
+        success: false,
+      });
+      return;
+    }
+    if (!isUserExist) {
+       res.status(404).json({
+        message: "User not found",
+        success: false,
+      });
+      return;
+    }
+
+    if (isUserExist.password !== password) {
+       res.status(404).json({
+        message: "password doesn't match",
+        success: false,
+      });
+      return;
+    }
+
+     res.status(200).json({
+      message: "You have successfully sign in",
+      success: true,
+      response: isUserExist,
+    });
+  } catch (error) {
+     res.status(500).json({
+      message: "Internal server error",
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown Error",
     });
   }
 };

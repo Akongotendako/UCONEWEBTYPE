@@ -4,10 +4,10 @@ import UCMerchLogo from "../../assets/shopping-cart.png";
 import Title from "../typography/Title";
 
 interface LogoContainerProps {
-  isVisible?: false;
+  isVisible?: boolean;
 }
 
-const LogoContainer: React.FC<LogoContainerProps> = ({ isVisible }) => {
+const LogoContainer: React.FC<LogoContainerProps> = ({ isVisible = false }) => {
   return (
     <Flex
       direction={"row"}

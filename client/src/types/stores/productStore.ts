@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { IImage, IProductStore } from "../types/product.type";
-import { addProduct } from "../services/product.service";
+import { IImage, IProductStore } from "../product.type";
+import { addProduct } from "../../services/product.service";
 
 export const productStore = create<IProductStore>((set, get) => ({
   product: {
