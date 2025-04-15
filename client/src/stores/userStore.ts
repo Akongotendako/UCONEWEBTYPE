@@ -1,12 +1,7 @@
 import { create } from "zustand";
-import { IProfilePic, IUserState } from "../user.type";
-import {
-  fetchProfile,
-  signIn,
-  signUp,
-  updateProfile,
-} from "../../services/user.service";
-import { interceptorError } from "../interceptor.error.type";
+import { IProfilePic, IUserState } from "../types/user.type";
+import { fetchProfile, signIn, signUp, updateProfile } from "../services/user.service";
+import { interceptorError } from "../types/interceptor.error.type";
 
 const userStore = create<IUserState>((set, get) => ({
   user: {

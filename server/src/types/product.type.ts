@@ -16,4 +16,7 @@ export interface IProduct {
     category: string
 }
 
+
+
+
 export type IProductDocument = Document<unknown, {}, IProduct> & IProduct;

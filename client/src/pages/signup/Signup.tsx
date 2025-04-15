@@ -7,8 +7,8 @@ import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { FcGoogle } from "react-icons/fc";
 import Paragraph from "../../components/typography/Paragraph";
 import { AUTH_ROUTE } from "../auth/authRoute";
-import userStore from "../../types/stores/userStore";
 import generalToast from "../../components/utils/toaster";
+import userStore from "../../stores/userStore";
 
 const Signup = () => {
   const { user, setField, signUp, clearAllProperties } = userStore();

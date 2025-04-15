@@ -1,8 +1,13 @@
 import { HStack } from '@chakra-ui/react'
-import React from 'react'
 import LogoContainer from '../../components/logo/LogoContainer'
+import NavigationMenu from './NavigationMenu'
+import AccountMenus from './AccountMenus'
 
-const NavBarContainer = () => {
+interface NavBarContainerProps {
+  role: string
+}
+
+const NavBarContainer = ({role}: NavBarContainerProps) => {
   return (
     <HStack
       borderColor="#FFF"
@@ -23,10 +28,10 @@ const NavBarContainer = () => {
 
 
       {/** Link buttons */}
-      <LinkButtons role={role}/>
+      <NavigationMenu role={role}/>
 
       {/** Accounts */}
-      <AccountButtons/>
+      <AccountMenus/>
     </HStack>
   )
 }

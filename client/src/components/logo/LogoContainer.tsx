@@ -11,11 +11,11 @@ const LogoContainer: React.FC<LogoContainerProps> = ({ isVisible = false }) => {
   return (
     <Flex
       direction={"row"}
-      display={isVisible ? "none" : ""}
       gap={2}
-      position={"absolute"}
+      position={isVisible ? "" : "absolute"}
       top={5}
       left={5}
+      align={"center"}
     >
       <Image src={UCMerchLogo} fit={"cover"} boxSize={"50px"} />
       <Title>UC Merch</Title>

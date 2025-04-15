@@ -1,12 +1,16 @@
-import { Box } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Flex } from "@chakra-ui/react";
+import NavBarContainer from "../../../layout/nav-bar/NavBarContainer";
+import { Outlet } from "react-router-dom";
 
 const AdminDashboard = () => {
   return (
-    <Box>
-        <
-    </Box>
-  )
-}
+    <Flex bg={"#121A21"} w={"full"} h={"full"} position={"relative"} direction={"column"}>
+      <NavBarContainer role="admin"/>
+      <Box flex={1} overflow={"auto"}>
+        <Outlet />
+      </Box>
+    </Flex>
+  );
+};
 
-export default AdminDashboard
+export default AdminDashboard;
