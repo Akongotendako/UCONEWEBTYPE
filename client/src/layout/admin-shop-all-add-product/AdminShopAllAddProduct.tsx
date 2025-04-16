@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import productStore from "../../stores/productStore";
+import EmptyCart from '../../assets/empty-cart.png'
 import {
   Box,
   Grid,
@@ -13,9 +14,12 @@ import Description from "../../components/typography/Description";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import generalToast from "../../components/utils/toaster";
+import { useNavigate } from "react-router-dom";
+import { ADMIN_ROUTE } from "../../routes/admin/adminRoute";
 
 const AdminShopAllAddProduct = () => {
   const { products, getProducts, deleteProduct } = productStore();
+  const navigate = useNavigate()
 
   useEffect(() => {
     getProducts();
@@ -34,8 +38,10 @@ const AdminShopAllAddProduct = () => {
     }
   };
 
+  const handleNavigation = () => navigate(ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM);
+
   return (
-    <Box w={"full"}>
+    <Box w={"full"} h={"full"}>
       {products.length > 0 ? (
         <Grid templateColumns="repeat(4, 1fr)" gap="6">
           {products.map((product) => (
@@ -96,8 +102,12 @@ const AdminShopAllAddProduct = () => {
           ))}
         </Grid>
       ) : (
-        <Box w={"full"}>
-          
+        <Box  w={"full"} h={"full"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+          <VStack align={"center"}>
+            <Image src={EmptyCart} boxSize={"16"} />
+            <Title>No product found</Title>
+            <PrimaryButton marginTop="7" onclick={handleNavigation}>Add Product</PrimaryButton>
+          </VStack>
         </Box>
       )}
     </Box>

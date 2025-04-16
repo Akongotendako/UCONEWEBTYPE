@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 const AdminShop = () => {
   
   return (
-    <Box w={'full'} p={5}>
+    <Box w={'full'} p={5} h={'full'}>
         <Outlet/>
     </Box>
   )

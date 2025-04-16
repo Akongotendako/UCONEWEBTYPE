@@ -176,6 +176,33 @@ const productStore = create<IProductState>((set, get) => ({
       };
     }
   },
+  clearAllProperties: () =>
+    set((state) => ({
+      ...state,
+      product: {
+        _id: "",
+        productName: "",
+        description: "",
+        price: "",
+        stock: "",
+        discount: "",
+        images: [] as IImage[],
+        isLimitReach: false,
+        products: [] as string[],
+        sizes: [] as string[],
+        category: "",
+        originalImages: [] as IOriginalImages[],
+        isLimit: false as boolean,
+      },
+    })),
+  isCategoryLanyard: () =>
+    set((state) => ({
+      ...state,
+      product: {
+        ...state.product,
+        sizes: [],
+      },
+    })),
 }));
 
 export default productStore;

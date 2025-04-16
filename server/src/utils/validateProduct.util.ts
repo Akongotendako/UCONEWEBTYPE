@@ -20,7 +20,7 @@ export const areAllFieldsEmpty = ({
   category: string;
 }) => {
   return Boolean(
-    description && price && stock && discount && sizes && category
+    description && price && stock && discount && category
   );
 };
 

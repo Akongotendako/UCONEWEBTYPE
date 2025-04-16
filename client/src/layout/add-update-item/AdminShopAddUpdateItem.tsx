@@ -5,9 +5,41 @@ import productStore from "../../stores/productStore";
 import Images from "./Images";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import SelectionBoxes from "../../components/selection-boxes/SelectionBoxes";
+import generalToast from "../../components/utils/toaster";
 
-const AdminShopAddUpdateItem = () => {
-  const { product, setField, addProduct } = productStore();
+interface AdminShopAddUpdateItemProps {
+  typeOfForm: string
+}
+
+const AdminShopAddUpdateItem = ({typeOfForm}: AdminShopAddUpdateItemProps) => {
+  const { product, setField, addProduct, clearAllProperties, isCategoryLanyard } = productStore();
+
+  const handleAddProduct = async() => {
+
+    const response = await addProduct()
+
+    if (response.status === 200) {
+      generalToast({
+        status: response.status,
+        message: response.message,
+        duration: 3000
+      })
+      clearAllProperties()
+    } else {
+      generalToast({
+        status: response.status,
+        message: response.message,
+        duration: 3000
+      })
+    }
+  }
+
+
+  const handleLanyardCategory = (category: string) => {
+    if (category === "Lanyard") {
+      isCategoryLanyard()
+    }
+  }
   return (
     <HStack w={"full"} align={"flex-start"} gap={5}>
       {/** General information and stock-pricing*/}
@@ -130,12 +162,15 @@ const AdminShopAddUpdateItem = () => {
             obj={product}
             field="category"
             value={product.category}
-            onChange={(value) => setField("category", value)}
+            onChange={(value) => {
+              setField("category", value)
+              handleLanyardCategory(value)
+            }}
             mt={4}
           />
 
           {/** Save and changes button */}
-          <PrimaryButton marginTop="1" onclick={addProduct}>Save</PrimaryButton>
+          <PrimaryButton marginTop="1" onclick={handleAddProduct}>Save</PrimaryButton>
         </VStack>
       </VStack>
     </HStack>

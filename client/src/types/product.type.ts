@@ -43,6 +43,8 @@ export interface IProductState {
   addProduct: () => Promise<{success: boolean; status: number; error?: string; message: string}>;
   getProducts: () => Promise<unknown>;
   deleteProduct: (id: string) => Promise<{success: boolean; status: number; error?: string; message: string}>;
+  clearAllProperties: () => void;
+  isCategoryLanyard: () => void;
 }
 
 export interface IProductStore {
