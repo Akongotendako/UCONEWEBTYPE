@@ -37,7 +37,7 @@ const NavigationMenu = ({ role }: NavigationMenuProps) => {
     {
       value: "Add Product",
       text: "Add Product",
-      path: ADMIN_ROUTE.ADMIN_SHOP_ALL,
+      path: ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM,
     },
   ];
   return (
@@ -52,9 +52,7 @@ const NavigationMenu = ({ role }: NavigationMenuProps) => {
       </Link>
 
       {/** this is shop navigation */}
-      <Menu.Root navigate={({ value }) => {
-        if(value) navigate(value)
-      }}>
+      <Menu.Root>
         <Menu.Trigger>
           <HStack align="center" cursor="pointer">
             <Link
@@ -80,6 +78,9 @@ const NavigationMenu = ({ role }: NavigationMenuProps) => {
                     value={item.path}
                     color="#FFF"
                     mb="2"
+                    onClick={() => {
+                      navigate(item.path)
+                    }}
                     _hover={{ color: "#94ADC7" }}
                     bg="transparent"
                     _focus={{ bg: "transparent" }}

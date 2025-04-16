@@ -7,8 +7,8 @@ import AdminDashboard from "./pages/admin/dashboard/AdminDashboard";
 import AdminHome from "./pages/admin/home/AdminHome";
 import AdminShop from "./pages/admin/shop/AdminShop";
 import AdminShopAll from "./pages/admin/shop-all/AdminShopAll";
-import AdminShopAddItem from "./pages/admin/shop-add-item/AdminShopAddItem";
 import { ADMIN_ROUTE } from "./routes/admin/adminRoute";
+import AdminShopAddItem from "./pages/admin/shop-add-item/AdminShopAddItem";
 
 function App() {
   return (

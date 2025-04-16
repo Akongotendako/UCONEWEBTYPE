@@ -21,6 +21,7 @@ export interface IProduct {
   sizes: string[];
   category: string;
   originalImages: IOriginalImages[];
+  isLimit: boolean
 }
 
 export interface IProductState {
@@ -32,6 +33,10 @@ export interface IProductState {
     field: K,
     value: IProduct[K]
   ) => void;
+
+  addImage: (newImages: IImage) => void;
+  removeImage: (index: number) => void;
+  updateImage: (index: number, newImage: IImage) => void
 }
 
 export interface IProductStore {
