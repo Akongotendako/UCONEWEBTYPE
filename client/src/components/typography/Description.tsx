@@ -6,16 +6,18 @@ interface DescriptionProps {
   textStyle?: string;
   children?: ReactNode;
   textAlign?: string;
+  lineClamp?: number
 }
 
 const Description: React.FC<DescriptionProps> = ({
   color,
   textStyle,
   children,
-  textAlign
+  textAlign,
+  lineClamp
 }) => {
   return (
-    <Text color={color || "#FFFFFF80"} textStyle={textStyle || "md"} textAlign={textAlign || "start"}>
+    <Text lineClamp={lineClamp || ""} color={color || "#FFFFFF80"} textStyle={textStyle || "md"} textAlign={textAlign || "start"}>
       {children}
     </Text>
   );

@@ -10,6 +10,7 @@ export interface IOriginalImages {
 }
 
 export interface IProduct {
+  _id: string;
   productName: string;
   description: string;
   price: string;
@@ -26,6 +27,7 @@ export interface IProduct {
 
 export interface IProductState {
   product: IProduct;
+  products: IProduct[];
 
   setField: <
     K extends keyof IProduct
@@ -36,7 +38,11 @@ export interface IProductState {
 
   addImage: (newImages: IImage) => void;
   removeImage: (index: number) => void;
-  updateImage: (index: number, newImage: IImage) => void
+  updateImage: (index: number, newImage: IImage) => void;
+  addSize: (size: string) => void;
+  addProduct: () => Promise<{success: boolean; status: number; error?: string; message: string}>;
+  getProducts: () => Promise<unknown>;
+  deleteProduct: (id: string) => Promise<{success: boolean; status: number; error?: string; message: string}>;
 }
 
 export interface IProductStore {

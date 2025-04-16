@@ -3,9 +3,11 @@ import Title from "../../components/typography/Title";
 import InputField from "../../components/input/InputField";
 import productStore from "../../stores/productStore";
 import Images from "./Images";
+import PrimaryButton from "../../components/buttons/PrimaryButton";
+import SelectionBoxes from "../../components/selection-boxes/SelectionBoxes";
 
 const AdminShopAddUpdateItem = () => {
-  const { product, setField } = productStore();
+  const { product, setField, addProduct } = productStore();
   return (
     <HStack w={"full"} align={"flex-start"} gap={5}>
       {/** General information and stock-pricing*/}
@@ -28,6 +30,7 @@ const AdminShopAddUpdateItem = () => {
             field="productName"
             value={product.productName}
             onChange={(value) => setField("productName", value)}
+            mt={4}
           />
 
           {/** Description */}
@@ -37,6 +40,7 @@ const AdminShopAddUpdateItem = () => {
             field="description"
             value={product.description}
             onChange={(value) => setField("description", value)}
+            mt={6}
           />
         </VStack>
 
@@ -59,6 +63,7 @@ const AdminShopAddUpdateItem = () => {
             field="price"
             value={product.price}
             onChange={(value) => setField("price", value)}
+            mt={4}
           />
 
           {/** Stock */}
@@ -68,6 +73,7 @@ const AdminShopAddUpdateItem = () => {
             field="stock"
             value={product.stock}
             onChange={(value) => setField("stock", value)}
+            mt={6}
           />
 
           {/** Discount */}
@@ -77,6 +83,7 @@ const AdminShopAddUpdateItem = () => {
             field="discount"
             value={product.discount}
             onChange={(value) => setField("discount", value)}
+            mt={6}
           />
         </VStack>
       </VStack>
@@ -94,7 +101,7 @@ const AdminShopAddUpdateItem = () => {
           gap={10}
         >
           <Title>Upload Images</Title>
-          <Images />
+          <Images/>
         </VStack>
 
         {/** Sizes and category */}
@@ -107,13 +114,28 @@ const AdminShopAddUpdateItem = () => {
           borderWidth={"1px"}
           gap={10}
         >
+          {/** Sizes and category title */}
+          <Title>Sizes and Category</Title>
+
+          {/** Sizes title */}
+          {product.category !== "Lanyard" && (
+            <VStack align={"flex-start"}>
+              <Title textStyle="md">Sizes</Title>
+              <SelectionBoxes />
+            </VStack>
+          )}
+
           <InputField
             title={"Category"}
             obj={product}
             field="category"
             value={product.category}
             onChange={(value) => setField("category", value)}
-          ></InputField>
+            mt={4}
+          />
+
+          {/** Save and changes button */}
+          <PrimaryButton marginTop="1" onclick={addProduct}>Save</PrimaryButton>
         </VStack>
       </VStack>
     </HStack>

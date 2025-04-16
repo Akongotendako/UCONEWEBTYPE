@@ -32,7 +32,7 @@ export const updateProduct = async(id: string, data: FormData) => {
 }
 
 export const deleteProduct = async(id: string) => {
-  const response = await axiosInstance.delete(`/products/${id}}`);
+  const response = await axiosInstance.delete(`/products/${id}`);
   return response;
 };
 

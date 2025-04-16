@@ -1,5 +1,5 @@
 import { SystemStyleObject, Text } from "@chakra-ui/react";
-import React, { ReactNode } from "react";
+import React, { MouseEventHandler, ReactNode } from "react";
 
 interface TitleProps {
   color?: string;
@@ -9,7 +9,9 @@ interface TitleProps {
   mt?: number;
   mb?: number;
   isCursorActivated?: boolean;
-  _hover?: SystemStyleObject
+  _hover?: SystemStyleObject;
+  onclick?: MouseEventHandler<HTMLParagraphElement>;
+  lineClamp?: number
 }
 
 const Title: React.FC<TitleProps> = ({
@@ -20,7 +22,9 @@ const Title: React.FC<TitleProps> = ({
   mt,
   mb,
   isCursorActivated = false,
-  _hover
+  _hover,
+  onclick,
+  lineClamp
 }) => {
   return (
     <Text
@@ -31,8 +35,11 @@ const Title: React.FC<TitleProps> = ({
       mb={mb}
       cursor={isCursorActivated ? "pointer" : "auto"}
       _hover={_hover}
+      onClick={onclick}
+      lineClamp={lineClamp || ""}
     >
       {children}
+      
     </Text>
   );
 };

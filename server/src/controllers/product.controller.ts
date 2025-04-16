@@ -73,7 +73,7 @@ export const addProduct = async (
     });
 
     // check if all fields are empty
-    if (areAllFieldsEmpty(data)) {
+    if (!areAllFieldsEmpty(data)) {
       res.status(400).json({
         message: "All fields must not be empty",
         success: false,
@@ -82,7 +82,7 @@ export const addProduct = async (
     }
 
     // check if price and stock are in number format
-    if (arePriceAndStockNumbers(price, stock)) {
+    if (!arePriceAndStockNumbers(price, stock)) {
       res.status(400).json({
         message: "Price and stock fields must be in numbers",
         success: false,

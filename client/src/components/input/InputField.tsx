@@ -154,6 +154,7 @@ const InputField = <T, K extends keyof T>({
           align={"flex-start"}
           p={5}
           rounded={"md"}
+          zIndex={"dropdown"}
           display={isDropdownActivated ? "block" : "none"}
         >
           {dropDownValues.map((item) => (
@@ -164,6 +165,10 @@ const InputField = <T, K extends keyof T>({
               mb={3}
               _hover={{ color: "#94ADC7" }}
               key={item.id}
+              onclick={() => {
+                handleDropdownValue(item.label)
+                handlePasswordVisibility()
+              }}
             >
               {item.label}
             </Title>

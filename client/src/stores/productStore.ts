@@ -5,9 +5,16 @@ import {
   IProduct,
   IProductState,
 } from "../types/product.type";
+import { interceptorError } from "../types/interceptor.error.type";
+import {
+  addProduct,
+  deleteProduct,
+  getProducts,
+} from "../services/product.service";
 
 const productStore = create<IProductState>((set, get) => ({
   product: {
+    _id: "",
     productName: "",
     description: "",
     price: "",
@@ -21,6 +28,7 @@ const productStore = create<IProductState>((set, get) => ({
     originalImages: [] as IOriginalImages[],
     isLimit: false as boolean,
   },
+  products: [] as IProduct[],
 
   setField: <K extends keyof IProduct>(field: K, value: IProduct[K]) =>
     set((state) => ({
@@ -78,6 +86,96 @@ const productStore = create<IProductState>((set, get) => ({
         },
       };
     }),
+  addSize: (size) =>
+    set((state) => {
+      const currentSizes = state.product.sizes.filter((s) => s !== size);
+      if (currentSizes.length === state.product.sizes.length) {
+        return {
+          ...state,
+          product: {
+            ...state.product,
+            sizes: [...currentSizes, size],
+          },
+        };
+      }
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          sizes: currentSizes,
+        },
+      };
+    }),
+  addProduct: async () => {
+    try {
+      const {
+        productName,
+        description,
+        price,
+        stock,
+        discount,
+        category,
+        sizes,
+        images,
+      } = get().product;
+
+      const formData = new FormData();
+      formData.append("productName", productName);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("stock", stock);
+      formData.append("discount", discount);
+      formData.append("category", category);
+      sizes.forEach((size) => {
+        formData.append("sizes", size);
+      });
+
+      const filteredImages = images.filter(
+        (image): image is { file: File } => !!image.file
+      );
+      filteredImages.forEach((file) => {
+        formData.append("images", file.file);
+      });
+
+      const response = await addProduct(formData);
+
+      return {
+        success: true,
+        status: response.status,
+        message: response.data.message,
+      };
+    } catch (error: unknown) {
+      const { status, message } = error as interceptorError;
+      return {
+        success: false,
+        status: status,
+        message: message,
+      };
+    }
+  },
+
+  getProducts: async () => {
+    const response = await getProducts();
+    console.log(response.data.response);
+    set({ products: response.data.response });
+  },
+  deleteProduct: async (id) => {
+    try {
+      const response = await deleteProduct(id);
+      return {
+        success: true,
+        status: response.status,
+        message: response.data.message,
+      };
+    } catch (error: unknown) {
+      const { status, message } = error as interceptorError;
+      return {
+        success: false,
+        status: status,
+        message: message,
+      };
+    }
+  },
 }));
 
 export default productStore;

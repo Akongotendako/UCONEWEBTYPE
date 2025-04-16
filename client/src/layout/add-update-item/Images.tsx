@@ -4,8 +4,13 @@ import productStore from "../../stores/productStore";
 import { IImage } from "../../types/product.type";
 import { IoMdClose } from "react-icons/io";
 import { MdEdit, MdOutlineCloudUpload } from "react-icons/md";
+import generalToast from "../../components/utils/toaster";
 
-const Images = () => {
+interface ImagesProps {
+  mt?: number;
+}
+
+const Images = ({ mt }: ImagesProps) => {
   const { product, addImage, removeImage, updateImage } = productStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const indexRef = useRef<number | null>(null);
@@ -19,6 +24,15 @@ const Images = () => {
         updateImage(indexRef.current, image);
         indexRef.current = null;
       } else {
+        if (product.images.length >= 6) {
+          generalToast({
+            status: 400,
+            message: "You can't add more than 6 images",
+            duration: 3000,
+          });
+          return;
+        }
+
         addImage(image);
       }
 
@@ -34,11 +48,11 @@ const Images = () => {
   };
 
   return (
-    <Flex gap={5} wrap="wrap" alignItems="center">
+    <Flex gap={5} wrap="wrap" alignItems="center" mt={mt || ""}>
       {/* Display selected images */}
       {product.images.map((image, index) => (
         <Box
-          key={index}       
+          key={index}
           borderColor={"#FFFFFF80"}
           borderWidth={"1px"}
           rounded={"md"}
@@ -101,43 +115,39 @@ const Images = () => {
       />
 
       {/* Image picker input */}
-      {product.isLimitReach ? (
-        <Text color="red.500">Maximum 6 images reached</Text>
-      ) : (
-        <Box
-          w="100px"
-          h="100px"
-          border="2px dashed #ccc"
-          borderRadius="md"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          position="relative"
-          cursor="pointer"
-        >
-          {/* Hidden file input */}
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            style={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              opacity: 0,
-              cursor: "pointer",
-            }}
-            onChange={handleChange}
-          />
+      <Box
+        w="100px"
+        h="100px"
+        border="2px dashed #ccc"
+        borderRadius="md"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        position="relative"
+        cursor="pointer"
+      >
+        {/* Hidden file input */}
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            opacity: 0,
+            cursor: "pointer",
+          }}
+          onChange={handleChange}
+        />
 
-          <Flex direction="column" align="center">
-            <MdOutlineCloudUpload fontSize="24px !important" color="#FFF" />
-            <Text fontSize="sm" color="gray.500">
-              Upload
-            </Text>
-          </Flex>
-        </Box>
-      )}
+        <Flex direction="column" align="center">
+          <MdOutlineCloudUpload fontSize="24px !important" color="#FFF" />
+          <Text fontSize="sm" color="gray.500">
+            Upload
+          </Text>
+        </Flex>
+      </Box>
     </Flex>
   );
 };

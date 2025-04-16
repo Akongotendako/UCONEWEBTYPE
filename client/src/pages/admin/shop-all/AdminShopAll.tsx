@@ -1,7 +1,8 @@
+import AdminShopAllAddProduct from "../../../layout/admin-shop-all-add-product/AdminShopAllAddProduct"
 
 const AdminShopAll = () => {
   return (
-    <div>AdminShopAll</div>
+    <AdminShopAllAddProduct/>
   )
 }
 
