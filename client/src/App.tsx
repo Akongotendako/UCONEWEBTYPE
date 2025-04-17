@@ -14,6 +14,7 @@ import { USER_ROUTES } from "./routes/user/userRoute";
 import UserDashboard from "./pages/user/dashboard/UserDashboard";
 import UserHome from "./pages/user/home/UserHome";
 import UserShop from "./pages/user/shop/UserShop";
+import UserCategoryMenu from "./layout/user-category-menu/UserCategoryMenu";
 
 function App() {
   return (
@@ -43,7 +44,9 @@ function App() {
         {/** User dashboard */}
         <Route path={USER_ROUTES.USER} element={<UserDashboard />}>
           <Route path={USER_ROUTES.USER_HOME} element={<UserHome />} />
-          <Route path={USER_ROUTES.USER_SHOP} element={<UserShop />} />
+          <Route path={USER_ROUTES.USER_SHOP} element={<UserShop />}>
+            <Route path={USER_ROUTES.USER_CATEGORY} element={<UserCategoryMenu />} />
+          </Route>
         </Route>
       </Routes>
     </Box>

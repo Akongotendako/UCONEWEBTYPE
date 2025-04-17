@@ -47,6 +47,7 @@ export interface IProductState {
   isCategoryLanyard: () => void;
   getProduct: (id: string) => Promise<unknown>;
   updateProduct: (id: string) => Promise<{success: boolean; status: number; error?: string; message: string}>;
+  getProductByCategory: (category: string) => Promise<unknown>;
 }
 
 export interface IProductStore {

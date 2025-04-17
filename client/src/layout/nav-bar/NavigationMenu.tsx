@@ -9,6 +9,7 @@ const NavigationMenu = () => {
   const { clearAllProperties } = productStore();
 
   const role = localStorage.getItem("role");
+  console.log(`role ${role}`)
 
   const navigate = useNavigate();
   const handleNavigation = () => {
@@ -19,13 +20,13 @@ const NavigationMenu = () => {
     {
       value: "All",
       text: "All",
-      path: ADMIN_ROUTE.ADMIN_SHOP_ALL,
+      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : USER_ROUTES.USER_CATEGORY,
       role: ["admin", "user"],
     },
     {
       value: "Lanyard",
       text: "Lanyard",
-      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : USER_ROUTES.USER,
+      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : `${USER_ROUTES.USER_SHOP}/${"Lanyard"}/category`,
       role: ["admin", "user"],
     },
     {
@@ -44,7 +45,7 @@ const NavigationMenu = () => {
       value: "Add Product",
       text: "Add Product",
       path: ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM,
-      role: "user",
+      role: ["admin"],
     },
   ];
   return (
@@ -81,8 +82,7 @@ const NavigationMenu = () => {
               <Flex direction="column" gap="2">
                 {shopMenuItems.map(
                   (item) =>
-                    item.role.includes("admin") &&
-                    item.role.includes("user") && (
+                    item.role.includes(role as string) && (
                       <Menu.Item
                         key={item.value}
                         value={item.path}

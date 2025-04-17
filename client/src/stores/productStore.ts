@@ -10,6 +10,7 @@ import {
   addProduct,
   deleteProduct,
   getProduct,
+  getProductByCategory,
   getProducts,
   updateProduct,
 } from "../services/product.service";
@@ -239,7 +240,7 @@ const productStore = create<IProductState>((set, get) => ({
         images,
         originalImages,
       } = get().product;
-      
+
       const formData = new FormData();
       formData.append("productName", productName);
       formData.append("description", description);
@@ -276,6 +277,15 @@ const productStore = create<IProductState>((set, get) => ({
         status: status,
         message: message,
       };
+    }
+  },
+  getProductByCategory: async (category) => {
+    if (category === "All") {
+      const response = await getProducts();
+      set({ products: response.data.response });
+    } else {
+      const response = await getProductByCategory(category);
+      set({ products: response.data.response });
     }
   },
 }));

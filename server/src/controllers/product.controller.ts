@@ -366,6 +366,8 @@ export const getProductByCategory = async (
   try {
     const { category } = req.params;
 
+    console.log(`category ${category}`)
+
     if (!category) {
       res.status(400).json({
         message: `Request is empty`,

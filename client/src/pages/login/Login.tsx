@@ -33,6 +33,7 @@ const Login = () => {
     }, 3500);
 
     setTimeout(() => {
+      console.log(`role here in login ${response.role}`)
       if (response.role === "admin") {
         navigate(ADMIN_ROUTE.ADMIN);
         localStorage.setItem("role", "admin")

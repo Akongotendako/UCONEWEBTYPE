@@ -1,25 +1,24 @@
 import {
   Box,
   Grid,
-  HStack,
   RatingGroup,
   VStack,
   Image,
 } from "@chakra-ui/react";
-import Description from "../../../components/typography/Description";
-import Title from "../../../components/typography/Title";
-import SecondaryButton from "../../../components/buttons/SecondaryButton";
-import PrimaryButton from "../../../components/buttons/PrimaryButton";
-import productStore from "../../../stores/productStore";
 import { useEffect } from "react";
-import EmptyCart from '../../../assets/empty-cart.png'
+import EmptyCart from "../../assets/empty-cart.png";
+import productStore from "../../stores/productStore";
+import Title from "../../components/typography/Title";
+import Description from "../../components/typography/Description";
+import { useParams } from "react-router-dom";
 
-const UserShopAll = () => {
-  const { products, getProducts } = productStore();
+const UserCategoryMenu = () => {
+    const {category} = useParams();
+  const { products, getProductByCategory } = productStore();
 
   useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+    getProductByCategory(category as string);
+  }, [getProductByCategory, category]);
 
   return (
     <Box w={"full"} h={"full"}>
@@ -69,20 +68,6 @@ const UserShopAll = () => {
                 <RatingGroup.HiddenInput />
                 <RatingGroup.Control />
               </RatingGroup.Root>
-
-              {/** Buttons */}
-              <HStack w={"full"} align={"flex-start"}>
-                <SecondaryButton
-                  width="1/2"
-                >
-                  Update
-                </SecondaryButton>
-                <PrimaryButton
-                  width="1/2"
-                >
-                  Remove
-                </PrimaryButton>
-              </HStack>
             </VStack>
           ))}
         </Grid>
@@ -104,4 +89,4 @@ const UserShopAll = () => {
   );
 };
 
-export default UserShopAll;
+export default UserCategoryMenu;
