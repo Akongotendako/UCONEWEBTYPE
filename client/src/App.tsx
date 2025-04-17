@@ -9,6 +9,11 @@ import AdminShop from "./pages/admin/shop/AdminShop";
 import AdminShopAll from "./pages/admin/shop-all/AdminShopAll";
 import { ADMIN_ROUTE } from "./routes/admin/adminRoute";
 import AdminShopAddItem from "./pages/admin/shop-add-item/AdminShopAddItem";
+import AdminShopUpdateItem from "./pages/admin/shop-update-item/AdminShopUpdateItem";
+import { USER_ROUTES } from "./routes/user/userRoute";
+import UserDashboard from "./pages/user/dashboard/UserDashboard";
+import UserHome from "./pages/user/home/UserHome";
+import UserShop from "./pages/user/shop/UserShop";
 
 function App() {
   return (
@@ -29,7 +34,16 @@ function App() {
               path={ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM}
               element={<AdminShopAddItem />}
             />
+            <Route
+              path={ADMIN_ROUTE.ADMIN_SHOP_UPDATE_ITEM}
+              element={<AdminShopUpdateItem />}
+            />
           </Route>
+        </Route>
+        {/** User dashboard */}
+        <Route path={USER_ROUTES.USER} element={<UserDashboard />}>
+          <Route path={USER_ROUTES.USER_HOME} element={<UserHome />} />
+          <Route path={USER_ROUTES.USER_SHOP} element={<UserShop />} />
         </Route>
       </Routes>
     </Box>

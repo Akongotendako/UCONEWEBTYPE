@@ -40,8 +40,19 @@ export interface IUserState {
     value: IUserState["user"][T][K]
   ) => void;
   setImage: (newImage: IProfilePic) => void;
-  signUp: () => Promise<{success: boolean; status: number; error?: string; message: string}>;
-  signIn: () => Promise<{success: boolean; status: number; error?: string; message: string}>;
+  signUp: () => Promise<{
+    success: boolean;
+    status: number;
+    error?: string;
+    message: string;
+  }>;
+  signIn: () => Promise<{
+    success: boolean;
+    status: number;
+    error?: string;
+    message: string;
+    role?: string;
+  }>;
   fetchProfile: (id: string) => Promise<unknown>;
   updateProfile: (id: string) => Promise<unknown>;
   clearAllProperties: <T extends keyof IUserState["user"]>(obj: T) => void;

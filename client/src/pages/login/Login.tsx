@@ -11,32 +11,37 @@ import generalToast from "../../components/utils/toaster";
 import { useNavigate } from "react-router-dom";
 import userStore from "../../stores/userStore";
 import { ADMIN_ROUTE } from "../../routes/admin/adminRoute";
+import { USER_ROUTES } from "../../routes/user/userRoute";
 
 const Login = () => {
+  const { user, setField, signIn, clearAllProperties } = userStore();
+  const navigate = useNavigate();
 
-  const {user, setField, signIn, clearAllProperties} = userStore();
-  const navigate = useNavigate()
-
-  const handleSubmission = async() => {
-
-    const response = await signIn()
+  const handleSubmission = async () => {
+    const response = await signIn();
 
     generalToast({
       status: response.status,
       message: response.message,
-      duration: 3000
+      duration: 3000,
     });
 
     setTimeout(() => {
       if (response.status === 200) {
-        clearAllProperties("signin")
+        clearAllProperties("signin");
       }
     }, 3500);
 
     setTimeout(() => {
-      navigate(ADMIN_ROUTE.ADMIN)
+      if (response.role === "admin") {
+        navigate(ADMIN_ROUTE.ADMIN);
+        localStorage.setItem("role", "admin")
+      } else {
+        navigate(USER_ROUTES.USER);
+        localStorage.setItem("role", "user")
+      }
     }, 3600);
-  }
+  };
 
   return (
     <Flex
@@ -58,12 +63,12 @@ const Login = () => {
             onChange={(value) => setField("signin", "email", value)}
           />
           <InputField
-             mt={1}
-             title={"Password"}
-             obj={user.signin}
-             field="password"
-             value={user.signin.password}
-             onChange={(value) => setField("signin", "password", value)}
+            mt={1}
+            title={"Password"}
+            obj={user.signin}
+            field="password"
+            value={user.signin.password}
+            onChange={(value) => setField("signin", "password", value)}
           />
         </VStack>
         <HStack w={"full"} justify={"space-between"} mt={3}>

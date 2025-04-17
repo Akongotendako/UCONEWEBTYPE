@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import productStore from "../../stores/productStore";
-import EmptyCart from '../../assets/empty-cart.png'
+import EmptyCart from "../../assets/empty-cart.png";
 import {
   Box,
   Grid,
@@ -19,7 +19,7 @@ import { ADMIN_ROUTE } from "../../routes/admin/adminRoute";
 
 const AdminShopAllAddProduct = () => {
   const { products, getProducts, deleteProduct } = productStore();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProducts();
@@ -40,6 +40,9 @@ const AdminShopAllAddProduct = () => {
 
   const handleNavigation = () => navigate(ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM);
 
+  const handleNavigationTOUpdateItemPage = (id: string) =>
+    navigate(`/admin/shop/${id}/update`);
+
   return (
     <Box w={"full"} h={"full"}>
       {products.length > 0 ? (
@@ -51,6 +54,7 @@ const AdminShopAllAddProduct = () => {
               borderColor={"#FFF"}
               p={5}
               align={"flex-start"}
+              key={product._id}
             >
               <Box w={"full"} position={"relative"}>
                 <Image
@@ -90,7 +94,12 @@ const AdminShopAllAddProduct = () => {
 
               {/** Buttons */}
               <HStack w={"full"} align={"flex-start"}>
-                <SecondaryButton width="1/2">Update</SecondaryButton>
+                <SecondaryButton
+                  width="1/2"
+                  onClick={() => handleNavigationTOUpdateItemPage(product._id)}
+                >
+                  Update
+                </SecondaryButton>
                 <PrimaryButton
                   width="1/2"
                   onclick={() => handleDeleteProduct(product._id)}
@@ -102,11 +111,19 @@ const AdminShopAllAddProduct = () => {
           ))}
         </Grid>
       ) : (
-        <Box  w={"full"} h={"full"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+        <Box
+          w={"full"}
+          h={"full"}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
           <VStack align={"center"}>
             <Image src={EmptyCart} boxSize={"16"} />
             <Title>No product found</Title>
-            <PrimaryButton marginTop="7" onclick={handleNavigation}>Add Product</PrimaryButton>
+            <PrimaryButton marginTop="7" onclick={handleNavigation}>
+              Add Product
+            </PrimaryButton>
           </VStack>
         </Box>
       )}

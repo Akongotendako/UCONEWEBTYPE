@@ -94,7 +94,8 @@ const userStore = create<IUserState>((set, get) => ({
       return {
         status: response.status,
         message: response.data.message,
-        success: true
+        success: true,
+        role: response.data.role
       };
     } catch (error) {
       const {status, message} = error as interceptorError

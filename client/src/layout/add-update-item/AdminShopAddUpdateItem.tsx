@@ -6,40 +6,73 @@ import Images from "./Images";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import SelectionBoxes from "../../components/selection-boxes/SelectionBoxes";
 import generalToast from "../../components/utils/toaster";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
-interface AdminShopAddUpdateItemProps {
-  typeOfForm: string
-}
+const AdminShopAddUpdateItem = () => {
+  const { id } = useParams();
+  const {
+    product,
+    setField,
+    addProduct,
+    clearAllProperties,
+    isCategoryLanyard,
+    getProduct,
+    updateProduct,
+  } = productStore();
+  const isUpdate = !!id;
+  const buttonText = isUpdate ? "Save Changes" : "Save";
 
-const AdminShopAddUpdateItem = ({typeOfForm}: AdminShopAddUpdateItemProps) => {
-  const { product, setField, addProduct, clearAllProperties, isCategoryLanyard } = productStore();
-
-  const handleAddProduct = async() => {
-
-    const response = await addProduct()
-
-    if (response.status === 200) {
-      generalToast({
-        status: response.status,
-        message: response.message,
-        duration: 3000
-      })
-      clearAllProperties()
-    } else {
-      generalToast({
-        status: response.status,
-        message: response.message,
-        duration: 3000
-      })
+  useEffect(() => {
+    if (id) {
+      getProduct(id);
+      console.log("EXECUTED");
     }
-  }
+  }, [getProduct, id]);
 
+  const handleChange = async () => {
+    if (id) {
+      const response = await updateProduct(id);
+
+      if (response.status === 200) {
+        generalToast({
+          status: response.status,
+          message: response.message,
+          duration: 3000,
+        });
+        clearAllProperties();
+      } else {
+        generalToast({
+          status: response.status,
+          message: response.message,
+          duration: 3000,
+        });
+      }
+    } else {
+      const response = await addProduct();
+
+      if (response.status === 200) {
+        generalToast({
+          status: response.status,
+          message: response.message,
+          duration: 3000,
+        });
+        clearAllProperties();
+      } else {
+        generalToast({
+          status: response.status,
+          message: response.message,
+          duration: 3000,
+        });
+      }
+    }
+  };
 
   const handleLanyardCategory = (category: string) => {
     if (category === "Lanyard") {
-      isCategoryLanyard()
+      isCategoryLanyard();
     }
-  }
+  };
   return (
     <HStack w={"full"} align={"flex-start"} gap={5}>
       {/** General information and stock-pricing*/}
@@ -133,7 +166,7 @@ const AdminShopAddUpdateItem = ({typeOfForm}: AdminShopAddUpdateItemProps) => {
           gap={10}
         >
           <Title>Upload Images</Title>
-          <Images/>
+          <Images />
         </VStack>
 
         {/** Sizes and category */}
@@ -163,14 +196,16 @@ const AdminShopAddUpdateItem = ({typeOfForm}: AdminShopAddUpdateItemProps) => {
             field="category"
             value={product.category}
             onChange={(value) => {
-              setField("category", value)
-              handleLanyardCategory(value)
+              setField("category", value);
+              handleLanyardCategory(value);
             }}
             mt={4}
           />
 
           {/** Save and changes button */}
-          <PrimaryButton marginTop="1" onclick={handleAddProduct}>Save</PrimaryButton>
+          <PrimaryButton marginTop="1" onclick={handleChange}>
+            {buttonText}
+          </PrimaryButton>
         </VStack>
       </VStack>
     </HStack>

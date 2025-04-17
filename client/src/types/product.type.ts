@@ -45,6 +45,8 @@ export interface IProductState {
   deleteProduct: (id: string) => Promise<{success: boolean; status: number; error?: string; message: string}>;
   clearAllProperties: () => void;
   isCategoryLanyard: () => void;
+  getProduct: (id: string) => Promise<unknown>;
+  updateProduct: (id: string) => Promise<{success: boolean; status: number; error?: string; message: string}>;
 }
 
 export interface IProductStore {

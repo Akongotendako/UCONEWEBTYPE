@@ -10,6 +10,7 @@ import cloudinary from "../config/cloudinary.js";
 import { Readable } from "stream";
 import { ICloudinary } from "../types/cloudinary.type.js";
 import { IOriginalImages } from "../types/originalImages.type.js";
+import { deleteAnAsset } from "../utils/delete.asset.util.js";
 
 // Get all products
 export const getProducts = async (
@@ -221,7 +222,7 @@ export const updateProduct = async (
       : [];
 
     // checking if all fields are not empty
-    if (areAllFieldsEmpty(data)) {
+    if (!areAllFieldsEmpty(data)) {
       res.status(400).json({
         message: "All fields must not be empty",
         success: false,
@@ -235,7 +236,7 @@ export const updateProduct = async (
     deleteAnAsset(originalImages, existingImages);
 
     // checking if the price and stock are in numbers format
-    if (arePriceAndStockNumbers(price, stock)) {
+    if (!arePriceAndStockNumbers(price, stock)) {
       res.status(400).json({
         message: "Price and stock fields must be in numbers",
         success: false,
@@ -259,6 +260,14 @@ export const updateProduct = async (
     // update assets from cloudinary and wait it after the successful operation
     let newImages: IOriginalImages[] = [];
     let files: Express.Multer.File[] = [];
+
+    if (req.files) {
+      if (Array.isArray(req.files)) {
+        files = req.files
+      } else {
+        files = Object.values(req.files).flat()
+      }
+    }
 
     if (files && files.length > 0) {
       const uploadPromises = files.map((file) => {
@@ -312,9 +321,6 @@ export const updateProduct = async (
     });
   }
 };
-function deleteAnAsset(originalImages: any, existingImages: any) {
-  throw new Error("Function not implemented.");
-}
 
 // delete a specific product
 export const deleteProduct = async (

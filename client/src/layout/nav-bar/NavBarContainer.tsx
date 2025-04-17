@@ -3,11 +3,7 @@ import LogoContainer from '../../components/logo/LogoContainer'
 import NavigationMenu from './NavigationMenu'
 import AccountMenus from './AccountMenus'
 
-interface NavBarContainerProps {
-  role: string
-}
-
-const NavBarContainer = ({role}: NavBarContainerProps) => {
+const NavBarContainer = () => {
   return (
     <HStack
       borderColor="#FFF"
@@ -28,7 +24,7 @@ const NavBarContainer = ({role}: NavBarContainerProps) => {
 
 
       {/** Link buttons */}
-      <NavigationMenu role={role}/>
+      <NavigationMenu/>
 
       {/** Accounts */}
       <AccountMenus/>

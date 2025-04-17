@@ -3,41 +3,48 @@ import { useNavigate } from "react-router-dom";
 import { USER_ROUTES } from "../../routes/user/userRoute";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { ADMIN_ROUTE } from "../../routes/admin/adminRoute";
+import productStore from "../../stores/productStore";
 
-interface NavigationMenuProps {
-  role: string;
-}
+const NavigationMenu = () => {
+  const { clearAllProperties } = productStore();
 
-const NavigationMenu = ({ role }: NavigationMenuProps) => {
+  const role = localStorage.getItem("role");
+
   const navigate = useNavigate();
   const handleNavigation = () => {
     return role === "admin" ? ADMIN_ROUTE.ADMIN_HOME : USER_ROUTES.USER_HOME;
   };
+
   const shopMenuItems = [
     {
       value: "All",
       text: "All",
       path: ADMIN_ROUTE.ADMIN_SHOP_ALL,
+      role: ["admin", "user"],
     },
     {
       value: "Lanyard",
       text: "Lanyard",
-      path: ADMIN_ROUTE.ADMIN_SHOP_ALL,
+      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : USER_ROUTES.USER,
+      role: ["admin", "user"],
     },
     {
       value: "T-Shirt",
       text: "T-Shirt",
       path: ADMIN_ROUTE.ADMIN_SHOP_ALL,
+      role: ["admin", "user"],
     },
     {
       value: "Uniform",
       text: "Uniform",
       path: ADMIN_ROUTE.ADMIN_SHOP_ALL,
+      role: ["admin", "user"],
     },
     {
       value: "Add Product",
       text: "Add Product",
       path: ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM,
+      role: "user",
     },
   ];
   return (
@@ -72,23 +79,28 @@ const NavigationMenu = ({ role }: NavigationMenuProps) => {
           <Menu.Positioner>
             <Menu.Content bg={"#243647"} px={3} py={5}>
               <Flex direction="column" gap="2">
-                {shopMenuItems.map((item) => (
-                  <Menu.Item
-                    key={item.value}
-                    value={item.path}
-                    color="#FFF"
-                    mb="2"
-                    onClick={() => {
-                      navigate(item.path)
-                    }}
-                    _hover={{ color: "#94ADC7" }}
-                    bg="transparent"
-                    _focus={{ bg: "transparent" }}
-                    _active={{ bg: "transparent" }}
-                  >
-                    {item.text}
-                  </Menu.Item>
-                ))}
+                {shopMenuItems.map(
+                  (item) =>
+                    item.role.includes("admin") &&
+                    item.role.includes("user") && (
+                      <Menu.Item
+                        key={item.value}
+                        value={item.path}
+                        color="#FFF"
+                        mb="2"
+                        onClick={() => {
+                          navigate(item.path);
+                          clearAllProperties();
+                        }}
+                        _hover={{ color: "#94ADC7" }}
+                        bg="transparent"
+                        _focus={{ bg: "transparent" }}
+                        _active={{ bg: "transparent" }}
+                      >
+                        {item.text}
+                      </Menu.Item>
+                    )
+                )}
               </Flex>
             </Menu.Content>
           </Menu.Positioner>
@@ -101,7 +113,7 @@ const NavigationMenu = ({ role }: NavigationMenuProps) => {
         textDecoration="none"
         _hover={{ color: "#94ADC7" }}
       >
-        Students
+        {role === "admin" ? "Students" : "Cart"}
       </Link>
 
       <Link

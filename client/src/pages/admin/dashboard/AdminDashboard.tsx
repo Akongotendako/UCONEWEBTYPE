@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 const AdminDashboard = () => {
   return (
     <Flex bg={"#121A21"} w={"full"} h={"full"} position={"relative"} direction={"column"}>
-      <NavBarContainer role="admin"/>
+      <NavBarContainer/>
       <Box flex={1} overflow={"auto"}>
         <Outlet />
       </Box>
