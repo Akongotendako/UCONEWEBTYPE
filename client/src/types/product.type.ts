@@ -53,7 +53,3 @@ export interface IProductState {
   nextImage: () => void;
   prevImage: () => void;
 }
-
-export interface IProductStore {
-  product: IProduct;
-}

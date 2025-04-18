@@ -52,6 +52,7 @@ export interface IUserState {
     error?: string;
     message: string;
     role?: string;
+    userId: string;
   }>;
   fetchProfile: (id: string) => Promise<unknown>;
   updateProfile: (id: string) => Promise<unknown>;

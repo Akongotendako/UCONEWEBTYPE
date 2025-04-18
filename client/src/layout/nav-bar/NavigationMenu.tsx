@@ -13,7 +13,7 @@ const NavigationMenu = () => {
 
   const navigate = useNavigate();
   const handleNavigation = () => {
-    return role === "admin" ? ADMIN_ROUTE.ADMIN_HOME : USER_ROUTES.USER_HOME;
+    return role === "admin" ? ADMIN_ROUTE.ADMIN_HOME : USER_ROUTES.USER_CART;
   };
 
   const shopMenuItems = [

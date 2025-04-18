@@ -6,7 +6,7 @@ import {
   RatingGroup,
   Icon,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import productStore from "../../../stores/productStore";
 import Title from "../../../components/typography/Title";
@@ -14,19 +14,19 @@ import Description from "../../../components/typography/Description";
 import SecondaryButton from "../../../components/buttons/SecondaryButton";
 import PrimaryButton from "../../../components/buttons/PrimaryButton";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
+import cartStore from "../../../stores/cartStore";
 const UserAddToCart = () => {
   const { id } = useParams();
   const { products, getProduct, currentIndex, setIndex, nextImage, prevImage } =
     productStore();
-  const [counter, setCounter] = useState(0);
+  const {cartItem, cart, increment, decrement, addCart} = cartStore();
+  const userId = localStorage.getItem("userId")
 
   useEffect(() => {
     getProduct(id as string);
-  }, [getProduct, id]);
-
-  const handleIncrementQuantity = () => setCounter(counter + 1);
-  const handleDecrementQuantity = () => setCounter(counter - 1);
+    cart.userId = userId as string;
+    cartItem.productId = id as string;
+  }, [cart, cartItem, getProduct, id, userId]);
 
   return (
     <VStack w={"full"}>
@@ -130,15 +130,15 @@ const UserAddToCart = () => {
                 <SecondaryButton
                   width="auto"
                   flex={1}
-                  onClick={handleDecrementQuantity}
+                  onClick={decrement}
                 >
                   -
                 </SecondaryButton>
-                <Description textAlign="center">{counter}</Description>
+                <Description textAlign="center">{cartItem.quantity}</Description>
                 <PrimaryButton
                   width="auto"
                   flex={1}
-                  onclick={handleIncrementQuantity}
+                  onclick={increment}
                 >
                   +
                 </PrimaryButton>
@@ -150,7 +150,7 @@ const UserAddToCart = () => {
               <SecondaryButton width="auto" flex={1}>
                 Buy Now
               </SecondaryButton>
-              <PrimaryButton width="auto" flex={1}>
+              <PrimaryButton width="auto" flex={1} onclick={addCart}>
                 Add to Cart
               </PrimaryButton>
             </HStack>

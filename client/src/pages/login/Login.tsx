@@ -33,13 +33,14 @@ const Login = () => {
     }, 3500);
 
     setTimeout(() => {
-      console.log(`role here in login ${response.role}`)
       if (response.role === "admin") {
         navigate(ADMIN_ROUTE.ADMIN);
-        localStorage.setItem("role", "admin")
+        localStorage.setItem("role", "admin");
+        localStorage.setItem("userId", response.userId);
       } else {
         navigate(USER_ROUTES.USER);
-        localStorage.setItem("role", "user")
+        localStorage.setItem("role", "user");
+        localStorage.setItem("userId", response.userId);
       }
     }, 3600);
   };
