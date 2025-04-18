@@ -5,19 +5,27 @@ interface SecondaryButtonProps {
   children?: ReactNode;
   width?: string;
   marginTop?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  flex?: number;
 }
 
-const SecondaryButton: React.FC<SecondaryButtonProps> = ({ children, width, marginTop, onClick }) => {
+const SecondaryButton: React.FC<SecondaryButtonProps> = ({
+  children,
+  width,
+  marginTop,
+  onClick,
+  flex,
+}) => {
   return (
     <Button
       size={"sm"}
       w={width || "full"}
       bg={"#121A21"}
-      borderColor={'#FFF'}
-      _hover={{ bg: "#121A21", borderColor: "#FFF" }}
+      borderColor={"#FFF"}
+      _hover={{ bg: "#2985E5", borderColor: "transparent" }}
       mt={marginTop || "5"}
       onClick={onClick}
+      flex={flex}
     >
       {children}
     </Button>

@@ -32,6 +32,7 @@ const productStore = create<IProductState>((set, get) => ({
     isLimit: false as boolean,
   },
   products: [] as IProduct[],
+  currentIndex: 1,
 
   setField: <K extends keyof IProduct>(field: K, value: IProduct[K]) =>
     set((state) => ({
@@ -179,9 +180,8 @@ const productStore = create<IProductState>((set, get) => ({
       };
     }
   },
-  clearAllProperties: () =>
-    set((state) => ({
-      ...state,
+  clearAllProperties: () => {
+    set({
       product: {
         _id: "",
         productName: "",
@@ -197,7 +197,9 @@ const productStore = create<IProductState>((set, get) => ({
         originalImages: [] as IOriginalImages[],
         isLimit: false as boolean,
       },
-    })),
+      products: [],
+    });
+  },
   isCategoryLanyard: () =>
     set((state) => ({
       ...state,
@@ -288,6 +290,23 @@ const productStore = create<IProductState>((set, get) => ({
       set({ products: response.data.response });
     }
   },
+  setIndex: (index) =>
+    set((state) => ({
+      ...state,
+      currentIndex: index,
+    })),
+  nextImage: () =>
+    set((state) => ({
+      ...state,
+      currentIndex: (state.currentIndex + 1) % state.product.images.length,
+    })),
+  prevImage: () =>
+    set((state) => ({
+      ...state,
+      currentIndex:
+        (state.currentIndex - 1 + state.product.images.length) %
+        state.product.images.length,
+    })),
 }));
 
 export default productStore;

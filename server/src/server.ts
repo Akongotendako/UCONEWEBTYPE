@@ -3,6 +3,7 @@ import cors from 'cors';
 import { connectDb } from '../src/config/db.js';
 import userRoute from '../src/routes/user.route.js'
 import productRoute from '../src/routes/product.route.js'
+import cartRoute from '../src/routes/cart.route.js'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,6 +17,7 @@ connectDb();
 
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
+app.use("/api/carts", cartRoute)
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

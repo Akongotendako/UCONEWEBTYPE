@@ -20,7 +20,7 @@ const NavigationMenu = () => {
     {
       value: "All",
       text: "All",
-      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : USER_ROUTES.USER_CATEGORY,
+      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : `${USER_ROUTES.USER_SHOP}/${"All"}/category`,
       role: ["admin", "user"],
     },
     {
@@ -32,13 +32,13 @@ const NavigationMenu = () => {
     {
       value: "T-Shirt",
       text: "T-Shirt",
-      path: ADMIN_ROUTE.ADMIN_SHOP_ALL,
+      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : `${USER_ROUTES.USER_SHOP}/${"T-Shirt"}/category`,
       role: ["admin", "user"],
     },
     {
       value: "Uniform",
       text: "Uniform",
-      path: ADMIN_ROUTE.ADMIN_SHOP_ALL,
+      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : `${USER_ROUTES.USER_SHOP}/${"Uniform"}/category`,
       role: ["admin", "user"],
     },
     {

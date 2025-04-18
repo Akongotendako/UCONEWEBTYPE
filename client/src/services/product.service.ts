@@ -37,6 +37,6 @@ export const deleteProduct = async(id: string) => {
 };
 
 export const getProductByCategory = async(category: string) => {
-  const response = await axiosInstance.get(`/products/${category}`);
+  const response = await axiosInstance.get(`/products/${category}/category`);
   return response;
 };

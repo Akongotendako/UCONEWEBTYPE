@@ -1,24 +1,23 @@
-import {
-  Box,
-  Grid,
-  RatingGroup,
-  VStack,
-  Image,
-} from "@chakra-ui/react";
+import { Box, Grid, RatingGroup, VStack, Image } from "@chakra-ui/react";
 import { useEffect } from "react";
 import EmptyCart from "../../assets/empty-cart.png";
 import productStore from "../../stores/productStore";
 import Title from "../../components/typography/Title";
 import Description from "../../components/typography/Description";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { USER_ROUTES } from "../../routes/user/userRoute";
 
 const UserCategoryMenu = () => {
-    const {category} = useParams();
+  const { category } = useParams();
   const { products, getProductByCategory } = productStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProductByCategory(category as string);
   }, [getProductByCategory, category]);
+
+  const handleNavigation = (id: string) =>
+    navigate(`${USER_ROUTES.USER_SHOP}/${id}/cart`);
 
   return (
     <Box w={"full"} h={"full"}>
@@ -32,6 +31,8 @@ const UserCategoryMenu = () => {
               p={5}
               align={"flex-start"}
               key={product._id}
+              cursor={"pointer"}
+              onClick={() => handleNavigation(product._id)}
             >
               <Box w={"full"} position={"relative"}>
                 <Image

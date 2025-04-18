@@ -28,6 +28,7 @@ export interface IProduct {
 export interface IProductState {
   product: IProduct;
   products: IProduct[];
+  currentIndex: number;
 
   setField: <
     K extends keyof IProduct
@@ -48,6 +49,9 @@ export interface IProductState {
   getProduct: (id: string) => Promise<unknown>;
   updateProduct: (id: string) => Promise<{success: boolean; status: number; error?: string; message: string}>;
   getProductByCategory: (category: string) => Promise<unknown>;
+  setIndex: (index: number) => void;
+  nextImage: () => void;
+  prevImage: () => void;
 }
 
 export interface IProductStore {
