@@ -6,7 +6,8 @@ import { addCart, fetchCart } from "../services/cart.service";
 const cartStore = create<ICartState>((set, get) => ({
   cart: {
     userId: "",
-    items: [] as IItems[]
+    items: [] as IItems[],
+    total: 0
   },
   cartItem: {
     productId: "",

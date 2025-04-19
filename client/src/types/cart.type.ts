@@ -8,7 +8,8 @@ export interface IItems {
 }
 export interface ICart {
     userId: string,
-    items: IItems[]
+    items: IItems[],
+    total: number
 }
 
 export interface ICartItem {
