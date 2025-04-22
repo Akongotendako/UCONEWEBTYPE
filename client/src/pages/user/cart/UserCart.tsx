@@ -1,7 +1,7 @@
-import { For, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import cartStore from "../../../stores/cartStore";
 import { useEffect } from "react";
-import CartContainer from "../../../components/cart-user/CartContainer";
+import UserCartProductContainer from "../../../components/features/user/user-cart/product/UserCartProductContainer";
 
 const UserCart = () => {
   const userId = localStorage.getItem("userId");
@@ -13,13 +13,7 @@ const UserCart = () => {
 
   return (
     <Stack w={"full"} p={5}>
-      <For each={
-        cart.items
-      } >
-        {(item, index) => (
-          <CartContainer item={item}/>
-        )}
-      </For>
+      <UserCartProductContainer cart={cart}/>
     </Stack>
   );
 };
