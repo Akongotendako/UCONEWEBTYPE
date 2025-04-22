@@ -1,13 +1,13 @@
 import { VStack } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
-import Title from "../../components/typography/Title";
-import Description from "../../components/typography/Description";
+import Description from "../ui/Description";
+import Title from "../ui/Title";
 
 interface FormContainerProps {
   children?: ReactNode;
 }
 
-const FormContainer: React.FC<FormContainerProps> = ({ children }) => {
+const FormData: React.FC<FormContainerProps> = ({ children }) => {
   return (
     <VStack
       p={5}
@@ -25,4 +25,4 @@ const FormContainer: React.FC<FormContainerProps> = ({ children }) => {
   );
 };
 
-export default FormContainer;
+export default FormData;

@@ -1,10 +1,10 @@
 import { Box, Flex, Icon, Image, Input, Text } from "@chakra-ui/react";
 import { ChangeEvent, useRef } from "react";
-import productStore from "../../stores/productStore";
-import { IImage } from "../../types/product.type";
 import { IoMdClose } from "react-icons/io";
 import { MdEdit, MdOutlineCloudUpload } from "react-icons/md";
-import generalToast from "../../components/utils/toaster";
+import productStore from "../../../../stores/productStore";
+import { IImage } from "../../../../types/product.type";
+import generalToast from "../../../utils/toaster";
 
 interface ImagesProps {
   mt?: number;

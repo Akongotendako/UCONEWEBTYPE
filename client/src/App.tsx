@@ -14,9 +14,9 @@ import { USER_ROUTES } from "./routes/user/userRoute";
 import UserDashboard from "./pages/user/dashboard/UserDashboard";
 import UserHome from "./pages/user/home/UserHome";
 import UserShop from "./pages/user/shop/UserShop";
-import UserCategoryMenu from "./layout/user-category-menu/UserCategoryMenu";
 import UserAddToCart from "./pages/user/add-to-cart/UserAddToCart";
 import UserCart from "./pages/user/cart/UserCart";
+import UserShopCategories from "./pages/user/shop-all/UserShopCategories";
 
 function App() {
   return (
@@ -47,7 +47,7 @@ function App() {
         <Route path={USER_ROUTES.USER} element={<UserDashboard />}>
           <Route path={USER_ROUTES.USER_HOME} element={<UserHome />} />
           <Route path={USER_ROUTES.USER_SHOP} element={<UserShop />}>
-            <Route path={USER_ROUTES.USER_CATEGORY} element={<UserCategoryMenu />} />
+            <Route path={USER_ROUTES.USER_CATEGORY} element={<UserShopCategories />} />
             <Route path={USER_ROUTES.USER_ADD_TO_CART} element={<UserAddToCart />} />
           </Route>
           <Route path={USER_ROUTES.USER_CART} element={<UserCart />} />

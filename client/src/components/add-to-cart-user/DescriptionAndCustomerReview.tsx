@@ -1,0 +1,122 @@
+import { HStack, RatingGroup, Separator, Tabs, VStack } from "@chakra-ui/react";
+import React from "react";
+import SecondaryButton from "../buttons/SecondaryButton";
+import Title from "../typography/Title";
+import Description from "../typography/Description";
+
+const DescriptionAndCustomerReview = () => {
+  return (
+    <Tabs.Root
+      variant="enclosed"
+      w={"full"}
+      fitted
+      defaultValue={"Description"}
+    >
+      <Tabs.List
+        w={"full"}
+        bg={"transparent"}
+        borderColor={"#FFFFFF80"}
+        borderWidth={"1px"}
+      >
+        <Tabs.Trigger
+          value="Description"
+          flex={1}
+          color={"#FFFFFF80"}
+          _selected={{
+            bg: "#2985E5",
+            color: "#FFF",
+          }}
+        >
+          Description
+        </Tabs.Trigger>
+        <Tabs.Trigger
+          value="CustomerReview"
+          flex={1}
+          color={"#FFFFFF80"}
+          _selected={{
+            bg: "#2985E5",
+            color: "#FFF",
+          }}
+        >
+          Customer Review
+        </Tabs.Trigger>
+      </Tabs.List>
+      <Tabs.Content value="Description" color={"#FFFFFF80"}>
+        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus
+        ex sapien vitae pellentesque sem placerat. In id cursus mi pretium
+        tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
+        Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis
+        massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper
+        vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
+        inceptos himenaeos. Lorem ipsum dolor sit amet consectetur adipiscing
+        elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id
+        cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
+        urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
+        egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
+        hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent
+        per conubia nostra inceptos himenaeos. Lorem ipsum dolor sit amet
+        consectetur adipiscing elit. Quisque faucibus ex sapien vitae
+        pellentesque sem placerat. In id cursus mi pretium tellus duis
+        convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus
+        fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada
+        lacinia integer nunc posuere. Ut hendrerit semper vel class aptent
+        taciti sociosqu. Ad litora torquent per conubia nostra inceptos
+        himenaeos.
+      </Tabs.Content>
+      <Tabs.Content value="CustomerReview">
+        <VStack w={"full"} align={"flex-start"}>
+          <HStack w={"full"} justify={"flex-end"}>
+            <SecondaryButton width="auto">WRITE A REVIEW</SecondaryButton>
+          </HStack>
+
+          {/** Titlte indicator */}
+          <Title mb={10}>100 REVIEWS</Title>
+
+          <VStack w={"full"} align={"flex-start"}>
+            <HStack gap={7}>
+              <Title textStyle="md">Lord Jan Rolmar</Title>
+              <RatingGroup.Root count={5} defaultValue={3} size="sm">
+                <RatingGroup.HiddenInput />
+                <RatingGroup.Control />
+              </RatingGroup.Root>
+            </HStack>
+            <Description mb={15}>Posted by Lord Jan Rolmar January 22, 2025</Description>
+
+            <Description mb={15}>Kasyuteng kinawat</Description>
+          </VStack>
+          <Separator w={"full"} color={"#FFFFFF80"}/>
+
+          <VStack w={"full"} align={"flex-start"}>
+            <HStack gap={7}>
+              <Title textStyle="md">Lord Jan Rolmar</Title>
+              <RatingGroup.Root count={5} defaultValue={3} size="sm">
+                <RatingGroup.HiddenInput />
+                <RatingGroup.Control />
+              </RatingGroup.Root>
+            </HStack>
+            <Description mb={15}>Posted by Lord Jan Rolmar January 22, 2025</Description>
+
+            <Description mb={15}>Kasyuteng kinawat</Description>
+          </VStack>
+          <Separator w={"full"} color={"#FFFFFF80"}/>
+
+          <VStack w={"full"} align={"flex-start"}>
+            <HStack gap={7}>
+              <Title textStyle="md">Lord Jan Rolmar</Title>
+              <RatingGroup.Root count={5} defaultValue={3} size="sm">
+                <RatingGroup.HiddenInput />
+                <RatingGroup.Control />
+              </RatingGroup.Root>
+            </HStack>
+            <Description mb={15}>Posted by Lord Jan Rolmar January 22, 2025</Description>
+
+            <Description mb={15}>Kasyuteng kinawat</Description>
+          </VStack>
+          <Separator w={"full"} color={"#FFFFFF80"}/>
+        </VStack>
+      </Tabs.Content>
+    </Tabs.Root>
+  );
+};
+
+export default DescriptionAndCustomerReview;

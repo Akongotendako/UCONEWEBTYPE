@@ -1,4 +1,4 @@
-import AdminShopAllAddProduct from "../../../layout/admin-shop-all-add-product/AdminShopAllAddProduct"
+import AdminShopAllAddProduct from "../../../components/features/admin/admin-shop-all-add-product/AdminShopAllAddProduct"
 
 const AdminShopAll = () => {
   return (

@@ -1,28 +1,26 @@
-import {
-  Box,
-  Grid,
-  HStack,
-  RatingGroup,
-  VStack,
-  Image,
-} from "@chakra-ui/react";
-import Description from "../../../components/typography/Description";
-import Title from "../../../components/typography/Title";
-import SecondaryButton from "../../../components/buttons/SecondaryButton";
-import PrimaryButton from "../../../components/buttons/PrimaryButton";
-import productStore from "../../../stores/productStore";
+import { Box, Grid, RatingGroup, VStack, Image } from "@chakra-ui/react";
 import { useEffect } from "react";
-import EmptyCart from '../../../assets/empty-cart.png'
+import EmptyCart from "../../../../assets/empty-cart.png";
+import { useParams, useNavigate } from "react-router-dom";
+import { USER_ROUTES } from "../../../../routes/user/userRoute";
+import productStore from "../../../../stores/productStore";
+import Description from "../../../ui/Description";
+import Title from "../../../ui/Title";
 
-const UserShopAll = () => {
-  const { products, getProducts } = productStore();
+const UserCategoryMenu = () => {
+  const { category } = useParams();
+  const { products, getProductByCategory } = productStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+    getProductByCategory(category as string);
+  }, [getProductByCategory, category]);
+
+  const handleNavigation = (id: string) =>
+    navigate(`${USER_ROUTES.USER_SHOP}/${id}/cart`);
 
   return (
-    <Box w={"full"} h={"full"}>
+    <>
       {products.length > 0 ? (
         <Grid templateColumns="repeat(4, 1fr)" gap="6">
           {products.map((product) => (
@@ -33,6 +31,8 @@ const UserShopAll = () => {
               p={5}
               align={"flex-start"}
               key={product._id}
+              cursor={"pointer"}
+              onClick={() => handleNavigation(product._id)}
             >
               <Box w={"full"} position={"relative"}>
                 <Image
@@ -69,20 +69,6 @@ const UserShopAll = () => {
                 <RatingGroup.HiddenInput />
                 <RatingGroup.Control />
               </RatingGroup.Root>
-
-              {/** Buttons */}
-              <HStack w={"full"} align={"flex-start"}>
-                <SecondaryButton
-                  width="1/2"
-                >
-                  Update
-                </SecondaryButton>
-                <PrimaryButton
-                  width="1/2"
-                >
-                  Remove
-                </PrimaryButton>
-              </HStack>
             </VStack>
           ))}
         </Grid>
@@ -100,8 +86,8 @@ const UserShopAll = () => {
           </VStack>
         </Box>
       )}
-    </Box>
+    </>
   );
 };
 
-export default UserShopAll;
+export default UserCategoryMenu;

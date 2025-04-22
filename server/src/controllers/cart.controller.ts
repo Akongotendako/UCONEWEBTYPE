@@ -38,12 +38,17 @@ export const addCart = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const cart = new Cart({ userId, createdAt: new Date() });
-    await cart.save();
+    let cart = await Cart.findOne({ userId });
+    if (!cart) {
+      cart = new Cart({ userId, createdAt: new Date() });
+      await cart.save();
+    }
+
+    console.log(`cart id ${cart._id}`);
 
     let cartItem = await CartItem.findOne({ cartId: cart._id, productId });
     if (cartItem) {
-      cartItem.quantity += quantity;
+      cartItem.quantity += Number(quantity);
       await cartItem.save();
     } else {
       cartItem = new CartItem({
@@ -55,7 +60,7 @@ export const addCart = async (req: Request, res: Response): Promise<void> => {
     }
 
     res.status(200).json({
-      success: false,
+      success: true,
       message: "Successfully added to the cart",
     });
   } catch (error) {
@@ -101,11 +106,11 @@ export const fetchCart = async (req: Request, res: Response): Promise<void> => {
       const discount = parseDiscount(cartItem.productId.discount);
       const discountedPrice = price * (1 - discount);
       const itemTotal = discountedPrice * quantity;
-      total += itemTotal
+      total += itemTotal;
       return {
         product: cartItem.productId,
         quantity: cartItem.quantity,
-        itemTotal: itemTotal.toFixed(2)
+        itemTotal: itemTotal.toFixed(2),
       };
     });
 
@@ -114,7 +119,7 @@ export const fetchCart = async (req: Request, res: Response): Promise<void> => {
       message: "Cart fetched successfully",
       cart: {
         items,
-        total: total.toFixed(2)
+        total: total.toFixed(2),
       },
     });
   } catch (error) {

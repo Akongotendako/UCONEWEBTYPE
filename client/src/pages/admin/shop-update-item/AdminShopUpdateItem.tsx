@@ -1,4 +1,5 @@
-import AdminShopAddUpdateItem from '../../../layout/add-update-item/AdminShopAddUpdateItem'
+import AdminShopAddUpdateItem from "../../../components/features/admin/admin-shop-add-update-item/AdminShopAddUpdateItem"
+
 
 const AdminShopUpdateItem = () => {
   return (

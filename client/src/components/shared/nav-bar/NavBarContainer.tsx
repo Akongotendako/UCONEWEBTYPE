@@ -1,7 +1,7 @@
 import { HStack } from '@chakra-ui/react'
-import LogoContainer from '../../components/logo/LogoContainer'
-import NavigationMenu from './NavigationMenu'
 import AccountMenus from './AccountMenus'
+import LogoContainer from '../../logo/LogoContainer'
+import NavigationMenu from './NavigationMenu'
 
 const NavBarContainer = () => {
   return (

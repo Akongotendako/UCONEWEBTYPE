@@ -12,6 +12,7 @@ interface TitleProps {
   _hover?: SystemStyleObject;
   onclick?: MouseEventHandler<HTMLParagraphElement>;
   lineClamp?: number
+  underline?: string
 }
 
 const Title: React.FC<TitleProps> = ({
@@ -24,7 +25,8 @@ const Title: React.FC<TitleProps> = ({
   isCursorActivated = false,
   _hover,
   onclick,
-  lineClamp
+  lineClamp,
+  underline
 }) => {
   return (
     <Text
@@ -37,6 +39,7 @@ const Title: React.FC<TitleProps> = ({
       _hover={_hover}
       onClick={onclick}
       lineClamp={lineClamp || ""}
+      textDecoration={underline || ""}
     >
       {children}
       

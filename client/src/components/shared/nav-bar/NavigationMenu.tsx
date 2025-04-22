@@ -1,9 +1,9 @@
 import { Flex, HStack, Icon, Link, Menu, Portal } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { USER_ROUTES } from "../../routes/user/userRoute";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { ADMIN_ROUTE } from "../../routes/admin/adminRoute";
-import productStore from "../../stores/productStore";
+import { ADMIN_ROUTE } from "../../../routes/admin/adminRoute";
+import { USER_ROUTES } from "../../../routes/user/userRoute";
+import productStore from "../../../stores/productStore";
 
 const NavigationMenu = () => {
   const { clearAllProperties } = productStore();

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import productStore from "../../stores/productStore";
-import EmptyCart from "../../assets/empty-cart.png";
+import EmptyCart from "../../../../assets/empty-cart.png";
 import {
   Box,
   Grid,
@@ -9,13 +8,14 @@ import {
   RatingGroup,
   HStack,
 } from "@chakra-ui/react";
-import Title from "../../components/typography/Title";
-import Description from "../../components/typography/Description";
-import SecondaryButton from "../../components/buttons/SecondaryButton";
-import PrimaryButton from "../../components/buttons/PrimaryButton";
-import generalToast from "../../components/utils/toaster";
 import { useNavigate } from "react-router-dom";
-import { ADMIN_ROUTE } from "../../routes/admin/adminRoute";
+import { ADMIN_ROUTE } from "../../../../routes/admin/adminRoute";
+import productStore from "../../../../stores/productStore";
+import PrimaryButton from "../../../buttons/PrimaryButton";
+import SecondaryButton from "../../../buttons/SecondaryButton";
+import generalToast from "../../../utils/toaster";
+import Description from "../../../ui/Description";
+import Title from "../../../ui/Title";
 
 const AdminShopAllAddProduct = () => {
   const { products, getProducts, deleteProduct } = productStore();

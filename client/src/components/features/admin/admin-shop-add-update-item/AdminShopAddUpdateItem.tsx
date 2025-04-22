@@ -1,13 +1,13 @@
 import { HStack, VStack } from "@chakra-ui/react";
-import Title from "../../components/typography/Title";
-import InputField from "../../components/input/InputField";
-import productStore from "../../stores/productStore";
-import Images from "./Images";
-import PrimaryButton from "../../components/buttons/PrimaryButton";
-import SelectionBoxes from "../../components/selection-boxes/SelectionBoxes";
-import generalToast from "../../components/utils/toaster";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import productStore from "../../../../stores/productStore";
+import PrimaryButton from "../../../buttons/PrimaryButton";
+import InputField from "../../../form/InputField";
+import SelectionBoxes from "../../../selection-boxes/SelectionBoxes";
+import generalToast from "../../../utils/toaster";
+import Images from "./Images";
+import Title from "../../../ui/Title";
 
 const AdminShopAddUpdateItem = () => {
   const { id } = useParams();

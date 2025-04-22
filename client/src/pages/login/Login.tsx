@@ -1,17 +1,17 @@
 import { Checkbox, Flex, HStack, Link, VStack } from "@chakra-ui/react";
 import LogoContainer from "../../components/logo/LogoContainer";
-import FormContainer from "../../layout/signin-signup-form/FormContainer";
-import InputField from "../../components/input/InputField";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { FcGoogle } from "react-icons/fc";
-import Paragraph from "../../components/typography/Paragraph";
 import { AUTH_ROUTE } from "../auth/authRoute";
 import generalToast from "../../components/utils/toaster";
 import { useNavigate } from "react-router-dom";
 import userStore from "../../stores/userStore";
 import { ADMIN_ROUTE } from "../../routes/admin/adminRoute";
 import { USER_ROUTES } from "../../routes/user/userRoute";
+import InputField from "../../components/form/InputField";
+import FormContainer from "../../components/form/FormContainer";
+import Paragraph from "../../components/ui/Paragraph";
 
 const Login = () => {
   const { user, setField, signIn, clearAllProperties } = userStore();

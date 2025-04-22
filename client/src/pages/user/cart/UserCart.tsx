@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { For, Stack } from "@chakra-ui/react";
 import cartStore from "../../../stores/cartStore";
 import { useEffect } from "react";
 import CartContainer from "../../../components/cart-user/CartContainer";
@@ -12,15 +12,15 @@ const UserCart = () => {
   }, [userId, fetchCart]);
 
   return (
-    <Box w={"full"} p={5}>
-      {cart && (
-        <>
-          {cart.items.map((item) => (
-            <CartContainer item={item} />
-          ))}
-        </>
-      )}
-    </Box>
+    <Stack w={"full"} p={5}>
+      <For each={
+        cart.items
+      } >
+        {(item, index) => (
+          <CartContainer item={item}/>
+        )}
+      </For>
+    </Stack>
   );
 };
 

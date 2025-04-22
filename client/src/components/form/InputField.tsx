@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Title from "../typography/Title";
 import { Icon, Input, VStack } from "@chakra-ui/react";
 import { PiEyeLight, PiEyeSlash } from "react-icons/pi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { IconType } from "react-icons";
+import Title from "../ui/Title";
 
 interface InputFieldProps<T, K extends keyof T> {
   mt?: number;

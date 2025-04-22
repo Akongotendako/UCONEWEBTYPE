@@ -6,7 +6,9 @@ interface DescriptionProps {
   textStyle?: string;
   children?: ReactNode;
   textAlign?: string;
-  lineClamp?: number
+  lineClamp?: number;
+  fontStyle?: string;
+  mb?: number
 }
 
 const Description: React.FC<DescriptionProps> = ({
@@ -14,10 +16,19 @@ const Description: React.FC<DescriptionProps> = ({
   textStyle,
   children,
   textAlign,
-  lineClamp
+  lineClamp,
+  fontStyle,
+  mb
 }) => {
   return (
-    <Text lineClamp={lineClamp || ""} color={color || "#FFFFFF80"} textStyle={textStyle || "md"} textAlign={textAlign || "start"}>
+    <Text
+      lineClamp={lineClamp || ""}
+      color={color || "#FFFFFF80"}
+      textStyle={textStyle || "md"}
+      textAlign={textAlign || "start"}
+      fontStyle={fontStyle || ""}
+      mb={mb || ""}
+    >
       {children}
     </Text>
   );

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { MdOutlineAccountCircle } from "react-icons/md";
-import { ADMIN_ROUTE } from "../../routes/admin/adminRoute";
+import { ADMIN_ROUTE } from "../../../routes/admin/adminRoute";
 
 const AccountMenus = () => {
   const navigate = useNavigate();

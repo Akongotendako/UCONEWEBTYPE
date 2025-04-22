@@ -10,11 +10,9 @@ interface CartContainerProps {
 const CartContainer = ({item}: CartContainerProps) => {
   return (
     <HStack
-      borderTopColor={"#E2E8F0"}
-      borderBottomColor={"#E2E8F0"}
-      borderLeftColor={"transparent"}
-      borderRightColor={"transparent"}
+      borderColor={"#FFFFFF80"}
       borderWidth={"1px"}
+      rounded={"md"}
       p={5}
       align={"flex-start"}
 

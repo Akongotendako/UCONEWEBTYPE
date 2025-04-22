@@ -1,10 +1,7 @@
-import React from 'react'
-import AdminShopAddUpdateItem from '../../../layout/add-update-item/AdminShopAddUpdateItem'
+import AdminShopAddUpdateItem from "../../../components/features/admin/admin-shop-add-update-item/AdminShopAddUpdateItem";
 
 const AdminShopAddItem = () => {
-  return (
-    <AdminShopAddUpdateItem/>
-  )
-}
+  return <AdminShopAddUpdateItem />;
+};
 
-export default AdminShopAddItem
+export default AdminShopAddItem;
