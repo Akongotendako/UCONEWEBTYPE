@@ -1,7 +1,4 @@
 import { Box, Grid, HStack, Image, RatingGroup, VStack } from "@chakra-ui/react";
-import Title from "../../../components/typography/Title";
-import Description from "../../../components/typography/Description";
-import PrimaryButton from "../../../components/buttons/PrimaryButton";
 import TShirt from "../../../assets/t-shirt.jpeg";
 import Lanyard from "../../../assets/sling.jpg";
 import Uniform from "../../../assets/blouse.jpg";
@@ -9,6 +6,9 @@ import { useEffect } from "react";
 import productStore from "../../../stores/productStore";
 import { useNavigate } from "react-router-dom";
 import { USER_ROUTES } from "../../../routes/user/userRoute";
+import Description from "../../../components/ui/Description";
+import Title from "../../../components/ui/Title";
+import PrimaryButton from "../../../components/ui/PrimaryButton";
 
 const UserHome = () => {
   const { products, getProducts } = productStore();

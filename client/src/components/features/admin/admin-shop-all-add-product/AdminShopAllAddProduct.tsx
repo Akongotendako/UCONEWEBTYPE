@@ -11,11 +11,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { ADMIN_ROUTE } from "../../../../routes/admin/adminRoute";
 import productStore from "../../../../stores/productStore";
-import PrimaryButton from "../../../buttons/PrimaryButton";
-import SecondaryButton from "../../../buttons/SecondaryButton";
 import generalToast from "../../../utils/toaster";
 import Description from "../../../ui/Description";
 import Title from "../../../ui/Title";
+import PrimaryButton from "../../../ui/PrimaryButton";
+import SecondaryButton from "../../../ui/SecondaryButton";
 
 const AdminShopAllAddProduct = () => {
   const { products, getProducts, deleteProduct } = productStore();

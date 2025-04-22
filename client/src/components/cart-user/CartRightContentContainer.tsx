@@ -1,8 +1,8 @@
-import { Box, HStack, IconButton, Input, NumberInput, VStack } from "@chakra-ui/react";
-import Title from "../typography/Title";
-import Description from "../typography/Description";
-import { GoPlus } from "react-icons/go";
+import { HStack, IconButton, NumberInput, VStack } from "@chakra-ui/react";
+
 import { LuMinus, LuPlus } from "react-icons/lu";
+import Description from "../ui/Description";
+import Title from "../ui/Title";
 
 const CartRightContentContainer = () => {
   return (

@@ -2,12 +2,12 @@ import { HStack, VStack } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import productStore from "../../../../stores/productStore";
-import PrimaryButton from "../../../buttons/PrimaryButton";
 import InputField from "../../../form/InputField";
 import SelectionBoxes from "../../../selection-boxes/SelectionBoxes";
 import generalToast from "../../../utils/toaster";
 import Images from "./Images";
 import Title from "../../../ui/Title";
+import PrimaryButton from "../../../ui/PrimaryButton";
 
 const AdminShopAddUpdateItem = () => {
   const { id } = useParams();

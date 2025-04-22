@@ -1,10 +1,9 @@
-import { HStack, RatingGroup, Separator, Tabs, VStack } from "@chakra-ui/react";
-import React from "react";
-import SecondaryButton from "../buttons/SecondaryButton";
-import Title from "../typography/Title";
-import Description from "../typography/Description";
+import { Tabs, VStack, HStack, RatingGroup, Separator } from '@chakra-ui/react'
+import Description from '../../../ui/Description'
+import SecondaryButton from '../../../ui/SecondaryButton'
+import Title from '../../../ui/Title'
 
-const DescriptionAndCustomerReview = () => {
+const AddToCartBottomContent = () => {
   return (
     <Tabs.Root
       variant="enclosed"
@@ -116,7 +115,7 @@ const DescriptionAndCustomerReview = () => {
         </VStack>
       </Tabs.Content>
     </Tabs.Root>
-  );
-};
+  )
+}
 
-export default DescriptionAndCustomerReview;
+export default AddToCartBottomContent

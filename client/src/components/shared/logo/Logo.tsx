@@ -1,13 +1,13 @@
 import { Flex, Image } from "@chakra-ui/react";
 import React from "react";
-import UCMerchLogo from "../../assets/shopping-cart.png";
-import Title from "../typography/Title";
+import UCMerchLogo from "../../../assets/shopping-cart.png";
+import Title from "../../ui/Title";
 
-interface LogoContainerProps {
+interface LogoProps {
   isVisible?: boolean;
 }
 
-const LogoContainer: React.FC<LogoContainerProps> = ({ isVisible = false }) => {
+const Logo: React.FC<LogoProps> = ({ isVisible = false }) => {
   return (
     <Flex
       direction={"row"}
@@ -23,4 +23,4 @@ const LogoContainer: React.FC<LogoContainerProps> = ({ isVisible = false }) => {
   );
 };
 
-export default LogoContainer;
+export default Logo;

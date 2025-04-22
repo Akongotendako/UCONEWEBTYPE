@@ -1,7 +1,4 @@
 import { Checkbox, Flex, HStack, Link, VStack } from "@chakra-ui/react";
-import LogoContainer from "../../components/logo/LogoContainer";
-import PrimaryButton from "../../components/buttons/PrimaryButton";
-import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { FcGoogle } from "react-icons/fc";
 import { AUTH_ROUTE } from "../auth/authRoute";
 import generalToast from "../../components/utils/toaster";
@@ -12,6 +9,9 @@ import { USER_ROUTES } from "../../routes/user/userRoute";
 import InputField from "../../components/form/InputField";
 import FormContainer from "../../components/form/FormContainer";
 import Paragraph from "../../components/ui/Paragraph";
+import Logo from "../../components/shared/logo/Logo";
+import PrimaryButton from "../../components/ui/PrimaryButton";
+import SecondaryButton from "../../components/ui/SecondaryButton";
 
 const Login = () => {
   const { user, setField, signIn, clearAllProperties } = userStore();
@@ -53,7 +53,7 @@ const Login = () => {
       align={"center"}
       justify={"center"}
     >
-      <LogoContainer />
+      <Logo />
       <FormContainer>
         <VStack gap={7} w={"full"}>
           <InputField

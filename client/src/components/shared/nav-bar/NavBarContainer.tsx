@@ -1,7 +1,7 @@
 import { HStack } from '@chakra-ui/react'
 import AccountMenus from './AccountMenus'
-import LogoContainer from '../../logo/LogoContainer'
 import NavigationMenu from './NavigationMenu'
+import Logo from '../logo/Logo'
 
 const NavBarContainer = () => {
   return (
@@ -20,7 +20,7 @@ const NavBarContainer = () => {
     >
 
       {/** Logo */}
-      <LogoContainer isVisible={true}/>
+      <Logo isVisible={true}/>
 
 
       {/** Link buttons */}
