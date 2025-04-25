@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import mongoose from "mongoose";
+import mongoose, { set } from "mongoose";
 import Product from "../models/product.model.js";
 import Cart from "../models/cart.model.js";
 import CartItem from "../models/cart.item.model.js";
@@ -104,12 +104,17 @@ export const fetchCart = async (req: Request, res: Response): Promise<void> => {
       const price = cartItem.productId.price;
       const quantity = cartItem.quantity;
       const discount = parseDiscount(cartItem.productId.discount);
+      const originalPrice = price * quantity;
       const discountedPrice = price * (1 - discount);
+      const discountPerItem = price * discount;
       const itemTotal = discountedPrice * quantity;
       total += itemTotal;
       return {
+        _id: cartItem._id,
         product: cartItem.productId,
         quantity: cartItem.quantity,
+        originalPrice: originalPrice,
+        discountPerItem: Number(discountPerItem).toFixed(2),
         itemTotal: itemTotal.toFixed(2),
       };
     });
@@ -118,9 +123,104 @@ export const fetchCart = async (req: Request, res: Response): Promise<void> => {
       success: true,
       message: "Cart fetched successfully",
       cart: {
+        userId: userId,
         items,
         total: total.toFixed(2),
       },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+};
+
+// update cart
+export const updateCart = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { cartId } = req.params;
+    const { userId, quantity } = req.body;
+
+    if (
+      !mongoose.Types.ObjectId.isValid(userId) &&
+      !mongoose.Types.ObjectId.isValid(cartId)
+    ) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid ids",
+      });
+      return;
+    }
+
+    const cart = await Cart.findOne({ userId });
+    if (!cart) {
+      res.status(404).json({
+        success: false,
+        message: "Cart not found",
+      });
+      return;
+    }
+
+    await CartItem.findByIdAndUpdate(cartId, { $set: { quantity: quantity } });
+
+    res.status(200).json({
+      success: true,
+      message: "Product updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+};
+
+export const deleteCart = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const {cartItemId, userId} = req.body
+
+    if (
+      !mongoose.Types.ObjectId.isValid(userId) &&
+      !mongoose.Types.ObjectId.isValid(cartItemId)
+    ) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid ids",
+      });
+      return;
+    }
+
+
+    const cart = await Cart.findOne({userId})
+    if (!cart) {
+      res.status(404).json({
+        success: false,
+        message: "Cart not found",
+      });
+      return;
+    }
+
+    const cartItem = await CartItem.findByIdAndDelete(cartItemId)
+    if (!cartItem) {
+      res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
     });
   } catch (error) {
     res.status(500).json({

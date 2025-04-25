@@ -106,7 +106,7 @@ const AddToCartTopContent = () => {
                   variant="outline"
                   size="sm"
                   color={"#FFFFFF80"}
-                  onClick={decrement}
+                  onClick={() => decrement("cartItem")}
                 >
                   <LuMinus />
                 </IconButton>
@@ -122,7 +122,7 @@ const AddToCartTopContent = () => {
                   variant="outline"
                   size="sm"
                   color={"#FFFFFF80"}
-                  onClick={increment}
+                  onClick={() => increment("cartItem")}
                 >
                   <LuPlus />
                 </IconButton>

@@ -1,5 +1,5 @@
 import {
-    CloseButton,
+  CloseButton,
   HStack,
   IconButton,
   NumberInput,
@@ -8,36 +8,44 @@ import {
 import Title from "../../../../ui/Title";
 import { LuMinus, LuPlus } from "react-icons/lu";
 import Description from "../../../../ui/Description";
-import productStore from "../../../../../stores/productStore";
 import cartStore from "../../../../../stores/cartStore";
+import { IItems } from "../../../../../types/cart.type";
 
-const UserCartProductDetails = () => {
-  const { product } = productStore();
-  const { cartItem, increment, decrement, addCart } = cartStore();
+interface UserCartProductDetailsProps {
+  item: IItems;
+  index: number;
+}
+
+const UserCartProductDetails = ({
+  item,
+  index,
+}: UserCartProductDetailsProps) => {
+  const { increment, decrement, deleteCart } = cartStore();
+  const userId = localStorage.getItem("userId")
 
   return (
     <VStack w={"1/2"} align={"flex-start"} position={"relative"}>
       {/** Product name */}
-      <Title>Lanyard 2024</Title>
+      <Title>{item.product.productName}</Title>
 
       {/** Price */}
       <HStack gap={5} mt={5}>
         <Title color="#FFFFFF80" underline="line-through">
-          ₱500
+          {`₱${item.originalPrice}`}
         </Title>
-        <Title>₱300</Title>
+        <Title>{item.itemTotal}</Title>
       </HStack>
 
       {/** You have same info */}
       <Description fontStyle="italic">
-        (You have saved ₱200 per unit)
+        {`(You have saved ₱${item.discountPerItem} per unit)`}
       </Description>
 
       {/** Quantity */}
       <VStack mt={10} align={"flex-start"} gap={5}>
         <Title>Quantity:</Title>
         <NumberInput.Root
-          value={String(cartItem.quantity)}
+          value={String(item.quantity)}
           unstyled
           spinOnPress={false}
         >
@@ -47,7 +55,7 @@ const UserCartProductDetails = () => {
                 variant="outline"
                 size="sm"
                 color={"#FFFFFF80"}
-                onClick={decrement}
+                onClick={() => decrement("cart", index)}
               >
                 <LuMinus />
               </IconButton>
@@ -63,7 +71,7 @@ const UserCartProductDetails = () => {
                 variant="outline"
                 size="sm"
                 color={"#FFFFFF80"}
-                onClick={increment}
+                onClick={() => increment("cart", index)}
               >
                 <LuPlus />
               </IconButton>
@@ -73,7 +81,14 @@ const UserCartProductDetails = () => {
       </VStack>
 
       {/** Closed button */}
-      <CloseButton position={"absolute"} right={1} variant={"ghost"} color={"#FFFFFF80"} _hover={{color: "#000"}}/>
+      <CloseButton
+        position={"absolute"}
+        right={1}
+        variant={"ghost"}
+        color={"#FFFFFF80"}
+        _hover={{ color: "#000" }}
+        onClick={() => deleteCart(userId as string, item._id as string)}
+      />
     </VStack>
   );
 };
