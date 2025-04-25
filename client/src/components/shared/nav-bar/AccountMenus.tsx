@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { MdOutlineAccountCircle } from "react-icons/md";
-import { ADMIN_ROUTE } from "../../../routes/admin/adminRoute";
+import { USER_ROUTES } from "../../../routes/user/userRoute";
 
 const AccountMenus = () => {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    navigate(ADMIN_ROUTE.ADMIN_PROFILE);
+    navigate(USER_ROUTES.USER_PROFILE);
   };
 
   return (

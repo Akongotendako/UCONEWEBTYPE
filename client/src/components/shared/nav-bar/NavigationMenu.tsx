@@ -12,9 +12,19 @@ const NavigationMenu = () => {
   console.log(`role ${role}`)
 
   const navigate = useNavigate();
-  const handleNavigation = () => {
-    return role === "admin" ? ADMIN_ROUTE.ADMIN_HOME : USER_ROUTES.USER_CART;
+
+  const handleHomeNavigation = () => {
+    return role === "admin" ? ADMIN_ROUTE.ADMIN_HOME : USER_ROUTES.USER_HOME;
   };
+
+  const handleCartNavigation = () => {
+    return role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM : USER_ROUTES.USER_CART
+  }
+
+  
+  const handleOrderNavigation = () => {
+    return role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM : USER_ROUTES.USER_ORDER
+  }
 
   const shopMenuItems = [
     {
@@ -51,7 +61,7 @@ const NavigationMenu = () => {
   return (
     <HStack gap={10}>
       <Link
-        href={handleNavigation()}
+        href={handleHomeNavigation()}
         color="#FFF"
         textDecoration="none"
         _hover={{ color: "#94ADC7" }}
@@ -108,7 +118,7 @@ const NavigationMenu = () => {
       </Menu.Root>
 
       <Link
-        href={handleNavigation()}
+        href={handleCartNavigation()}
         color="#FFF"
         textDecoration="none"
         _hover={{ color: "#94ADC7" }}
@@ -117,7 +127,7 @@ const NavigationMenu = () => {
       </Link>
 
       <Link
-        href={handleNavigation()}
+        href={handleOrderNavigation()}
         color="#FFF"
         textDecoration="none"
         _hover={{ color: "#94ADC7" }}

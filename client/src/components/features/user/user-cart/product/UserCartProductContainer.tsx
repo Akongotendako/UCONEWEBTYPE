@@ -19,6 +19,7 @@ const UserCartProductContainer = ({cart}: UserCartProductContainerProps) => {
           p={5}
           align={"flex-start"}
           key={index}
+          mt={index !== 0 ? "5" : ""}
         >
             <UserCartProductImage source={item.product.images[0]?.url as string}/>
 

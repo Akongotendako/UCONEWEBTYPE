@@ -2,9 +2,16 @@ import { HStack, VStack } from "@chakra-ui/react";
 import Title from "../../../../ui/Title";
 import PrimaryButton from "../../../../ui/PrimaryButton";
 import cartStore from "../../../../../stores/cartStore";
+import { useNavigate } from "react-router-dom";
+import { USER_ROUTES } from "../../../../../routes/user/userRoute";
 
 const UserCartCheckOut = () => {
   const { cart } = cartStore();
+  const navigate = useNavigate()
+
+  const handleNavigationToCheckOut = () => {
+    navigate(USER_ROUTES.USER_CHECKOUT)
+  }
   return (
     <VStack align={"flex-end"} w={"full"} mt={5}>
       <VStack
@@ -20,7 +27,7 @@ const UserCartCheckOut = () => {
           <Title color="#FFFFFF80">{cart.total}</Title>
         </HStack>
 
-        <PrimaryButton>CHECK OUT</PrimaryButton>
+        <PrimaryButton onclick={handleNavigationToCheckOut}>CHECK OUT</PrimaryButton>
       </VStack>
     </VStack>
   );

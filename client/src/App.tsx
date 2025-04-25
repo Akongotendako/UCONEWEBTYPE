@@ -17,6 +17,10 @@ import UserShop from "./pages/user/shop/UserShop";
 import UserAddToCart from "./pages/user/add-to-cart/UserAddToCart";
 import UserCart from "./pages/user/cart/UserCart";
 import UserShopCategories from "./pages/user/shop-all/UserShopCategories";
+import UserCheckout from "./pages/user/checkout/UserCheckout";
+import UserPayment from "./pages/user/payment/UserPayment";
+import UserOrder from "./pages/user/orders/UserOrder";
+import UserProfile from "./pages/user/profile/UserProfile";
 
 function App() {
   return (
@@ -47,10 +51,24 @@ function App() {
         <Route path={USER_ROUTES.USER} element={<UserDashboard />}>
           <Route path={USER_ROUTES.USER_HOME} element={<UserHome />} />
           <Route path={USER_ROUTES.USER_SHOP} element={<UserShop />}>
-            <Route path={USER_ROUTES.USER_CATEGORY} element={<UserShopCategories />} />
-            <Route path={USER_ROUTES.USER_ADD_TO_CART} element={<UserAddToCart />} />
+            <Route
+              path={USER_ROUTES.USER_CATEGORY}
+              element={<UserShopCategories />}
+            />
+            <Route
+              path={USER_ROUTES.USER_ADD_TO_CART}
+              element={<UserAddToCart />}
+            />
           </Route>
-          <Route path={USER_ROUTES.USER_CART} element={<UserCart />} />
+          <Route path={USER_ROUTES.USER_CART} element={<UserCart />}>
+            <Route
+              path={USER_ROUTES.USER_CHECKOUT}
+              element={<UserCheckout />}
+            />
+            <Route path={USER_ROUTES.USER_Payment} element={<UserPayment />} />
+          </Route>
+          <Route path={USER_ROUTES.USER_ORDER} element={<UserOrder />} />
+          <Route path={USER_ROUTES.USER_PROFILE} element={<UserProfile />} />
         </Route>
       </Routes>
     </Box>
