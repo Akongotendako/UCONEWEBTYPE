@@ -38,13 +38,13 @@ export const signIn = async ({
   return response;
 };
 
-export const fetchProfile = async (id: string) => {
-  const response = await axiosInstance.get(`/users/${id}`);
+export const fetchProfile = async (userId: string) => {
+  const response = await axiosInstance.get(`/users/${userId}`);
   return response;
 };
 
-export const updateProfile = async (id: string, data: FormData) => {
-  const response = await axiosInstance.post(`/users/${id}`, data, {
+export const updateProfile = async (userId: string, data: FormData) => {
+  const response = await axiosInstance.post(`/users/${userId}/update-profile`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

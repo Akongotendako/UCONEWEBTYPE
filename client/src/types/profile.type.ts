@@ -20,4 +20,7 @@ export interface IProfileState {
         field: K,
         value: IProfileState[T][K]
     ) => void;
+    fetchProfile: (userId: string) => Promise<unknown>;
+    addImage: (image: IProfilePic) => void;
+    updateProfile: (userId: string) => Promise<unknown>;
 }

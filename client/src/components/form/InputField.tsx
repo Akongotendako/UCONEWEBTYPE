@@ -85,7 +85,8 @@ const InputField = <T, K extends keyof T>({
     category: "Choose category",
     firstName: "Enter your first name",
     lastName: "Enter your last name",
-    phoneNumber: "Enter your phone number"
+    phoneNumber: "Enter your phone number",
+    age: "Enter your age"
   } as Partial<
     Record<
       | K
@@ -100,7 +101,8 @@ const InputField = <T, K extends keyof T>({
       | "category"
       | "firstName"
       | "lastName"
-      | "phoneNumber",
+      | "phoneNumber"
+      | "age",
       string
     >
   >;

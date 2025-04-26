@@ -1,5 +1,4 @@
 import { HStack } from "@chakra-ui/react";
-import React from "react";
 import InputField from "../../../../form/InputField";
 import userStore from "../../../../../stores/userStore";
 
@@ -19,7 +18,7 @@ const UserProfilePersonalInformationName = () => {
         title={"Last Name"}
         obj={user.profile}
         field={"lastName"}
-        value={user.profile.firstName}
+        value={user.profile.lastName}
         onChange={(value) => setField("profile", "lastName", value)}
       />
     </HStack>

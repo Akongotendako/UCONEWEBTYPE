@@ -3,6 +3,7 @@ import Title from '../../../../ui/Title'
 import UserProfilePersonalInformationName from './UserProfilePersonalInformationName'
 import UserProfilePersonalInformationCredential from './UserProfilePersonalInformationCredential'
 import UserProfilePersonalInformationPhoneNumber from './UserProfilePersonalInformationPhoneNumber'
+import UserProfilePersonalInformationSaveChangesButton from './UserProfilePersonalInformationSaveChangesButton'
 
 const UserProfilePersonalInformationContainer = () => {
   return (
@@ -12,6 +13,7 @@ const UserProfilePersonalInformationContainer = () => {
         <UserProfilePersonalInformationName/>
         <UserProfilePersonalInformationCredential/>
         <UserProfilePersonalInformationPhoneNumber/>
+        <UserProfilePersonalInformationSaveChangesButton/>
     </VStack>
   )
 }

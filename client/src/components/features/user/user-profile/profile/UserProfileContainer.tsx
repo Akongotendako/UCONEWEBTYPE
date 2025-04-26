@@ -3,12 +3,12 @@ import UserProfileImagePicker from "./UserProfileImagePicker";
 import Title from "../../../../ui/Title";
 import PrimaryButton from "../../../../ui/PrimaryButton";
 import React, { useRef } from "react";
-import userStore from "../../../../../stores/userStore";
 import { IProfilePic } from "../../../../../types/user.type";
+import userStore from "../../../../../stores/userStore";
 
 const UserProfileContainer = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const { setImage } = userStore();
+  const { user, setImage } = userStore();
 
   const handleButtonClick = () => {
     inputRef.current?.click();
@@ -33,7 +33,7 @@ const UserProfileContainer = () => {
       gap={8}
     >
       <UserProfileImagePicker />
-      <Title>Lord Jan Rolmar Y. Carombana</Title>
+      <Title>{`${user.profile.firstName} ${user.profile.lastName}`}</Title>
       <Input
         type="file"
         ref={inputRef}

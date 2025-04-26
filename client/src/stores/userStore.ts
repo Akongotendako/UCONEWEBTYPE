@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IProfilePic, IUserState } from "../types/user.type";
+import { IOriginalImage, IProfilePic, IUserState } from "../types/user.type";
 import { fetchProfile, signIn, signUp, updateProfile } from "../services/user.service";
 import { interceptorError } from "../types/interceptor.error.type";
 
@@ -26,6 +26,10 @@ const userStore = create<IUserState>((set, get) => ({
       },
       phoneNumber: "",
     },
+    originalImage: {
+      url: "",
+      publicId: ""
+    } as IOriginalImage
   },
 
   setImage: (newImage: IProfilePic) =>
@@ -109,26 +113,27 @@ const userStore = create<IUserState>((set, get) => ({
     }
   },
 
-  fetchProfile: async (id) => {
+  fetchProfile: async (userId) => {
     try {
-      const response = await fetchProfile(id);
+      const response = await fetchProfile(userId);
       console.log(response.data.response);
       set((state) => ({
         ...state,
         user: {
           ...state.user,
           signin: {
-            email: response.data.response.email,
-            password: response.data.response.password,
-            role: response.data.response.role,
+            email: response.data.data.email,
+            password: response.data.data.password,
+            role: response.data.data.role,
           },
           profile: {
-            firstName: response.data.response.profile.firstName,
-            lastName: response.data.response.profile.lastName,
-            age: response.data.response.profile.age,
-            profilePic: response.data.response.profile.profilePic,
-            phoneNumber: response.data.response.profile.phoneNumber,
+            firstName: response.data.data.profile.firstName,
+            lastName: response.data.data.profile.lastName,
+            age: response.data.data.profile.age,
+            profilePic: response.data.data.profile.profilePic,
+            phoneNumber: response.data.data.profile.phoneNumber,
           },
+          originalImage: response.data.data.profile.profilePic
         },
       }));
     } catch (error) {
@@ -136,9 +141,9 @@ const userStore = create<IUserState>((set, get) => ({
     }
   },
 
-  updateProfile: async (id) => {
+  updateProfile: async (userId) => {
     try {
-      const { signin, profile } = get().user;
+      const { signin, profile, originalImage } = get().user;
       console.log(get().user.profile.profilePic);
       const formData = new FormData();
       formData.append("email", signin.email);
@@ -151,8 +156,11 @@ const userStore = create<IUserState>((set, get) => ({
         formData.append("profilePic", file);
       }
       formData.append("phoneNumber", profile.phoneNumber);
+      formData.append("originalImage", JSON.stringify(originalImage));
 
-      const response = await updateProfile(id, formData);
+      const response = await updateProfile(userId, formData);
+
+      await get().fetchProfile(userId)
       return response;
     } catch (error) {
       return error;

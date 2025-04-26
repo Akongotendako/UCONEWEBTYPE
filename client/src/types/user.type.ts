@@ -25,11 +25,17 @@ export interface IProfile {
   phoneNumber: string;
 }
 
+export interface IOriginalImage {
+  url?: string;
+  publicId: string;
+}
+
 export interface IUserState {
   user: {
     signin: ISignIn;
     signup: ISignUp;
     profile: IProfile;
+    originalImage: IOriginalImage;
   };
   setField: <
     T extends keyof IUserState["user"],
@@ -54,7 +60,7 @@ export interface IUserState {
     role?: string;
     userId: string;
   }>;
-  fetchProfile: (id: string) => Promise<unknown>;
-  updateProfile: (id: string) => Promise<unknown>;
+  fetchProfile: (userId: string) => Promise<unknown>;
+  updateProfile: (userId: string) => Promise<unknown>;
   clearAllProperties: <T extends keyof IUserState["user"]>(obj: T) => void;
 }

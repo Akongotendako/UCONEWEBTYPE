@@ -1,9 +1,15 @@
 import express from 'express';
-import { signIn, signUp } from '../controllers/user.controller.js';
+import { fetchProfile, signIn, signUp, updateProfile } from '../controllers/user.controller.js';
+import multer from 'multer'
 
 const router = express.Router();
 
+const storage = multer.memoryStorage();
+const upload = multer({storage: storage})
+
 router.post("/", signUp);
-router.post("/sign-in", signIn)
+router.post("/sign-in", signIn);
+router.get("/:userId", fetchProfile);
+router.post("/:userId/update-profile", upload.single("profilePic"), updateProfile);
 
 export default router;
