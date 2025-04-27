@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import mongoose, { set } from "mongoose";
+import mongoose from "mongoose";
 import Product from "../models/product.model.js";
 import Cart from "../models/cart.model.js";
 import CartItem from "../models/cart.item.model.js";
@@ -186,7 +186,7 @@ export const deleteCart = async (
   res: Response
 ): Promise<void> => {
   try {
-    const {cartItemId, userId} = req.body
+    const { cartItemId, userId } = req.body;
 
     if (
       !mongoose.Types.ObjectId.isValid(userId) &&
@@ -199,8 +199,7 @@ export const deleteCart = async (
       return;
     }
 
-
-    const cart = await Cart.findOne({userId})
+    const cart = await Cart.findOne({ userId });
     if (!cart) {
       res.status(404).json({
         success: false,
@@ -209,7 +208,7 @@ export const deleteCart = async (
       return;
     }
 
-    const cartItem = await CartItem.findByIdAndDelete(cartItemId)
+    const cartItem = await CartItem.findByIdAndDelete(cartItemId);
     if (!cartItem) {
       res.status(404).json({
         success: false,
@@ -221,6 +220,45 @@ export const deleteCart = async (
     res.status(200).json({
       success: true,
       message: "Product deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+};
+
+export const deleteAllCarts = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { userId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid ids",
+      });
+      return;
+    }
+
+    const cart = await Cart.findOneAndDelete({ userId });
+    if (!cart) {
+      res.status(400).json({
+        success: false,
+        message: "Cart not found",
+      });
+      return;
+    }
+
+    const response = await CartItem.deleteMany({ cartId: cart._id });
+
+    res.status(200).json({
+      success: true,
+      message: "Cart deleted successfully",
     });
   } catch (error) {
     res.status(500).json({

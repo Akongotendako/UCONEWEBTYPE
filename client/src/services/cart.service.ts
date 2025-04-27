@@ -1,6 +1,5 @@
 import { debounce } from "lodash";
 import axiosInstance from "./axiosInstance";
-import { data } from "react-router-dom";
 
 export const addCart = async (
   userId: string,
@@ -35,5 +34,10 @@ export const deleteCart = async(userId: string, cartItemId: string) => {
     cartItemId,
     userId
   });
+  return response;
+}
+
+export const deleteAllCarts = async(userId: string) => {
+  const response = await axiosInstance.delete(`/carts/${userId}`);
   return response;
 }

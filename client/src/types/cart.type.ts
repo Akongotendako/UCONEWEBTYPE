@@ -34,14 +34,18 @@ export interface ICartState {
   carts: ICarts[];
   addCart: () => Promise<{ success: boolean; status: number; message: string }>;
   fetchCart: (userId: string) => Promise<unknown>;
-  increment: (
-    target: "cartItem" | "cart",
-    index?: number
-  ) => Promise<void>;
-  decrement: (
-    target: "cartItem" | "cart",
-    index?: number
-  ) => Promise<void>;
-  updateCart: (index: number) => Promise<{ success: boolean; status: number; message: string }>;
-  deleteCart: (userId: string, cartItemId: string) => Promise<{ success: boolean; status: number; message: string }>;
+  increment: (target: "cartItem" | "cart", index?: number) => Promise<void>;
+  decrement: (target: "cartItem" | "cart", index?: number) => Promise<void>;
+  updateCart: (
+    index: number
+  ) => Promise<{ success: boolean; status: number; message: string }>;
+  deleteCart: (
+    userId: string,
+    cartItemId: string
+  ) => Promise<{ success: boolean; status: number; message: string }>;
+  addOrder: (
+    paymentMethod: "CASH" | "GCASH",
+    paymentStatus: "Pending" | "Paid"
+  ) => Promise<{ success: boolean; status: number; message: string }>;
+  deleAllCarts: (userId: string) => Promise<unknown>;
 }

@@ -4,15 +4,19 @@ import UserCheckBillingDetailsContainer from "../../../components/features/user/
 import UserCheckOutOrderSummary from "../../../components/features/user/user-checkout/order-summary/UserCheckOutOrderSummary";
 import cartStore from "../../../stores/cartStore";
 import { useEffect } from "react";
+import userStore from "../../../stores/userStore";
 
 const UserCheckout = () => {
 
   const userId = localStorage.getItem("userId");
   const { fetchCart} = cartStore()
+  const {fetchProfile} = userStore()
 
   useEffect(() => {
     fetchCart(userId as string)
-  }, [fetchCart, userId])
+    fetchProfile(userId as string)
+
+  }, [fetchCart, userId, fetchProfile])
   
 
   return (

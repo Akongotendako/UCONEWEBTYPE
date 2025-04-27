@@ -1,7 +1,14 @@
 import { create } from "zustand";
 import { ICarts, ICartState, IItems } from "../types/cart.type";
 import { interceptorError } from "../types/interceptor.error.type";
-import { addCart, deleteCart, fetchCart, updateCart } from "../services/cart.service";
+import {
+  addCart,
+  deleteAllCarts,
+  deleteCart,
+  fetchCart,
+  updateCart,
+} from "../services/cart.service";
+import { addOrder } from "../services/order.service";
 
 const cartStore = create<ICartState>((set, get) => ({
   cart: {
@@ -111,7 +118,7 @@ const cartStore = create<ICartState>((set, get) => ({
       const extractedId = items[index]._id;
       const extractedQuantity = items[index].quantity;
 
-      console.log(`at index ${index}`)
+      console.log(`at index ${index}`);
 
       const response = await updateCart(
         userId,
@@ -138,21 +145,19 @@ const cartStore = create<ICartState>((set, get) => ({
       };
     }
   },
-  deleteCart: async(userId, cartItemId) => {
+  deleteCart: async (userId, cartItemId) => {
     try {
-
       const response = await deleteCart(userId, cartItemId);
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      await get().fetchCart(userId)
+      await get().fetchCart(userId);
       return {
         success: true,
         status: response.status,
-        message: response.data.message
-      }
-
-    } catch(error: unknown) {
+        message: response.data.message,
+      };
+    } catch (error: unknown) {
       const { status, message } = error as interceptorError;
       return {
         success: false,
@@ -160,7 +165,53 @@ const cartStore = create<ICartState>((set, get) => ({
         message: message,
       };
     }
-  }
+  },
+  addOrder: async (paymentMethod, paymentStatus) => {
+    try {
+      const { userId, items, total } = get().cart;
+
+      const products = items.map(item => ({
+        productId: item.product._id,
+        productName: item.product.productName,
+        sizes: item.product.sizes,
+        images: item.product.images,
+        quantity: item.quantity,
+        price: item.product.price,
+        category: item.product.category,
+        discount: item.product.discount,
+        description: item.product.description
+      }))
+
+      console.log(products)
+
+      const formData = new FormData();
+      formData.append("userId", userId);
+      formData.append("products", JSON.stringify(products));
+      formData.append("totalAmount", String(total));
+      formData.append("paymentMethod", paymentMethod);
+      formData.append("paymentStatus", paymentStatus);
+      formData.append("orderStatus", "Ready for Pickup");
+
+      const response = await addOrder(formData);
+
+      return {
+        success: false,
+        status: response.status,
+        message: response.data.message,
+      };
+    } catch (error: unknown) {
+      const { status, message } = error as interceptorError;
+      return {
+        success: false,
+        status: status,
+        message: message,
+      };
+    }
+  },
+  deleAllCarts: async(userId) => {
+    const response = await deleteAllCarts(userId)
+    return response;
+  },
 }));
 
 export default cartStore;

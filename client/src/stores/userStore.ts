@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { IOriginalImage, IProfilePic, IUserState } from "../types/user.type";
-import { fetchProfile, signIn, signUp, updateProfile } from "../services/user.service";
+import {
+  fetchProfile,
+  signIn,
+  signUp,
+  updateProfile,
+} from "../services/user.service";
 import { interceptorError } from "../types/interceptor.error.type";
 
 const userStore = create<IUserState>((set, get) => ({
@@ -28,8 +33,8 @@ const userStore = create<IUserState>((set, get) => ({
     },
     originalImage: {
       url: "",
-      publicId: ""
-    } as IOriginalImage
+      publicId: "",
+    } as IOriginalImage,
   },
 
   setImage: (newImage: IProfilePic) =>
@@ -83,7 +88,7 @@ const userStore = create<IUserState>((set, get) => ({
       return {
         success: false,
         status: status,
-        message: message
+        message: message,
       };
     }
   },
@@ -100,15 +105,15 @@ const userStore = create<IUserState>((set, get) => ({
         message: response.data.message,
         success: true,
         role: response.data.response.role,
-        userId: response.data.response._id
+        userId: response.data.response._id,
       };
     } catch (error) {
-      const {status, message} = error as interceptorError
+      const { status, message } = error as interceptorError;
       return {
         success: false,
         message: message,
         status: status,
-        userId: ""
+        userId: "",
       };
     }
   },
@@ -133,7 +138,7 @@ const userStore = create<IUserState>((set, get) => ({
             profilePic: response.data.data.profile.profilePic,
             phoneNumber: response.data.data.profile.phoneNumber,
           },
-          originalImage: response.data.data.profile.profilePic
+          originalImage: response.data.data.profile.profilePic,
         },
       }));
     } catch (error) {
@@ -156,11 +161,14 @@ const userStore = create<IUserState>((set, get) => ({
         formData.append("profilePic", file);
       }
       formData.append("phoneNumber", profile.phoneNumber);
+      console.log("original image", originalImage);
       formData.append("originalImage", JSON.stringify(originalImage));
 
       const response = await updateProfile(userId, formData);
 
-      await get().fetchProfile(userId)
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await get().fetchProfile(userId);
       return response;
     } catch (error) {
       return error;

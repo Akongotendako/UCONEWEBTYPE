@@ -7,8 +7,6 @@ import {
 import cloudinary from "../config/cloudinary.js";
 import { ICloudinary } from "../types/cloudinary.type.js";
 import { Readable } from "stream";
-import { IImage } from "../types/product.type.js";
-import { IProfilePic } from "../types/profile.type.js";
 
 export const signUp = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -153,11 +151,9 @@ export const updateProfile = async (
 ): Promise<void> => {
   try {
     const { userId } = req.params;
-    const { email, password, firstName, lastName, phoneNumber, age } = req.body;
+    const { email, password, firstName, lastName, phoneNumber, age, originalImage } = req.body;
 
-    const originalImage = req.body.originalImage
-      ? JSON.parse(req.body.originalImage)
-      : {};
+    
 
     const user = await User.findById(userId);
     if (!user) {
@@ -184,7 +180,7 @@ export const updateProfile = async (
       );
     }
 
-    let newImage: IProfilePic = {};
+    
     if (req.file) {
       const result = await new Promise<ICloudinary>((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
@@ -204,7 +200,7 @@ export const updateProfile = async (
         readableStream.pipe(stream);
       });
 
-      newImage = {
+      user.profile.profilePic = {
         url: result.secure_url,
         publicId: result.public_id,
       };
@@ -216,7 +212,6 @@ export const updateProfile = async (
     user.profile.lastName = lastName;
     user.profile.phoneNumber = phoneNumber;
     user.profile.age = age;
-    user.profile.profilePic = newImage;
 
     const response = await user.save();
 
