@@ -1,139 +1,51 @@
-import { Flex, HStack, Icon, Link, Menu, Portal } from "@chakra-ui/react";
+import {
+  HStack,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { RiArrowDropDownLine } from "react-icons/ri";
 import { ADMIN_ROUTE } from "../../../routes/admin/adminRoute";
 import { USER_ROUTES } from "../../../routes/user/userRoute";
-import productStore from "../../../stores/productStore";
+import ShopMenuContainer from "./shop-menu/ShopMenuContainer";
+import { getUserRole } from "../../utils/role";
+import CustomLink from "../custom-link/CustomLink";
 
 const NavigationMenu = () => {
-  const { clearAllProperties } = productStore();
 
-  const role = localStorage.getItem("role");
-  console.log(`role ${role}`)
+  const role = getUserRole(localStorage.getItem("role"));
 
   const navigate = useNavigate();
 
   const handleHomeNavigation = () => {
-    return role === "admin" ? ADMIN_ROUTE.ADMIN_HOME : USER_ROUTES.USER_HOME;
+    navigate(role === "admin" ? ADMIN_ROUTE.ADMIN_HOME : USER_ROUTES.USER_HOME);
   };
 
-  const handleCartNavigation = () => {
-    return role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM : USER_ROUTES.USER_CART
-  }
+  const handleStudentCartNavigation = () => {
+    navigate(
+      role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM : USER_ROUTES.USER_CART
+    );
+  };
 
-  
   const handleOrderNavigation = () => {
-    return role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM : USER_ROUTES.USER_ORDER
-  }
+    navigate(
+      role === "admin"
+        ? ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM
+        : USER_ROUTES.USER_ORDER
+    );
+  };
 
-  const shopMenuItems = [
-    {
-      value: "All",
-      text: "All",
-      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : `${USER_ROUTES.USER_SHOP}/${"All"}/category`,
-      role: ["admin", "user"],
-    },
-    {
-      value: "Lanyard",
-      text: "Lanyard",
-      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : `${USER_ROUTES.USER_SHOP}/${"Lanyard"}/category`,
-      role: ["admin", "user"],
-    },
-    {
-      value: "T-Shirt",
-      text: "T-Shirt",
-      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : `${USER_ROUTES.USER_SHOP}/${"T-Shirt"}/category`,
-      role: ["admin", "user"],
-    },
-    {
-      value: "Uniform",
-      text: "Uniform",
-      path: role === "admin" ? ADMIN_ROUTE.ADMIN_SHOP_ALL : `${USER_ROUTES.USER_SHOP}/${"Uniform"}/category`,
-      role: ["admin", "user"],
-    },
-    {
-      value: "Add Product",
-      text: "Add Product",
-      path: ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM,
-      role: ["admin"],
-    },
-  ];
   return (
     <HStack gap={10}>
-      <Link
-        href={handleHomeNavigation()}
-        color="#FFF"
-        textDecoration="none"
-        _hover={{ color: "#94ADC7" }}
-      >
-        Home
-      </Link>
+      
+      {/** Home navigation */}
+      <CustomLink onClick={handleHomeNavigation}>Home</CustomLink>
 
       {/** this is shop navigation */}
-      <Menu.Root>
-        <Menu.Trigger>
-          <HStack align="center" cursor="pointer">
-            <Link
-              color="#FFF"
-              textDecoration="none"
-              _hover={{ color: "#94ADC7" }}
-              href={ADMIN_ROUTE.ADMIN_SHOP}
-            >
-              Shop
-            </Link>
-            <Icon size="lg" _hover={{ color: "#94ADC7" }} cursor="pointer">
-              <RiArrowDropDownLine color="#FFF" />
-            </Icon>
-          </HStack>
-        </Menu.Trigger>
-        <Portal>
-          <Menu.Positioner>
-            <Menu.Content bg={"#243647"} px={3} py={5}>
-              <Flex direction="column" gap="2">
-                {shopMenuItems.map(
-                  (item) =>
-                    item.role.includes(role as string) && (
-                      <Menu.Item
-                        key={item.value}
-                        value={item.path}
-                        color="#FFF"
-                        mb="2"
-                        onClick={() => {
-                          navigate(item.path);
-                          clearAllProperties();
-                        }}
-                        _hover={{ color: "#94ADC7" }}
-                        bg="transparent"
-                        _focus={{ bg: "transparent" }}
-                        _active={{ bg: "transparent" }}
-                      >
-                        {item.text}
-                      </Menu.Item>
-                    )
-                )}
-              </Flex>
-            </Menu.Content>
-          </Menu.Positioner>
-        </Portal>
-      </Menu.Root>
+      <ShopMenuContainer role={role}/>
 
-      <Link
-        href={handleCartNavigation()}
-        color="#FFF"
-        textDecoration="none"
-        _hover={{ color: "#94ADC7" }}
-      >
-        {role === "admin" ? "Students" : "Cart"}
-      </Link>
+      {/** Students for admin and cart for user navigation */}
+      <CustomLink onClick={handleStudentCartNavigation}>{role === "admin" ? "Students" : "Cart"}</CustomLink>
 
-      <Link
-        href={handleOrderNavigation()}
-        color="#FFF"
-        textDecoration="none"
-        _hover={{ color: "#94ADC7" }}
-      >
-        Orders
-      </Link>
+      {/** Order navigation */}
+      <CustomLink onClick={handleOrderNavigation}>Orders</CustomLink>
     </HStack>
   );
 };

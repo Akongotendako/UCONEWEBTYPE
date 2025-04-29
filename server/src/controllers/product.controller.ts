@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import Product from "../models/product.model.js";
 import {
-  addImages,
   areAllFieldsEmpty,
   arePriceAndStockNumbers,
   isImageFileEmpty,
@@ -11,6 +10,8 @@ import { Readable } from "stream";
 import { ICloudinary } from "../types/cloudinary.type.js";
 import { IOriginalImages } from "../types/originalImages.type.js";
 import { deleteAnAsset } from "../utils/delete.asset.util.js";
+import { successResponse } from "../types/success.response.type.js";
+import { errorResponse } from "../types/error.response.type.js";
 
 // Get all products
 export const getProducts = async (
@@ -20,19 +21,9 @@ export const getProducts = async (
   try {
     const product = await Product.find();
 
-    res.status(200).json({
-      message: "Product successfully fetched",
-      success: true,
-      error: null,
-      response: product,
-    });
+    successResponse(res, product, "Product successfully fetched");
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown Error",
-      response: null,
-    });
+    errorResponse(res, "Internal server error", 500, error);
   }
 };
 
@@ -75,30 +66,25 @@ export const addProduct = async (
 
     // check if all fields are empty
     if (!areAllFieldsEmpty(data)) {
-      res.status(400).json({
-        message: "All fields must not be empty",
-        success: false,
-      });
-      return;
+      errorResponse(res, "All fields must not be empty", 400);
+      return
     }
 
     // check if price and stock are in number format
     if (!arePriceAndStockNumbers(price, stock)) {
-      res.status(400).json({
-        message: "Price and stock fields must be in numbers",
-        success: false,
-      });
-      return;
+      errorResponse(res, "Price and stock fields must be in numbers", 400);
+      return
     }
 
     // check if the images handled by multer is empty
     if (isImageFileEmpty(req.files)) {
-      res.status(400).json({
-        message: "No images uploaded",
-        success: false,
-        error: "No files were found in the request",
-      });
-      return;
+      errorResponse(
+        res,
+        "No images uploaded",
+        400,
+        "No files were found in the request"
+      );
+      return
     }
 
     // waiting for the images being uploaded in the cloudiary platform
@@ -127,7 +113,7 @@ export const addProduct = async (
         });
       });
 
-      // result from the images beign uploaded
+      // result from the images being uploaded
       const results = await Promise.all(uploadPromises);
 
       newProduct.images = results.map((result) => ({
@@ -138,18 +124,9 @@ export const addProduct = async (
 
     const response = await newProduct.save();
 
-    res.status(200).json({
-      message: "Product addded Successfully",
-      success: true,
-      response: response,
-    });
+    successResponse(res, response, "Product added Successfully");
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown Error",
-      response: null,
-    });
+    errorResponse(res, "Internal server error", 500, error);
   }
 };
 
@@ -165,24 +142,13 @@ export const getProduct = async (
 
     // checking if the item exist in the database before fetch it
     if (!response) {
-      res.status(404).json({
-        message: "Product not found",
-        success: false,
-      });
+      errorResponse(res, "Product not found", 400);
       return;
     }
 
-    res.status(200).json({
-      message: "Product successfully fetched",
-      success: true,
-      response: response,
-    });
+    successResponse(res, response, "Product successfully fetched");
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      success: false,
-      error: error instanceof Error ? error.message : "Uknown Error",
-    });
+    errorResponse(res, "Internal server error", 500, error);
   }
 };
 
@@ -223,12 +189,7 @@ export const updateProduct = async (
 
     // checking if all fields are not empty
     if (!areAllFieldsEmpty(data)) {
-      res.status(400).json({
-        message: "All fields must not be empty",
-        success: false,
-        error: null,
-        response: null,
-      });
+      errorResponse(res, "All fields must not be empty", 400);
       return;
     }
 
@@ -237,12 +198,7 @@ export const updateProduct = async (
 
     // checking if the price and stock are in numbers format
     if (!arePriceAndStockNumbers(price, stock)) {
-      res.status(400).json({
-        message: "Price and stock fields must be in numbers",
-        success: false,
-        error: null,
-        response: null,
-      });
+      errorResponse(res, "Price and stock fields must be in numbers", 400);
       return;
     }
 
@@ -250,10 +206,7 @@ export const updateProduct = async (
 
     // check if the product is truly exist in the database before update it
     if (!product) {
-      res.status(404).json({
-        message: "Product not found",
-        success: false,
-      });
+      errorResponse(res, "Product not found", 400);
       return;
     }
 
@@ -263,9 +216,9 @@ export const updateProduct = async (
 
     if (req.files) {
       if (Array.isArray(req.files)) {
-        files = req.files
+        files = req.files;
       } else {
-        files = Object.values(req.files).flat()
+        files = Object.values(req.files).flat();
       }
     }
 
@@ -306,19 +259,9 @@ export const updateProduct = async (
 
     const response = await product.save();
 
-    res.status(200).json({
-      message: "Product updated successfully",
-      success: true,
-      error: null,
-      response: response,
-    });
+    successResponse(res, response, "Product updated successfully");
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown error",
-      response: null,
-    });
+    errorResponse(res, "Internal server error", 500, error);
   }
 };
 
@@ -333,28 +276,13 @@ export const deleteProduct = async (
     const deletedProduct = await Product.findByIdAndDelete(id);
 
     if (!deletedProduct) {
-      res.status(404).json({
-        message: "Product not found",
-        success: false,
-        error: null,
-        response: null,
-      });
+      errorResponse(res, "Product not found", 404);
       return;
     }
 
-    res.status(200).json({
-      message: "Product deleted successfully",
-      success: true,
-      error: null,
-      response: null,
-    });
+    successResponse(res, deletedProduct, "Product deleted successfully");
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown Error",
-      response: null,
-    });
+    errorResponse(res, "Internal server error", 500, error);
   }
 };
 
@@ -366,38 +294,20 @@ export const getProductByCategory = async (
   try {
     const { category } = req.params;
 
-    console.log(`category ${category}`)
-
     if (!category) {
-      res.status(400).json({
-        message: `Request is empty`,
-        success: false,
-        error: null,
-        response: null,
-      });
+      errorResponse(res, "Request is empty", 404);
       return;
     }
 
     const productByCategory = await Product.find({ category: category });
 
     if (!productByCategory) {
-      res.status(404).json({
-        message: `Product with category of ${category} is empty`,
-        success: false,
-      });
+      errorResponse(res, `Product with category of ${category} is empty`, 404)
       return;
     }
 
-    res.status(200).json({
-      message: `Product of category ${category} is fetched successfully`,
-      success: true,
-      response: productByCategory,
-    });
+    successResponse(res, productByCategory, `Product of category ${category} is fetched successfully`)
   } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown Error",
-    });
+    errorResponse(res, "Internal server error", 500, error);
   }
 };

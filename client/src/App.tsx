@@ -49,10 +49,12 @@ function App() {
         </Route>
         {/** User dashboard */}
         <Route path={USER_ROUTES.USER} element={<UserDashboard />}>
-          <Route path={USER_ROUTES.USER_HOME} element={<UserHome />} />
+          <Route index  element={<UserHome />} />
+
+          {/** Shop */}
           <Route path={USER_ROUTES.USER_SHOP} element={<UserShop />}>
             <Route
-              path={USER_ROUTES.USER_CATEGORY}
+              index
               element={<UserShopCategories />}
             />
             <Route
@@ -60,9 +62,11 @@ function App() {
               element={<UserAddToCart />}
             />
           </Route>
+
+          {/** Cart */}
           <Route path={USER_ROUTES.USER_CART} element={<UserCart />}>
             <Route
-              path={USER_ROUTES.USER_CHECKOUT}
+              index
               element={<UserCheckout />}
             />
             <Route path={USER_ROUTES.USER_Payment} element={<UserPayment />} />
