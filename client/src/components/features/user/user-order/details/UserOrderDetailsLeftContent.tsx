@@ -1,0 +1,57 @@
+import { Grid, GridItem, VStack } from "@chakra-ui/react";
+import Description from "../../../../ui/Description";
+import Title from "../../../../ui/Title";
+
+const UserOrderDetailsLeftContent = () => {
+  return (
+    <VStack
+      w={"2/5"}
+      rounded={"md"}
+      borderColor={"#FFFFFF80"}
+      borderWidth={"1px"}
+      align={"flex-start"}
+      p={5}
+    >
+      <Title>Order Details</Title>
+
+      <Grid templateColumns="300px 1fr" w="full" mt={5} gap={8}>
+        <GridItem>
+          <Description color="#FFF">Order Date</Description>
+        </GridItem>
+        <GridItem>
+          <Description>January 31, 2004</Description>
+        </GridItem>
+
+        <GridItem>
+          <Description color="#FFF">Order Item</Description>
+        </GridItem>
+        <GridItem>
+          <Description>3</Description>
+        </GridItem>
+
+        <GridItem>
+          <Description color="#FFF">Payment Method</Description>
+        </GridItem>
+        <GridItem>
+          <Description>GCASH</Description>
+        </GridItem>
+
+        <GridItem>
+          <Description color="#FFF">Status</Description>
+        </GridItem>
+        <GridItem>
+          <Description>Pending</Description>
+        </GridItem>
+
+        <GridItem>
+          <Description color="#FFF">Total Amount</Description>
+        </GridItem>
+        <GridItem>
+          <Description>3000</Description>
+        </GridItem>
+      </Grid>
+    </VStack>
+  );
+};
+
+export default UserOrderDetailsLeftContent;

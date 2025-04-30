@@ -8,7 +8,7 @@ export const getShopMenuItems = (role: string) => [
     path:
       role === "admin"
         ? ADMIN_ROUTE.ADMIN_SHOP_ALL
-        : `${USER_ROUTES.USER_SHOP}/${"All"}/category`,
+        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}`,
     role: ["admin", "user"],
   },
   {
@@ -17,7 +17,7 @@ export const getShopMenuItems = (role: string) => [
     path:
       role === "admin"
         ? ADMIN_ROUTE.ADMIN_SHOP_ALL
-        : `${USER_ROUTES.USER_SHOP}/${"Lanyard"}/category`,
+        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/Lanyard`,
     role: ["admin", "user"],
   },
   {
@@ -26,7 +26,7 @@ export const getShopMenuItems = (role: string) => [
     path:
       role === "admin"
         ? ADMIN_ROUTE.ADMIN_SHOP_ALL
-        : `${USER_ROUTES.USER_SHOP}/${"T-Shirt"}/category`,
+        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/T-Shirt`,
     role: ["admin", "user"],
   },
   {
@@ -35,7 +35,7 @@ export const getShopMenuItems = (role: string) => [
     path:
       role === "admin"
         ? ADMIN_ROUTE.ADMIN_SHOP_ALL
-        : `${USER_ROUTES.USER_SHOP}/${"Uniform"}/category`,
+        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/Uniform`,
     role: ["admin", "user"],
   },
   {

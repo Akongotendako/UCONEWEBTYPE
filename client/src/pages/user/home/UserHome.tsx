@@ -39,7 +39,8 @@ const UserHome = () => {
     },
   ];
 
-  const handleNavigationToShopAll = () => navigate(`${USER_ROUTES.USER_SHOP}/${"All"}/category`)
+  const handleNavigationToShopAll = () => navigate(`${USER_ROUTES.USER_SHOP}`)
+
   return (
     <VStack w={"full"} p={5} align={"flex-start"} gap={10}>
       {/** Hero section */}

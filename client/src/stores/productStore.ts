@@ -160,8 +160,7 @@ const productStore = create<IProductState>((set, get) => ({
 
   getProducts: async () => {
     const response = await getProducts();
-    console.log(response.data.response);
-    set({ products: response.data.response });
+    set({ products: response.data.data });
   },
   deleteProduct: async (id) => {
     try {
@@ -212,15 +211,15 @@ const productStore = create<IProductState>((set, get) => ({
     const response = await getProduct(id);
     set({
       product: {
-        productName: response.data.response.productName as string,
-        description: response.data.response.description as string,
-        price: response.data.response.price as string,
-        stock: response.data.response.stock as string,
-        discount: response.data.response.discount as string,
-        images: response.data.response.images as IImage[],
-        sizes: response.data.response.sizes as string[],
-        category: response.data.response.category as string,
-        originalImages: response.data.response.images as IImage[],
+        productName: response.data.data.productName as string,
+        description: response.data.data.description as string,
+        price: response.data.data.price as string,
+        stock: response.data.data.stock as string,
+        discount: response.data.data.discount as string,
+        images: response.data.data.images as IImage[],
+        sizes: response.data.data.sizes as string[],
+        category: response.data.data.category as string,
+        originalImages: response.data.data.images as IImage[],
         _id: "",
         isLimitReach: false,
         products: [],
@@ -282,12 +281,12 @@ const productStore = create<IProductState>((set, get) => ({
     }
   },
   getProductByCategory: async (category) => {
-    if (category === "All") {
+    if (!category) {
       const response = await getProducts();
-      set({ products: response.data.response });
+      set({ products: response.data.data });
     } else {
       const response = await getProductByCategory(category);
-      set({ products: response.data.response });
+      set({ products: response.data.data });
     }
   },
   setIndex: (index) =>

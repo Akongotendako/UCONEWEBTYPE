@@ -54,6 +54,18 @@ const cartStore = create<ICartState>((set, get) => ({
     }));
   },
   decrement: async (target, index) => {
+    console.log(`cart item quantity ${get().cartItem.quantity}`)
+    if (target === "cartItem" && get().cartItem.quantity > 0) {
+      set((state) => ({
+        ...state,
+        cartItem: {
+          ...state.cartItem,
+          quantity: state.cartItem.quantity - 1,
+        },
+      }));
+      return
+    }
+
     if (target === "cart" && get().cart.items[index as number].quantity > 0) {
       set((state) => {
         const updatedItems = [...state.cart.items];
@@ -74,14 +86,6 @@ const cartStore = create<ICartState>((set, get) => ({
       await get().updateCart(index as number);
       return;
     }
-
-    set((state) => ({
-      ...state,
-      cartItem: {
-        ...state.cartItem,
-        quantity: state.cartItem.quantity - 1,
-      },
-    }));
   },
   addCart: async () => {
     try {
@@ -170,7 +174,7 @@ const cartStore = create<ICartState>((set, get) => ({
     try {
       const { userId, items, total } = get().cart;
 
-      const products = items.map(item => ({
+      const products = items.map((item) => ({
         productId: item.product._id,
         productName: item.product.productName,
         sizes: item.product.sizes,
@@ -179,10 +183,10 @@ const cartStore = create<ICartState>((set, get) => ({
         price: item.product.price,
         category: item.product.category,
         discount: item.product.discount,
-        description: item.product.description
-      }))
+        description: item.product.description,
+      }));
 
-      console.log(products)
+      console.log(products);
 
       const formData = new FormData();
       formData.append("userId", userId);
@@ -208,8 +212,8 @@ const cartStore = create<ICartState>((set, get) => ({
       };
     }
   },
-  deleAllCarts: async(userId) => {
-    const response = await deleteAllCarts(userId)
+  deleAllCarts: async (userId) => {
+    const response = await deleteAllCarts(userId);
     return response;
   },
 }));

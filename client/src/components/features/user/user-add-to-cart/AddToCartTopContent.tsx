@@ -7,10 +7,23 @@ import Description from "../../../ui/Description";
 import PrimaryButton from "../../../ui/PrimaryButton";
 import SecondaryButton from "../../../ui/SecondaryButton";
 import Title from "../../../ui/Title";
+import generalToast from "../../../utils/toaster";
 
 const AddToCartTopContent = () => {
   const { product, nextImage, prevImage, setIndex, currentIndex } = productStore();
   const { cartItem, decrement, increment, addCart } = cartStore();
+
+  const handleAddToCart = async() => {
+    const response = await addCart();
+
+    setTimeout(() => {
+      generalToast({
+        status: response.status,
+        message: response.message,
+        duration: 3000
+      })
+    }, 1200);
+  }
   return (
     <HStack
       h={"500px"}
@@ -134,7 +147,7 @@ const AddToCartTopContent = () => {
         {/** Buttons */}
         <HStack gap={5} mt={10}>
           <PrimaryButton>BUY NOW</PrimaryButton>
-          <SecondaryButton onClick={addCart}>ADD TO CART</SecondaryButton>
+          <SecondaryButton onClick={handleAddToCart}>ADD TO CART</SecondaryButton>
         </HStack>
       </VStack>
     </HStack>

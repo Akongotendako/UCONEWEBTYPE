@@ -19,8 +19,10 @@ import UserCart from "./pages/user/cart/UserCart";
 import UserShopCategories from "./pages/user/shop-all/UserShopCategories";
 import UserCheckout from "./pages/user/checkout/UserCheckout";
 import UserPayment from "./pages/user/payment/UserPayment";
-import UserOrder from "./pages/user/orders/UserOrder";
 import UserProfile from "./pages/user/profile/UserProfile";
+import UserOrderContainer from "./pages/user/orders/UserOrderContainer";
+import UserOrderMainContent from "./components/features/user/user-order/main-content/UserOrderMainContent";
+import UserOrderDetailsContainer from "./components/features/user/user-order/details/UserOrderDetailsContainer";
 
 function App() {
   return (
@@ -49,12 +51,13 @@ function App() {
         </Route>
         {/** User dashboard */}
         <Route path={USER_ROUTES.USER} element={<UserDashboard />}>
-          <Route index  element={<UserHome />} />
+          <Route index element={<UserHome />} />
 
           {/** Shop */}
           <Route path={USER_ROUTES.USER_SHOP} element={<UserShop />}>
+            <Route index element={<UserShopCategories />} />
             <Route
-              index
+              path={USER_ROUTES.USER_CATEGORY}
               element={<UserShopCategories />}
             />
             <Route
@@ -65,13 +68,18 @@ function App() {
 
           {/** Cart */}
           <Route path={USER_ROUTES.USER_CART} element={<UserCart />}>
-            <Route
-              index
-              element={<UserCheckout />}
-            />
+            <Route index element={<UserCheckout />} />
             <Route path={USER_ROUTES.USER_Payment} element={<UserPayment />} />
           </Route>
-          <Route path={USER_ROUTES.USER_ORDER} element={<UserOrder />} />
+
+          {/** Order */}
+          <Route path={USER_ROUTES.USER_ORDER} element={<UserOrderContainer />}>
+            <Route index element={<UserOrderMainContent />} />
+            <Route
+              path={USER_ROUTES.USER_ORDER_DETAILS}
+              element={<UserOrderDetailsContainer />}
+            />
+          </Route>
           <Route path={USER_ROUTES.USER_PROFILE} element={<UserProfile />} />
         </Route>
       </Routes>

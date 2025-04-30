@@ -10,6 +10,7 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import Description from "../../../../ui/Description";
 import cartStore from "../../../../../stores/cartStore";
 import { IItems } from "../../../../../types/cart.type";
+import generalToast from "../../../../utils/toaster";
 
 interface UserCartProductDetailsProps {
   item: IItems;
@@ -21,7 +22,19 @@ const UserCartProductDetails = ({
   index,
 }: UserCartProductDetailsProps) => {
   const { increment, decrement, deleteCart } = cartStore();
-  const userId = localStorage.getItem("userId")
+  const userId = localStorage.getItem("userId");
+
+
+  const handleDeleteCart = async() => {
+
+    const response = await deleteCart(userId as string, item._id as string);
+
+    generalToast({
+      status: response.status,
+      message: response.message,
+      duration: 3000
+    })
+  }
 
   return (
     <VStack w={"1/2"} align={"flex-start"} position={"relative"}>
@@ -87,7 +100,7 @@ const UserCartProductDetails = ({
         variant={"ghost"}
         color={"#FFFFFF80"}
         _hover={{ color: "#000" }}
-        onClick={() => deleteCart(userId as string, item._id as string)}
+        onClick={handleDeleteCart}
       />
     </VStack>
   );
