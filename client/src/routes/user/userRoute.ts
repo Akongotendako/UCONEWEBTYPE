@@ -5,6 +5,7 @@ export const USER_ROUTES = {
   USER_CATEGORY: ":category",
   USER_ADD_TO_CART: ":id/cart",
   USER_CART: "cart",
+  USER_CART_MAIN: "",
   USER_CHECKOUT: "checkout",
   USER_Payment: "payment",
   USER_ORDER: "order",

@@ -11,6 +11,9 @@ export interface IOrder {
 }
 
 export interface IOrderState {
-    order: IOrder[];
+    orders: IOrder[];
+    order: IOrder;
+    review: string;
     fetchOrders: (userId: string) => Promise<unknown>;
+    fetchSpecificDetails: (id: string) => Promise<unknown>;
 }

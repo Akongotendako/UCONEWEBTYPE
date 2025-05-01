@@ -1,8 +1,14 @@
 import { Grid, GridItem, VStack } from "@chakra-ui/react";
 import Description from "../../../../ui/Description";
 import Title from "../../../../ui/Title";
+import { IOrder } from "../../../../../types/order.type";
+import { dateFormatter } from "../../../../utils/dateFormatter";
 
-const UserOrderDetailsLeftContent = () => {
+interface UserOrderDetailsLeftContentProps {
+  order: IOrder
+}
+
+const UserOrderDetailsLeftContent = (props: UserOrderDetailsLeftContentProps) => {
   return (
     <VStack
       w={"2/5"}
@@ -19,35 +25,35 @@ const UserOrderDetailsLeftContent = () => {
           <Description color="#FFF">Order Date</Description>
         </GridItem>
         <GridItem>
-          <Description>January 31, 2004</Description>
+          <Description>{dateFormatter(props.order.createdAt)}</Description>
         </GridItem>
 
         <GridItem>
           <Description color="#FFF">Order Item</Description>
         </GridItem>
         <GridItem>
-          <Description>3</Description>
+          <Description>{props.order.products.length}</Description>
         </GridItem>
 
         <GridItem>
           <Description color="#FFF">Payment Method</Description>
         </GridItem>
         <GridItem>
-          <Description>GCASH</Description>
+          <Description>{props.order.paymentMethod}</Description>
         </GridItem>
 
         <GridItem>
           <Description color="#FFF">Status</Description>
         </GridItem>
         <GridItem>
-          <Description>Pending</Description>
+          <Description>{props.order.paymentStatus}</Description>
         </GridItem>
 
         <GridItem>
           <Description color="#FFF">Total Amount</Description>
         </GridItem>
         <GridItem>
-          <Description>3000</Description>
+          <Description>{props.order.totalAmount}</Description>
         </GridItem>
       </Grid>
     </VStack>

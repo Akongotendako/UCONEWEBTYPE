@@ -12,7 +12,7 @@ const UserOrderMainContent = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
 
-  const { fetchOrders, order } = orderStore();
+  const { fetchOrders, orders } = orderStore();
 
   const handleOrderDetailsNavigation = (_id: string) => {
     navigate(`${USER_ROUTES.USER_ORDER_DETAILS.replace(":_id", _id)}`)
@@ -27,7 +27,7 @@ const UserOrderMainContent = () => {
       {/** Title */}
       <Title>Order History</Title>
       {/** Container for each box */}
-      <For each={order}>
+      <For each={orders}>
         {(order, index) => (
           <HStack
             w={"full"}

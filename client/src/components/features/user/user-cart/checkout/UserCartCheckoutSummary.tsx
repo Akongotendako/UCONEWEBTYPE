@@ -1,16 +1,16 @@
-import { Box, Flex, For, HStack, Separator } from "@chakra-ui/react";
-import Title from "../../../../ui/Title";
-import Description from "../../../../ui/Description";
-import PrimaryButton from "../../../../ui/PrimaryButton";
-import cartStore from "../../../../../stores/cartStore";
+import { Flex, HStack, Separator, Box, For } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { USER_ROUTES } from "../../../../../routes/user/userRoute";
+import cartStore from "../../../../../stores/cartStore";
+import Description from "../../../../ui/Description";
+import PrimaryButton from "../../../../ui/PrimaryButton";
+import Title from "../../../../ui/Title";
 
-const UserCheckOutOrderSummary = () => {
+const UserCartCheckoutSummary = () => {
   const { cart } = cartStore();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleNavigation = () => navigate(USER_ROUTES.USER_Payment)
+  const handleNavigation = () => navigate(`${USER_ROUTES.USER}/${USER_ROUTES.USER_CART}/${USER_ROUTES.USER_Payment}`);
 
   return (
     <Flex
@@ -32,7 +32,11 @@ const UserCheckOutOrderSummary = () => {
       <Box mt={5}>
         <For each={cart.items}>
           {(item, index) => (
-            <HStack w={"full"} justify={"space-between"} mt={index !== 0 ? "5" : ""}>
+            <HStack
+              w={"full"}
+              justify={"space-between"}
+              mt={index !== 0 ? "5" : ""}
+            >
               <Description>{item.product.productName}</Description>
               <Description>₱{item.itemTotal}</Description>
             </HStack>
@@ -52,4 +56,4 @@ const UserCheckOutOrderSummary = () => {
   );
 };
 
-export default UserCheckOutOrderSummary;
+export default UserCartCheckoutSummary;

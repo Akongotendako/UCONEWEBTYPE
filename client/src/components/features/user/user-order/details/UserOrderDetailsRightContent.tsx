@@ -1,10 +1,34 @@
-import { Grid, GridItem, HStack, Image, VStack } from "@chakra-ui/react";
-import shirt from "../../../../../assets/t-shirt.jpeg";
+import { For, Grid, GridItem, HStack, Image, VStack } from "@chakra-ui/react";
 import Description from "../../../../ui/Description";
 import Title from "../../../../ui/Title";
 import PrimaryButton from "../../../../ui/PrimaryButton";
+import { IProduct } from "../../../../../types/product.type";
+import CustomDialog from "../../../../shared/custom-dialog/CustomDialog";
+import { useState } from "react";
+import reviewStore from "../../../../../stores/reviewStore";
 
-const UserOrderDetailsRightContent = () => {
+interface UserOrderDetailsRightContentProps {
+  products: IProduct[];
+}
+
+const UserOrderDetailsRightContent = (
+  props: UserOrderDetailsRightContentProps
+) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [product, setProduct] = useState<IProduct | null>(null);
+  const { addReview } = reviewStore();
+  const userId = localStorage.getItem("userId");
+
+  const handleOpenDialog = (product: IProduct) => {
+    setIsOpen(!isOpen);
+    setProduct(product);
+  };
+
+  const handleCloseDialog = () => {
+    setIsOpen(false);
+    setProduct(null);
+  };
+
   return (
     <VStack
       w={"3/5"}
@@ -13,24 +37,48 @@ const UserOrderDetailsRightContent = () => {
       borderWidth={"1px"}
       align={"flex-start"}
       p={5}
+      gap={5}
     >
-      <Grid templateColumns={"650px 1fr"} gap={8} w={"full"}>
-        <GridItem>
-          <HStack align={"flex-start"} gap={5}>
-            <Image src={shirt} boxSize={28} rounded={"sm"}/>
-            <VStack gap={7}>
-              <Description>T Shirt</Description>
-              <Description>Qty: 1</Description>
-            </VStack>
-          </HStack>
-        </GridItem>
-        <GridItem>
-            <VStack align={"flex-start"}>
-                <Title textStyle="md">₱300</Title>
-                <PrimaryButton width="auto" marginTop="2">Write a review</PrimaryButton>
-            </VStack>
-        </GridItem>
-      </Grid>
+      <For each={props.products}>
+        {(product, index) => (
+          <Grid templateColumns={"650px 1fr"} w={"full"} key={index}>
+            <GridItem>
+              <HStack align={"flex-start"} gap={5}>
+                <Image
+                  src={product.images[0]?.url}
+                  boxSize={28}
+                  rounded={"sm"}
+                />
+                <VStack gap={7} align={"flex-start"}>
+                  <Description>{product.productName}</Description>
+                  <Description>Qty: {product.quantity}</Description>
+                </VStack>
+              </HStack>
+            </GridItem>
+            <GridItem>
+              <VStack align={"flex-start"}>
+                <Title textStyle="md">₱{product.total}</Title>
+                <PrimaryButton
+                  width="auto"
+                  marginTop="2"
+                  onclick={() => handleOpenDialog(product)}
+                >
+                  Write a review
+                </PrimaryButton>
+              </VStack>
+            </GridItem>
+          </Grid>
+        )}
+      </For>
+
+      {isOpen && (
+        <CustomDialog
+          isOpen={isOpen}
+          onClick={handleCloseDialog}
+          product={product as IProduct}
+          onSubmit={() => addReview(userId as string)}
+        />
+      )}
     </VStack>
   );
 };

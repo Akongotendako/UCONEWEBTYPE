@@ -1,6 +1,7 @@
-import UserOrderDetailsContainer from "../../../components/features/user/user-order-details/UserOrderDetailsContainer"
+import UserOrderDetailsContainer from "../../../components/features/user/user-order/details/UserOrderDetailsContainer"
 
 const UserOrderDetails = () => {
+  
   return (
     <UserOrderDetailsContainer/>
   )

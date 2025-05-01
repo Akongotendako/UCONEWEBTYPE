@@ -9,3 +9,8 @@ export const fetchOrders = async(userId: string) => {
     const response = await axiosInstance.get(`/orders/${userId}`);
     return response
 }
+
+export const fetchSpecificDetails = async(id: string) => {
+    const response = await axiosInstance.get(`/orders/${id}/order`);
+    return response
+}

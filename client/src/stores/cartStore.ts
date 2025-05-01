@@ -184,6 +184,7 @@ const cartStore = create<ICartState>((set, get) => ({
         category: item.product.category,
         discount: item.product.discount,
         description: item.product.description,
+        total: item.itemTotal
       }));
 
       console.log(products);

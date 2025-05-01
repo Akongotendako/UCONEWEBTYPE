@@ -15,14 +15,15 @@ import UserDashboard from "./pages/user/dashboard/UserDashboard";
 import UserHome from "./pages/user/home/UserHome";
 import UserShop from "./pages/user/shop/UserShop";
 import UserAddToCart from "./pages/user/add-to-cart/UserAddToCart";
-import UserCart from "./pages/user/cart/UserCart";
 import UserShopCategories from "./pages/user/shop-all/UserShopCategories";
-import UserCheckout from "./pages/user/checkout/UserCheckout";
-import UserPayment from "./pages/user/payment/UserPayment";
 import UserProfile from "./pages/user/profile/UserProfile";
 import UserOrderContainer from "./pages/user/orders/UserOrderContainer";
 import UserOrderMainContent from "./components/features/user/user-order/main-content/UserOrderMainContent";
 import UserOrderDetailsContainer from "./components/features/user/user-order/details/UserOrderDetailsContainer";
+import UserCartContainer from "./pages/user/cart/container/UserCartContainer";
+import UsercartMainContent from "./pages/user/cart/main-content/UserCartMainContent";
+import UserPayment from "./pages/user/cart/payment/UserPayment";
+import UserCartCheckout from "./pages/user/cart/checkout/UserCartCheckout";
 
 function App() {
   return (
@@ -67,8 +68,12 @@ function App() {
           </Route>
 
           {/** Cart */}
-          <Route path={USER_ROUTES.USER_CART} element={<UserCart />}>
-            <Route index element={<UserCheckout />} />
+          <Route path={USER_ROUTES.USER_CART} element={<UserCartContainer />}>
+            <Route index element={<UsercartMainContent />} />
+            <Route
+              path={USER_ROUTES.USER_CHECKOUT}
+              element={<UserCartCheckout />}
+            />
             <Route path={USER_ROUTES.USER_Payment} element={<UserPayment />} />
           </Route>
 

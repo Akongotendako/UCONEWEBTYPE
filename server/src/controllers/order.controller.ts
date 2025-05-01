@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Order from "../models/order.model.js";
 import User from "../models/user.model.js";
+import { errorResponse } from "../types/error.response.type.js";
+import { successResponse } from "../types/success.response.type.js";
 
 export const addOrder = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -26,27 +28,15 @@ export const addOrder = async (req: Request, res: Response): Promise<void> => {
 
     const user = await User.findById(userId);
     if (!user) {
-      res.status(400).json({
-        success: false,
-        message: "User not found",
-      });
+      errorResponse(res, "User not found", 400)
       return;
     }
 
     const response = await order.save();
 
-    res.status(200).json({
-      success: true,
-      message:
-        "Thank you for your purchase! Your order has been successfully placed. You will receive a notification when your items are ready for pickup at your department.",
-      data: response,
-    });
+    successResponse(res, response, "Thank you for your purchase! Your order has been successfully placed. You will receive a notification when your items are ready for pickup at your department.")
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Internal server error",
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
+    errorResponse(res, "Internal server error", 500, error);
   }
 };
 
@@ -58,24 +48,31 @@ export const fetchOrders = async(req: Request, res: Response): Promise<void> => 
 
     const order = await Order.find({userId});
     if (!order) {
-      res.status(400).json({
-        success: false,
-        message: "Order not found"
-      });
+      errorResponse(res, "Order not found", 400)
       return;
     }
 
-    res.status(200).json({
-      success: false,
-      message: "Order fetched successfully",
-      data: order
-    });
+   successResponse(res, order, "Order fetched successfully")
 
   }catch(error) {
-    res.status(500).json({
-      success: false,
-      message: "Internal server error",
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
+    errorResponse(res, "Internal server error", 500, error);
+  }
+}
+
+export const fetchSpecificDetails = async(req: Request, res: Response): Promise<void> => {
+  try {
+
+    const {id} = req.params;
+
+    const order = await Order.findById(id);
+    if (!order) {
+      errorResponse(res, "Order not found", 400);
+      return;
+    }
+
+    successResponse(res, order, "Order fetch successfully")
+
+  }catch(error) {
+    errorResponse(res, "Internal server error", 500)
   }
 }

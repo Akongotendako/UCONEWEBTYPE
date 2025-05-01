@@ -1,9 +1,9 @@
 import { VStack } from "@chakra-ui/react";
-import Title from "../../../../ui/Title";
-import InputField from "../../../../form/InputField";
 import userStore from "../../../../../stores/userStore";
+import InputField from "../../../../form/InputField";
+import Title from "../../../../ui/Title";
 
-const UserCheckBillingDetailsContainer = () => {
+const UserCartCheckoutBillingDetails = () => {
   const { user, setField } = userStore();
   return (
     <VStack
@@ -51,4 +51,4 @@ const UserCheckBillingDetailsContainer = () => {
   );
 };
 
-export default UserCheckBillingDetailsContainer;
+export default UserCartCheckoutBillingDetails;

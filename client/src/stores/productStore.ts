@@ -30,6 +30,8 @@ const productStore = create<IProductState>((set, get) => ({
     category: "",
     originalImages: [] as IOriginalImages[],
     isLimit: false as boolean,
+    quantity: "",
+    total: ""
   },
   products: [] as IProduct[],
   currentIndex: 1,
@@ -195,7 +197,7 @@ const productStore = create<IProductState>((set, get) => ({
         category: "",
         originalImages: [] as IOriginalImages[],
         isLimit: false as boolean,
-      },
+      } as IProduct,
       products: [],
     });
   },
@@ -224,6 +226,8 @@ const productStore = create<IProductState>((set, get) => ({
         isLimitReach: false,
         products: [],
         isLimit: false,
+        total: "",
+        quantity: ""
       },
     });
   },

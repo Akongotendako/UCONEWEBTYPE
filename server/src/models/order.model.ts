@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 import { IOrderDocument } from "../types/order.type.js";
-import { ref } from "process";
 
 const orderProductSchema = new Schema(
   {
@@ -36,6 +35,14 @@ const orderProductSchema = new Schema(
       type: String,
       required: true,
     },
+    quantity: {
+      type: String,
+      required: true
+    },
+    total: {
+      type: String, 
+      required: true
+    }
   },
   {
     _id: false,

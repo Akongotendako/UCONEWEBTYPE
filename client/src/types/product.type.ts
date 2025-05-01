@@ -22,7 +22,9 @@ export interface IProduct {
   sizes: string[];
   category: string;
   originalImages: IOriginalImages[];
-  isLimit: boolean
+  isLimit: boolean,
+  quantity: string,
+  total: string
 }
 
 export interface IProductState {

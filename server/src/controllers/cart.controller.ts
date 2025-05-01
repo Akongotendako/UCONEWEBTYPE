@@ -259,6 +259,7 @@ export const deleteAllCarts = async (
     res.status(200).json({
       success: true,
       message: "Cart deleted successfully",
+      data: response
     });
   } catch (error) {
     res.status(500).json({
