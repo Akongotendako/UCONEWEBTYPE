@@ -1,11 +1,24 @@
-import { IProduct } from "./product.type";
+import { IImage } from "./product.type";
+
+export interface IOrderProduct {
+    productId: string;
+    productName: string;
+    description: string;
+    price: string;
+    discount: string;
+    images: IImage[];
+    sizes: string[];
+    category: string;
+    quantity: string;
+    total: string;
+}
 
 export interface IOrder {
     _id?: string;
     userId?: string;
     paymentMethod: "CASH" | "GCASH";
     paymentStatus: string;
-    products: IProduct[];
+    products: IOrderProduct[];
     totalAmount: number;
     createdAt: Date
 }

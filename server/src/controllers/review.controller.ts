@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { errorResponse } from "../types/error.response.type.js";
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import Review from "../models/review.model.js";
 import { successResponse } from "../types/success.response.type.js";
 
@@ -8,40 +8,43 @@ export const addReview = async (req: Request, res: Response): Promise<void> => {
   try {
     const { userId, productId, comment, rating } = req.body;
 
-    if (
-      !mongoose.Types.ObjectId.isValid(userId) &&
-      !mongoose.Types.ObjectId.isValid(productId)
-    ) {
-      res.status(400).json({
-        success: false,
-        message: "Invalid ids",
-      });
-      return;
-    }
+    const existing = await Review.findOne({ userId, productId });
 
-    const review = await Review.find({ userId });
-
-    if (!userId) {
-      errorResponse(res, "User not found", 400);
-      return;
-    }
-
-    const isReviewOnTheProductExist = await Review.findOne({ productId });
-    if (isReviewOnTheProductExist) {
-      isReviewOnTheProductExist.comment = comment;
-      await isReviewOnTheProductExist.save();
-      successResponse(
-        res,
-        isReviewOnTheProductExist,
-        "Review added successfully"
-      );
+    if (existing) {
+      existing.comment = comment;
+      await existing.save();
+      successResponse(res, existing, "Review added successfully");
       return;
     }
 
     const newReview = new Review({ userId, productId, comment, rating });
-    const response = newReview.save();
+    const response = await newReview.save();
 
     successResponse(res, response, "Review added successfully");
+  } catch (error) {
+    errorResponse(res, "Internal server error", 500);
+  }
+};
+
+export const fetchSpecificProductReview = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { productId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      errorResponse(res, "Invalid id", 400);
+      return;
+    }
+
+    const review = await Review.find({productId});
+    if (!review) {
+      errorResponse(res, "Product id not found", 404);
+      return;
+    }
+
+    successResponse(res, review, "Reviews fetched successfully");
   } catch (error) {
     errorResponse(res, "Internal server error", 500);
   }

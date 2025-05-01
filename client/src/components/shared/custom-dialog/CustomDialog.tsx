@@ -7,17 +7,17 @@ import {
   HStack,
   RatingGroup,
 } from "@chakra-ui/react";
-import { IProduct } from "../../../types/product.type";
 import Description from "../../ui/Description";
 import Title from "../../ui/Title";
 import TextArea from "../../form/TextArea";
 import reviewStore from "../../../stores/reviewStore";
 import PrimaryButton from "../../ui/PrimaryButton";
+import { IOrderProduct } from "../../../types/order.type";
 
 interface CustomDialogProps {
   isOpen: boolean;
   onClick: () => void;
-  product: IProduct;
+  product: IOrderProduct;
   onSubmit: () => void;
 }
 
@@ -80,7 +80,7 @@ const CustomDialog = (props: CustomDialogProps) => {
                 </VStack>
 
                 {/** Submit button */}
-                <PrimaryButton>Submit</PrimaryButton>
+                <PrimaryButton onclick={props.onSubmit}>Submit</PrimaryButton>
               </VStack>
             </Dialog.Body>
             <Dialog.CloseTrigger asChild>

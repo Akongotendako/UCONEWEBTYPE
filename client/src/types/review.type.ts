@@ -16,4 +16,5 @@ export interface IReviewState {
   addReview: (
     userId: string,
   ) => Promise<{ success: boolean; status: number; message: string }>;
+  fetchSpecificProductReview: (productId: string) => Promise<unknown>;
 }

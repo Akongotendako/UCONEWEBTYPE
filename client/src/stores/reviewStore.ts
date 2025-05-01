@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { IReview, IReviewState } from "../types/review.type";
-import { addReview } from "../services/review.service";
+import { addReview, fetchSpecificProductReview } from "../services/review.service";
 import { interceptorError } from "../types/interceptor.error.type";
 
 const reviewStore = create<IReviewState>((set, get) => ({
@@ -23,6 +23,7 @@ const reviewStore = create<IReviewState>((set, get) => ({
     try {
       const { rating, comment, productId } = get().review;
       const response = await addReview(userId, productId, rating, comment);
+      console.log("hello")
       return {
         success: true,
         status: response.status,
@@ -36,6 +37,10 @@ const reviewStore = create<IReviewState>((set, get) => ({
         message: message,
       };
     }
+  },
+  fetchSpecificProductReview: async(productId) => {
+    const response = await fetchSpecificProductReview(productId);
+    set({reviews: response.data.data})
   },
 }));
 

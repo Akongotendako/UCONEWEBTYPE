@@ -1,9 +1,19 @@
-import { Tabs, VStack, HStack, RatingGroup, Separator } from '@chakra-ui/react'
-import Description from '../../../ui/Description'
-import SecondaryButton from '../../../ui/SecondaryButton'
-import Title from '../../../ui/Title'
+import {
+  Tabs,
+  VStack,
+  HStack,
+  RatingGroup,
+  Separator,
+  For,
+} from "@chakra-ui/react";
+import Description from "../../../ui/Description";
+import SecondaryButton from "../../../ui/SecondaryButton";
+import Title from "../../../ui/Title";
+import reviewStore from "../../../../stores/reviewStore";
 
 const AddToCartBottomContent = () => {
+  const { reviews } = reviewStore();
+
   return (
     <Tabs.Root
       variant="enclosed"
@@ -69,53 +79,41 @@ const AddToCartBottomContent = () => {
           </HStack>
 
           {/** Titlte indicator */}
-          <Title mb={10}>100 REVIEWS</Title>
+          <Title mb={10}>{reviews.length > 1 ? `${reviews.length} REVIEWS` : `${reviews.length} REVIEW`}</Title>
 
-          <VStack w={"full"} align={"flex-start"}>
-            <HStack gap={7}>
-              <Title textStyle="md">Lord Jan Rolmar</Title>
-              <RatingGroup.Root count={5} defaultValue={3} size="sm">
-                <RatingGroup.HiddenInput />
-                <RatingGroup.Control />
-              </RatingGroup.Root>
-            </HStack>
-            <Description mb={15}>Posted by Lord Jan Rolmar January 22, 2025</Description>
+          <For each={reviews}>
+            {(review, index) => (
+              <>
+                <VStack w={"full"} align={"flex-start"} key={index}>
+                  <HStack gap={7}>
+                    <Title textStyle="md">Lord Jan Rolmar</Title>
+                    <RatingGroup.Root
+                      readOnly
+                      count={5}
+                      value={review.rating}
+                      size="sm"
+                      colorPalette={"yellow"}
+                    >
+                      <RatingGroup.HiddenInput />
+                      <RatingGroup.Control />
+                    </RatingGroup.Root>
+                  </HStack>
+                  <Description mb={15}>
+                    Posted by Lord Jan Rolmar January 22, 2025
+                  </Description>
 
-            <Description mb={15}>Kasyuteng kinawat</Description>
-          </VStack>
-          <Separator w={"full"} color={"#FFFFFF80"}/>
-
-          <VStack w={"full"} align={"flex-start"}>
-            <HStack gap={7}>
-              <Title textStyle="md">Lord Jan Rolmar</Title>
-              <RatingGroup.Root count={5} defaultValue={3} size="sm">
-                <RatingGroup.HiddenInput />
-                <RatingGroup.Control />
-              </RatingGroup.Root>
-            </HStack>
-            <Description mb={15}>Posted by Lord Jan Rolmar January 22, 2025</Description>
-
-            <Description mb={15}>Kasyuteng kinawat</Description>
-          </VStack>
-          <Separator w={"full"} color={"#FFFFFF80"}/>
-
-          <VStack w={"full"} align={"flex-start"}>
-            <HStack gap={7}>
-              <Title textStyle="md">Lord Jan Rolmar</Title>
-              <RatingGroup.Root count={5} defaultValue={3} size="sm">
-                <RatingGroup.HiddenInput />
-                <RatingGroup.Control />
-              </RatingGroup.Root>
-            </HStack>
-            <Description mb={15}>Posted by Lord Jan Rolmar January 22, 2025</Description>
-
-            <Description mb={15}>Kasyuteng kinawat</Description>
-          </VStack>
-          <Separator w={"full"} color={"#FFFFFF80"}/>
+                  <Description mb={15}>{review.comment}</Description>
+                </VStack>
+                {reviews.length - 1 !== index && (
+                  <Separator w={"full"} borderColor={"#FFFFFF80"} mb={5}/>
+                )}
+              </>
+            )}
+          </For>
         </VStack>
       </Tabs.Content>
     </Tabs.Root>
-  )
-}
+  );
+};
 
-export default AddToCartBottomContent
+export default AddToCartBottomContent;

@@ -2,26 +2,27 @@ import { For, Grid, GridItem, HStack, Image, VStack } from "@chakra-ui/react";
 import Description from "../../../../ui/Description";
 import Title from "../../../../ui/Title";
 import PrimaryButton from "../../../../ui/PrimaryButton";
-import { IProduct } from "../../../../../types/product.type";
 import CustomDialog from "../../../../shared/custom-dialog/CustomDialog";
 import { useState } from "react";
 import reviewStore from "../../../../../stores/reviewStore";
+import { IOrderProduct } from "../../../../../types/order.type";
 
 interface UserOrderDetailsRightContentProps {
-  products: IProduct[];
+  products: IOrderProduct[];
 }
 
 const UserOrderDetailsRightContent = (
   props: UserOrderDetailsRightContentProps
 ) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [product, setProduct] = useState<IProduct | null>(null);
-  const { addReview } = reviewStore();
+  const [product, setProduct] = useState<IOrderProduct | null>(null);
+  const { addReview, setField } = reviewStore();
   const userId = localStorage.getItem("userId");
 
-  const handleOpenDialog = (product: IProduct) => {
+  const handleOpenDialog = (product: IOrderProduct) => {
     setIsOpen(!isOpen);
     setProduct(product);
+    setField("productId", product.productId );
   };
 
   const handleCloseDialog = () => {
@@ -75,7 +76,7 @@ const UserOrderDetailsRightContent = (
         <CustomDialog
           isOpen={isOpen}
           onClick={handleCloseDialog}
-          product={product as IProduct}
+          product={product as IOrderProduct}
           onSubmit={() => addReview(userId as string)}
         />
       )}

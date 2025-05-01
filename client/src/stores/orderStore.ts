@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { IOrder, IOrderState } from "../types/order.type";
 import { fetchOrders, fetchSpecificDetails } from "../services/order.service";
 
-const orderStore = create<IOrderState>((set, get) => ({
+const orderStore = create<IOrderState>((set) => ({
   orders: [] as IOrder[],
   order: {
     paymentMethod: "CASH",
@@ -18,8 +18,27 @@ const orderStore = create<IOrderState>((set, get) => ({
   },
   fetchSpecificDetails: async(id) => {
     const response = await fetchSpecificDetails(id);
-    set({order: response.data.data});
+    set({order: response.data.data})
   },
 }));
 
 export default orderStore;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
