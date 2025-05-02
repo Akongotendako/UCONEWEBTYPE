@@ -2,14 +2,28 @@ import { create } from "zustand";
 import { IReview, IReviewState } from "../types/review.type";
 import { addReview, fetchSpecificProductReview } from "../services/review.service";
 import { interceptorError } from "../types/interceptor.error.type";
+import { IProfilePic, IUser } from "../types/user.type";
 
 const reviewStore = create<IReviewState>((set, get) => ({
   reviews: [] as IReview[],
   review: {
-    userId: "",
+    userId: {
+      _id: "",
+      email: "",
+      profile: {
+        firstName: "",
+        lastName: "",
+        age: "",
+        profilePic: {
+          url: ""
+        } as IProfilePic,
+        phoneNumber: ""
+      }
+    } as IUser,
     productId: "",
     comment: "",
     rating: 0,
+    createdAt: new Date()
   },
   setField: <K extends keyof IReview>(field: K, value: IReview[K]) =>
     set((state) => ({

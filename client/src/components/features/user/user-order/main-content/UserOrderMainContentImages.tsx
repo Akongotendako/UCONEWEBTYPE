@@ -1,10 +1,10 @@
-import { IProduct } from '../../../../../types/product.type'
 import { HStack, Image } from '@chakra-ui/react'
 import Description from '../../../../ui/Description'
 import shirt from '../../../../../assets/t-shirt.jpeg'
+import { IOrderProduct } from '../../../../../types/order.type'
 
 interface UserOrderMainContentImagesProps {
-    products: IProduct[]
+    products: IOrderProduct[]
 }
 
 const UserOrderMainContentImages = (props: UserOrderMainContentImagesProps) => {

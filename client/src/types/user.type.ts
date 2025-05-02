@@ -25,6 +25,11 @@ export interface IProfile {
   phoneNumber: string;
 }
 
+export interface IUser {
+  _id: string;
+  email: string;
+  profile: IProfile
+}
 export interface IOriginalImage {
   url?: string;
   publicId: string;

@@ -75,4 +75,21 @@ export const fetchSpecificDetails = async(req: Request, res: Response): Promise<
   }catch(error) {
     errorResponse(res, "Internal server error", 500)
   }
+};
+
+export const deleteOrder = async(req: Request, res: Response): Promise<void> => {
+  try {
+
+    const {id} = req.params;
+
+    const order = await Order.findByIdAndDelete(id)
+    if(!order) {
+      errorResponse(res, "Order not found", 404);
+      return;
+    }
+
+    successResponse(res, order, "Order deleted successfully");
+  } catch(error) {
+    errorResponse(res, "Internal server error", 500);
+  }
 }

@@ -29,4 +29,5 @@ export interface IOrderState {
     review: string;
     fetchOrders: (userId: string) => Promise<unknown>;
     fetchSpecificDetails: (id: string) => Promise<unknown>;
+    deleteOrder: (id: string) => Promise<{success: boolean, status: number, message: string}>
 }

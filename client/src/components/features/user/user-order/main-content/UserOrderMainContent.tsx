@@ -1,4 +1,4 @@
-import { Flex, For, HStack, Status } from "@chakra-ui/react";
+import { CloseButton, Flex, For, HStack, Status } from "@chakra-ui/react";
 import Title from "../../../../ui/Title";
 import UserOrderMainContentImages from "./UserOrderMainContentImages";
 import { useEffect } from "react";
@@ -7,16 +7,28 @@ import Description from "../../../../ui/Description";
 import { dateFormatter } from "../../../../utils/dateFormatter";
 import { useNavigate } from "react-router-dom";
 import { USER_ROUTES } from "../../../../../routes/user/userRoute";
+import generalToast from "../../../../utils/toaster";
 
 const UserOrderMainContent = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
 
-  const { fetchOrders, orders } = orderStore();
+  const { fetchOrders, orders, deleteOrder } = orderStore();
 
   const handleOrderDetailsNavigation = (_id: string) => {
-    navigate(`${USER_ROUTES.USER_ORDER_DETAILS.replace(":_id", _id)}`)
+    navigate(`${USER_ROUTES.USER_ORDER_DETAILS.replace(":_id", _id)}`);
   };
+
+
+  const handleDeletedOrder = async(id: string | undefined) => {
+    const response = await deleteOrder(id as string);
+
+    generalToast({
+      status: response.status,
+      message: response.message,
+      duration: 300
+    })
+  }
 
   useEffect(() => {
     fetchOrders(userId as string);
@@ -38,6 +50,7 @@ const UserOrderMainContent = () => {
             justify={"space-between"}
             cursor={"pointer"}
             onClick={() => handleOrderDetailsNavigation(order._id as string)}
+            position={"relative"}
             key={index}
           >
             {/** Total item bought by customer and number of images for each product */}
@@ -62,6 +75,18 @@ const UserOrderMainContent = () => {
 
             {/** Total for each order */}
             <Description>₱{order.totalAmount}</Description>
+
+            <CloseButton
+              position={"absolute"}
+              top={2}
+              right={2}
+              color={"#FFFFFF80"}
+              _hover={{ color: "#000" }}
+              onClick={(e) => {
+                e.stopPropagation()
+                handleDeletedOrder(order._id)
+              }}
+            />
           </HStack>
         )}
       </For>

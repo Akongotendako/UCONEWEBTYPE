@@ -12,6 +12,7 @@ export const addReview = async (req: Request, res: Response): Promise<void> => {
 
     if (existing) {
       existing.comment = comment;
+      existing.rating = rating;
       await existing.save();
       successResponse(res, existing, "Review added successfully");
       return;
@@ -38,7 +39,7 @@ export const fetchSpecificProductReview = async (
       return;
     }
 
-    const review = await Review.find({productId});
+    const review = await Review.find({productId}).populate("userId");
     if (!review) {
       errorResponse(res, "Product id not found", 404);
       return;

@@ -14,3 +14,8 @@ export const fetchSpecificDetails = async(id: string) => {
     const response = await axiosInstance.get(`/orders/${id}/order`);
     return response
 }
+
+export const deleteOrder = async(id: string) => {
+    const response = await axiosInstance.delete(`/orders/${id}`);
+    return response
+}

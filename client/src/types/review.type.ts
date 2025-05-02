@@ -1,9 +1,12 @@
+import { IUser } from "./user.type";
+
 export interface IReview {
   _id?: string;
-  userId: string;
+  userId: IUser;
   productId: string;
   comment: string;
   rating: number;
+  createdAt: Date
 }
 
 export interface IReviewState {

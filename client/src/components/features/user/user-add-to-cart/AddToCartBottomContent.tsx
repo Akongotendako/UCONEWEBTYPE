@@ -10,6 +10,7 @@ import Description from "../../../ui/Description";
 import SecondaryButton from "../../../ui/SecondaryButton";
 import Title from "../../../ui/Title";
 import reviewStore from "../../../../stores/reviewStore";
+import { dateFormatter } from "../../../utils/dateFormatter";
 
 const AddToCartBottomContent = () => {
   const { reviews } = reviewStore();
@@ -79,14 +80,18 @@ const AddToCartBottomContent = () => {
           </HStack>
 
           {/** Titlte indicator */}
-          <Title mb={10}>{reviews.length > 1 ? `${reviews.length} REVIEWS` : `${reviews.length} REVIEW`}</Title>
+          <Title mb={10}>
+            {reviews.length > 1
+              ? `${reviews.length} REVIEWS`
+              : `${reviews.length} REVIEW`}
+          </Title>
 
           <For each={reviews}>
             {(review, index) => (
               <>
                 <VStack w={"full"} align={"flex-start"} key={index}>
                   <HStack gap={7}>
-                    <Title textStyle="md">Lord Jan Rolmar</Title>
+                    <Title textStyle="md">{`${review.userId.profile.firstName} ${review.userId.profile.lastName}`}</Title>
                     <RatingGroup.Root
                       readOnly
                       count={5}
@@ -99,13 +104,15 @@ const AddToCartBottomContent = () => {
                     </RatingGroup.Root>
                   </HStack>
                   <Description mb={15}>
-                    Posted by Lord Jan Rolmar January 22, 2025
+                    {`Posted by ${review.userId.profile.firstName} ${
+                      review.userId.profile.lastName
+                    } on ${dateFormatter(review.createdAt)}`}
                   </Description>
 
                   <Description mb={15}>{review.comment}</Description>
                 </VStack>
                 {reviews.length - 1 !== index && (
-                  <Separator w={"full"} borderColor={"#FFFFFF80"} mb={5}/>
+                  <Separator w={"full"} borderColor={"#FFFFFF80"} mb={5} />
                 )}
               </>
             )}
