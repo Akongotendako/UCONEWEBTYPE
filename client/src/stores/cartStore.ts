@@ -23,8 +23,12 @@ const cartStore = create<ICartState>((set, get) => ({
     price: "",
   },
   carts: [] as ICarts[],
+  isLoading: false,
   increment: async (target, index) => {
     if (target === "cart") {
+
+      set({isLoading: true});
+
       set((state) => {
         const updatedItems = [...state.cart.items];
         updatedItems[index as number] = {
@@ -42,6 +46,9 @@ const cartStore = create<ICartState>((set, get) => ({
       });
 
       await get().updateCart(index as number);
+
+      await new Promise((resolve) => setTimeout(resolve, 550));
+      set({isLoading: false});
       return;
     }
 
@@ -67,6 +74,9 @@ const cartStore = create<ICartState>((set, get) => ({
     }
 
     if (target === "cart" && get().cart.items[index as number].quantity > 0) {
+      
+      set({isLoading: true})
+
       set((state) => {
         const updatedItems = [...state.cart.items];
         updatedItems[index as number] = {
@@ -84,6 +94,9 @@ const cartStore = create<ICartState>((set, get) => ({
       });
 
       await get().updateCart(index as number);
+
+      await new Promise((resolve) => setTimeout(resolve, 550));
+      set({isLoading: false})
       return;
     }
   },
@@ -216,6 +229,22 @@ const cartStore = create<ICartState>((set, get) => ({
   deleAllCarts: async (userId) => {
     const response = await deleteAllCarts(userId);
     return response;
+  },
+  clear: () => {
+    set({
+      cart: {
+        userId: "",
+        items: [] as IItems[],
+        total: 0,
+      },
+      cartItem: {
+        productId: "",
+        cartId: "",
+        quantity: 0,
+        price: "",
+      },
+      carts: [] as ICarts[]
+    })
   },
 }));
 

@@ -19,6 +19,9 @@ export interface IProduct {
   images: IImage[];
   sizes: string[];
   category: string;
+  averageRating: number;
+  ratingCount: number;
+
 }
 
 export type IProductDocument = Document<unknown, {}, IProduct> & IProduct;

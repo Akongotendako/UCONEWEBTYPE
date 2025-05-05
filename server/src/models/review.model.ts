@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { ref } from "process";
 import { IReviewDocument } from "../types/review.type.js";
+import { maxHeaderSize } from "http";
 
 const reviewSchema = new Schema({
     userId: {
@@ -15,11 +16,13 @@ const reviewSchema = new Schema({
     },
     comment: {
         type: String,
-        required: true
+        required: false
     },
     rating: {
         type: Number,
-        required: false
+        max: 5,
+        min: 1,
+        required: true
     }
 }, {
     timestamps: true

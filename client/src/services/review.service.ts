@@ -19,3 +19,8 @@ export const fetchSpecificProductReview = async (productId: string) => {
   const response = await axiosInstance.get(`/reviews/${productId}`);
   return response;
 };
+
+export const checkUserReview = async (userId: string, id: string) => {
+  const response = await axiosInstance.get(`/reviews/${userId}/${id}`);
+  return response;
+};

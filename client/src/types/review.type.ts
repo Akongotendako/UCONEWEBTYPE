@@ -12,6 +12,7 @@ export interface IReview {
 export interface IReviewState {
   review: IReview;
   reviews: IReview[];
+  isReview: boolean;
   setField: <K extends keyof IReview>(
     field: K,
     value: IReview[K]
@@ -20,4 +21,5 @@ export interface IReviewState {
     userId: string,
   ) => Promise<{ success: boolean; status: number; message: string }>;
   fetchSpecificProductReview: (productId: string) => Promise<unknown>;
+  checkUserReview: (userId: string, id: string) => Promise<unknown>;
 }

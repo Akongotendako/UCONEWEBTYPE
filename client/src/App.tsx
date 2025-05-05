@@ -24,6 +24,9 @@ import UserCartContainer from "./pages/user/cart/container/UserCartContainer";
 import UsercartMainContent from "./pages/user/cart/main-content/UserCartMainContent";
 import UserPayment from "./pages/user/cart/payment/UserPayment";
 import UserCartCheckout from "./pages/user/cart/checkout/UserCartCheckout";
+import AdminStudentMainContainer from "./pages/admin/student/admin-student-main-content/AdminStudentMainContainer";
+import AdminStudentContainer from "./pages/admin/student/admin-student-container/AdminStudentContainer";
+import AdminStudentDetailsContainer from "./pages/admin/student/details/AdminStudentDetailsContainer";
 
 function App() {
   return (
@@ -47,6 +50,18 @@ function App() {
             <Route
               path={ADMIN_ROUTE.ADMIN_SHOP_UPDATE_ITEM}
               element={<AdminShopUpdateItem />}
+            />
+          </Route>
+
+          {/** Student */}
+          <Route
+            path={ADMIN_ROUTE.ADMIN_STUDENT.ADMIN_STUDENT_BASED}
+            element={<AdminStudentContainer />}
+          >
+            <Route index element={<AdminStudentMainContainer />} />
+            <Route
+              path={ADMIN_ROUTE.ADMIN_STUDENT.ADMIN_STUDENT_DETAILS}
+              element={<AdminStudentDetailsContainer />}
             />
           </Route>
         </Route>

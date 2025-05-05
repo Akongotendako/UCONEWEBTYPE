@@ -1,7 +1,8 @@
 import { create } from "zustand";
-import { IOriginalImage, IProfilePic, IUserState } from "../types/user.type";
+import { IOriginalImage, IProfilePic, IUser, IUserState } from "../types/user.type";
 import {
   fetchProfile,
+  fetchUsers,
   signIn,
   signUp,
   updateProfile,
@@ -36,7 +37,7 @@ const userStore = create<IUserState>((set, get) => ({
       publicId: "",
     } as IOriginalImage,
   },
-
+  users: [] as IUser[],
   setImage: (newImage: IProfilePic) =>
     set((state) => ({
       ...state,
@@ -199,6 +200,10 @@ const userStore = create<IUserState>((set, get) => ({
             : state.user[obj],
       },
     })),
+    fetchUsers: async() =>{
+      const response = await fetchUsers();
+      set({users: response.data.data})
+    },
 }));
 
 export default userStore;

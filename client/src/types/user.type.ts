@@ -42,6 +42,7 @@ export interface IUserState {
     profile: IProfile;
     originalImage: IOriginalImage;
   };
+  users: IUser[];
   setField: <
     T extends keyof IUserState["user"],
     K extends keyof IUserState["user"][T]
@@ -65,6 +66,7 @@ export interface IUserState {
     role?: string;
     userId: string;
   }>;
+  fetchUsers: () => Promise<unknown>;
   fetchProfile: (userId: string) => Promise<unknown>;
   updateProfile: (userId: string) => Promise<unknown>;
   clearAllProperties: <T extends keyof IUserState["user"]>(obj: T) => void;

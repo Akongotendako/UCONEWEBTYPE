@@ -11,9 +11,11 @@ import SecondaryButton from "../../../ui/SecondaryButton";
 import Title from "../../../ui/Title";
 import reviewStore from "../../../../stores/reviewStore";
 import { dateFormatter } from "../../../utils/dateFormatter";
+import productStore from "../../../../stores/productStore";
 
 const AddToCartBottomContent = () => {
   const { reviews } = reviewStore();
+  const { product } = productStore();
 
   return (
     <Tabs.Root
@@ -52,26 +54,7 @@ const AddToCartBottomContent = () => {
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content value="Description" color={"#FFFFFF80"}>
-        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus
-        ex sapien vitae pellentesque sem placerat. In id cursus mi pretium
-        tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-        Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis
-        massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper
-        vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
-        inceptos himenaeos. Lorem ipsum dolor sit amet consectetur adipiscing
-        elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id
-        cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-        urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-        egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
-        hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent
-        per conubia nostra inceptos himenaeos. Lorem ipsum dolor sit amet
-        consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-        pellentesque sem placerat. In id cursus mi pretium tellus duis
-        convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus
-        fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada
-        lacinia integer nunc posuere. Ut hendrerit semper vel class aptent
-        taciti sociosqu. Ad litora torquent per conubia nostra inceptos
-        himenaeos.
+        {product.description}
       </Tabs.Content>
       <Tabs.Content value="CustomerReview">
         <VStack w={"full"} align={"flex-start"}>

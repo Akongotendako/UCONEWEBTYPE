@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { IReview, IReviewState } from "../types/review.type";
-import { addReview, fetchSpecificProductReview } from "../services/review.service";
+import { addReview, checkUserReview, fetchSpecificProductReview } from "../services/review.service";
 import { interceptorError } from "../types/interceptor.error.type";
 import { IProfilePic, IUser } from "../types/user.type";
 
@@ -25,6 +25,7 @@ const reviewStore = create<IReviewState>((set, get) => ({
     rating: 0,
     createdAt: new Date()
   },
+  isReview: false,
   setField: <K extends keyof IReview>(field: K, value: IReview[K]) =>
     set((state) => ({
         ...state,
@@ -55,6 +56,10 @@ const reviewStore = create<IReviewState>((set, get) => ({
   fetchSpecificProductReview: async(productId) => {
     const response = await fetchSpecificProductReview(productId);
     set({reviews: response.data.data})
+  },
+  checkUserReview: async(userId, id) => {
+    const response = await checkUserReview(userId, id)
+    set({isReview: response.data.success});
   },
 }));
 

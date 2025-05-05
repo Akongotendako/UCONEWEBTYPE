@@ -31,7 +31,11 @@ const productStore = create<IProductState>((set, get) => ({
     originalImages: [] as IOriginalImages[],
     isLimit: false as boolean,
     quantity: "",
-    total: ""
+    total: "",
+    discountedPrice: 0,
+    saveAmount: 0,
+    averageRating: 0,
+    ratingCount: 0,
   },
   products: [] as IProduct[],
   currentIndex: 1,
@@ -197,6 +201,12 @@ const productStore = create<IProductState>((set, get) => ({
         category: "",
         originalImages: [] as IOriginalImages[],
         isLimit: false as boolean,
+        quantity: "",
+        total: "",
+        discountedPrice: 0,
+        saveAmount: 0,
+        averageRating: 0,
+        ratingCount: 0,
       } as IProduct,
       products: [],
     });
@@ -227,7 +237,11 @@ const productStore = create<IProductState>((set, get) => ({
         products: [],
         isLimit: false,
         total: "",
-        quantity: ""
+        quantity: "",
+        discountedPrice: response.data.data.discountedPrice,
+        saveAmount: response.data.data.saveAmount,
+        averageRating: response.data.data.averageRating,
+        ratingCount: response.data.data.ratingCount,
       },
     });
   },

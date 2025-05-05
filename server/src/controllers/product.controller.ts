@@ -146,7 +146,22 @@ export const getProduct = async (
       return;
     }
 
-    successResponse(res, response, "Product successfully fetched");
+    const product = response.toObject();
+
+    console.log(`discount ${product.discount}`)
+
+
+    const discountedPrice = product.price * (1 - Number(product.discount) / 100);
+    const saveAmount = product.price - discountedPrice
+
+
+    const data = {
+      ...product,
+      discountedPrice: discountedPrice.toFixed(2),
+      saveAmount: saveAmount.toFixed(2)
+    }
+
+    successResponse(res, data, "Product successfully fetched");
   } catch (error) {
     errorResponse(res, "Internal server error", 500, error);
   }

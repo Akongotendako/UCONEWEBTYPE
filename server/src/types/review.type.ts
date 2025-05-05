@@ -6,7 +6,7 @@ export interface IReview {
     _id?: string,
     userId: mongoose.Types.ObjectId | IUser,
     productId: mongoose.Types.ObjectId | IProduct,
-    comment: string,
+    comment?: string,
     rating: number
 }
 

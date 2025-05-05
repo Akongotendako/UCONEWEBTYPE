@@ -32,6 +32,7 @@ export interface ICartState {
   cart: ICart;
   cartItem: ICartItem;
   carts: ICarts[];
+  isLoading: boolean;
   addCart: () => Promise<{ success: boolean; status: number; message: string }>;
   fetchCart: (userId: string) => Promise<unknown>;
   increment: (target: "cartItem" | "cart", index?: number) => Promise<void>;
@@ -48,4 +49,5 @@ export interface ICartState {
     paymentStatus: "Pending" | "Paid"
   ) => Promise<{ success: boolean; status: number; message: string }>;
   deleAllCarts: (userId: string) => Promise<unknown>;
+  clear: () => void;
 }

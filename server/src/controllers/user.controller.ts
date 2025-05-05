@@ -7,6 +7,8 @@ import {
 import cloudinary from "../config/cloudinary.js";
 import { ICloudinary } from "../types/cloudinary.type.js";
 import { Readable } from "stream";
+import { errorResponse } from "../types/error.response.type.js";
+import { successResponse } from "../types/success.response.type.js";
 
 export const signUp = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -228,3 +230,15 @@ export const updateProfile = async (
     });
   }
 };
+
+export const fetchUsers = async(req: Request, res: Response): Promise<void> => {
+  try {
+
+    const users = await User.find({role: {$ne: "admin"}});
+
+    successResponse(res, users, 'Users fetch successfully', 200)
+
+  }catch(error) {
+    errorResponse(res, "Internal server error", 500)
+  }
+}

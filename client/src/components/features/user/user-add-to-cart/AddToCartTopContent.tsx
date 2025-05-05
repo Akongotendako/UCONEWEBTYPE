@@ -1,4 +1,14 @@
-import { Box, Center, HStack, Icon, VStack, Image, IconButton, NumberInput, RatingGroup } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  HStack,
+  Icon,
+  VStack,
+  Image,
+  IconButton,
+  NumberInput,
+  RatingGroup,
+} from "@chakra-ui/react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import productStore from "../../../../stores/productStore";
 import cartStore from "../../../../stores/cartStore";
@@ -10,20 +20,21 @@ import Title from "../../../ui/Title";
 import generalToast from "../../../utils/toaster";
 
 const AddToCartTopContent = () => {
-  const { product, nextImage, prevImage, setIndex, currentIndex } = productStore();
+  const { product, nextImage, prevImage, setIndex, currentIndex } =
+    productStore();
   const { cartItem, decrement, increment, addCart } = cartStore();
 
-  const handleAddToCart = async() => {
+  const handleAddToCart = async () => {
     const response = await addCart();
 
     setTimeout(() => {
       generalToast({
         status: response.status,
         message: response.message,
-        duration: 3000
-      })
+        duration: 3000,
+      });
     }, 1200);
-  }
+  };
   return (
     <HStack
       h={"500px"}
@@ -87,23 +98,34 @@ const AddToCartTopContent = () => {
 
         {/** rating */}
         <HStack>
-          <RatingGroup.Root count={5} defaultValue={3} size="sm">
+          <RatingGroup.Root
+            value={product.averageRating}
+            size="sm"
+            colorPalette={"yellow"}
+            readOnly
+          >
             <RatingGroup.HiddenInput />
             <RatingGroup.Control />
           </RatingGroup.Root>
-          <Description>100 reviews</Description>
+          <Description>
+            {product.ratingCount > 0
+              ? product.ratingCount > 1
+                ? `${product.ratingCount} REVIEWS`
+                : `${product.ratingCount} REVIEW`
+              : "0 REVIEW"}
+          </Description>
         </HStack>
 
         {/** Price */}
         <HStack gap={5} mt={5}>
           <Title color="#FFFFFF80" underline="line-through">
-            ₱500
+            {`₱${product.price}`}
           </Title>
-          <Title>₱300</Title>
+          <Title>{`₱${product.discountedPrice}`}</Title>
         </HStack>
 
         {/** You have same info */}
-        <Description fontStyle="italic">(You have saved ₱200)</Description>
+        <Description fontStyle="italic">{`(You have saved ₱${product.saveAmount})`}</Description>
 
         {/** Quantity */}
         <VStack mt={10} align={"flex-start"} gap={5}>
@@ -147,7 +169,9 @@ const AddToCartTopContent = () => {
         {/** Buttons */}
         <HStack gap={5} mt={10}>
           <PrimaryButton>BUY NOW</PrimaryButton>
-          <SecondaryButton onClick={handleAddToCart}>ADD TO CART</SecondaryButton>
+          <SecondaryButton onClick={handleAddToCart}>
+            ADD TO CART
+          </SecondaryButton>
         </HStack>
       </VStack>
     </HStack>

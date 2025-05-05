@@ -24,7 +24,11 @@ export interface IProduct {
   originalImages: IOriginalImages[];
   isLimit: boolean,
   quantity: string,
-  total: string
+  total: string,
+  discountedPrice: number;
+  saveAmount: number;
+  averageRating: number;
+  ratingCount: number;
 }
 
 export interface IProductState {
