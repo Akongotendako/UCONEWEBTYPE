@@ -93,3 +93,19 @@ export const deleteOrder = async(req: Request, res: Response): Promise<void> => 
     errorResponse(res, "Internal server error", 500);
   }
 }
+
+export const fetchAllUsersOrders = async(req: Request, res: Response): Promise<void> => {
+  try {
+
+    const order = await Order.find({})
+
+    if(!order) {
+      errorResponse(res, "Empty orders", 404);
+      return;
+    }
+
+    successResponse(res, order, "Order fetched successfully");
+  } catch(error) {
+    errorResponse(res, "Internal server error", 500);
+  }
+}

@@ -19,3 +19,8 @@ export const deleteOrder = async(id: string) => {
     const response = await axiosInstance.delete(`/orders/${id}`);
     return response
 }
+
+export const fetchAllUsersOrders = async() => {
+    const response = await axiosInstance.get(`/orders`);
+    return response
+}

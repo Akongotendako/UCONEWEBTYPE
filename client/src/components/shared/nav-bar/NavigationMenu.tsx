@@ -36,7 +36,7 @@ const NavigationMenu = () => {
   const handleOrderNavigation = () => {
     navigate(
       role === "admin"
-        ? ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM
+        ? ADMIN_ROUTE.ADMIN_ORDER.ADMIN_ORDER_BASED
         : USER_ROUTES.USER_ORDER
     );
     console.log("HELLO");

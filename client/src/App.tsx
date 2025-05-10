@@ -27,6 +27,8 @@ import UserCartCheckout from "./pages/user/cart/checkout/UserCartCheckout";
 import AdminStudentMainContainer from "./pages/admin/student/admin-student-main-content/AdminStudentMainContainer";
 import AdminStudentContainer from "./pages/admin/student/admin-student-container/AdminStudentContainer";
 import AdminStudentDetailsContainer from "./pages/admin/student/details/AdminStudentDetailsContainer";
+import AdminOrderContainer from "./pages/admin/orders/container/AdminOrderContainer";
+import AdminOrderMainContentContainer from "./pages/admin/orders/main-content/AdminOrderMainContentContainer";
 
 function App() {
   return (
@@ -63,6 +65,16 @@ function App() {
               path={ADMIN_ROUTE.ADMIN_STUDENT.ADMIN_STUDENT_DETAILS}
               element={<AdminStudentDetailsContainer />}
             />
+          </Route>
+
+          {/**Order */}
+          <Route
+            path={ADMIN_ROUTE.ADMIN_ORDER.ADMIN_ORDER_BASED}
+            element={<AdminOrderContainer />}
+          >
+
+            <Route index element={<AdminOrderMainContentContainer />} />
+
           </Route>
         </Route>
         {/** User dashboard */}

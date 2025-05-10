@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { IOrder, IOrderState } from "../types/order.type";
 import {
   deleteOrder,
+  fetchAllUsersOrders,
   fetchOrders,
   fetchSpecificDetails,
 } from "../services/order.service";
@@ -42,6 +43,10 @@ const orderStore = create<IOrderState>((set) => ({
         message: message,
       };
     }
+  },
+  fetchAllUsersOrders: async() => {
+    const response = await fetchAllUsersOrders()
+    set({orders: response.data.data})
   },
 }));
 
