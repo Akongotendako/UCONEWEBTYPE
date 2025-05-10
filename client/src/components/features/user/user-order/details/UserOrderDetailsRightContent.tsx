@@ -6,6 +6,7 @@ import CustomDialog from "../../../../shared/custom-dialog/CustomDialog";
 import { useState } from "react";
 import reviewStore from "../../../../../stores/reviewStore";
 import { IOrderProduct } from "../../../../../types/order.type";
+import generalToast from "../../../../utils/toaster";
 
 interface UserOrderDetailsRightContentProps {
   products: IOrderProduct[];
@@ -29,6 +30,25 @@ const UserOrderDetailsRightContent = (
     setIsOpen(false);
     setProduct(null);
   };
+
+
+  const handleOnSubmit = async() => {
+    const response  = await addReview(userId as string)
+
+    generalToast({
+      status: response.status,
+      message: response.message,
+      duration: 3000
+    })
+
+    console.log(`success message ${response.success}`)
+
+    setTimeout(() => {
+      if(response.success) {
+        handleCloseDialog()
+      }
+    }, 3200);
+  }
 
   return (
     <VStack
@@ -77,7 +97,7 @@ const UserOrderDetailsRightContent = (
           isOpen={isOpen}
           onClick={handleCloseDialog}
           product={product as IOrderProduct}
-          onSubmit={() => addReview(userId as string)}
+          onSubmit={handleOnSubmit}
         />
       )}
     </VStack>
