@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { IOriginalImage, IProfilePic, IUser, IUserState } from "../types/user.type";
 import {
   fetchProfile,
+  fetchSpecificUser,
   fetchUsers,
   signIn,
   signUp,
@@ -203,6 +204,10 @@ const userStore = create<IUserState>((set, get) => ({
     fetchUsers: async() =>{
       const response = await fetchUsers();
       set({users: response.data.data})
+    },
+    fetchSpecificUser: async(userId) => {
+      const response = await fetchSpecificUser(userId);
+      return response.data.data.profile
     },
 }));
 

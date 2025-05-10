@@ -39,7 +39,7 @@ function App() {
         {/** Sign up */}
         <Route path={AUTH_ROUTE.SIGNUP} element={<Signup />} />
         <Route path={ADMIN_ROUTE.ADMIN} element={<AdminDashboard />}>
-          <Route path={ADMIN_ROUTE.ADMIN_HOME} element={<AdminHome />} />
+          <Route index element={<AdminHome />} />
           <Route path={ADMIN_ROUTE.ADMIN_SHOP} element={<AdminShop />}>
             <Route
               path={ADMIN_ROUTE.ADMIN_SHOP_ALL}

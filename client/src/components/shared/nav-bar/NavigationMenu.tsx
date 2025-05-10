@@ -39,7 +39,6 @@ const NavigationMenu = () => {
         ? ADMIN_ROUTE.ADMIN_ORDER.ADMIN_ORDER_BASED
         : USER_ROUTES.USER_ORDER
     );
-    console.log("HELLO");
     clearAllStoresProperties();
   };
 

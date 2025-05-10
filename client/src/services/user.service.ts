@@ -57,3 +57,9 @@ export const fetchUsers = async () => {
   return response;
 };
 
+export const fetchSpecificUser = async (userId: string) => {
+  const response = await axiosInstance.get(`/users/fetch-user/${userId}`);
+  return response;
+};
+
+

@@ -70,4 +70,5 @@ export interface IUserState {
   fetchProfile: (userId: string) => Promise<unknown>;
   updateProfile: (userId: string) => Promise<unknown>;
   clearAllProperties: <T extends keyof IUserState["user"]>(obj: T) => void;
+  fetchSpecificUser: (userId: string) => Promise<unknown>;
 }

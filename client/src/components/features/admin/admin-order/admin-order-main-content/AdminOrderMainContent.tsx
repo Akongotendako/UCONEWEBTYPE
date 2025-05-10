@@ -21,7 +21,7 @@ const AdminOrderMainContent = () => {
           p={5}
           key={index}
         >
-          <AdminOrderMainContentImageAndItems products={order.products} />
+          <AdminOrderMainContentImageAndItems products={order.products} userId={order.userId as string}/>
         </HStack>
       )}
     </For>

@@ -54,7 +54,7 @@ const UserOrderMainContent = () => {
             key={index}
           >
             {/** Total item bought by customer and number of images for each product */}
-            <UserOrderMainContentImages products={order.products} />
+            <UserOrderMainContentImages products={order.products}/>
 
             {/** Date by the time of purchases */}
             <Description>{dateFormatter(order.createdAt)}</Description>

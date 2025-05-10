@@ -242,3 +242,22 @@ export const fetchUsers = async(req: Request, res: Response): Promise<void> => {
     errorResponse(res, "Internal server error", 500)
   }
 }
+
+export const fetchSpecificUser = async(req: Request, res: Response): Promise<void> => {
+  try {
+
+    const {userId} = req.params
+
+    const user = await User.findById(userId);
+    if(!user) {
+      errorResponse(res, "User not found", 404 );
+      return;
+    }
+
+    successResponse(res, user, 'Users fetch successfully', 200)
+
+  }catch(error) {
+    errorResponse(res, "Internal server error", 500)
+  }
+}
+

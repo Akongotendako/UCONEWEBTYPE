@@ -8,6 +8,8 @@ interface UserOrderMainContentImagesProps {
 }
 
 const UserOrderMainContentImages = (props: UserOrderMainContentImagesProps) => {
+  
+
   const text = () => {
     return props.products.length === 1
       ? `${props.products.length} item`
