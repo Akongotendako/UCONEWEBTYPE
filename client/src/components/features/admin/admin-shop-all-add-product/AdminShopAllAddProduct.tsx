@@ -8,7 +8,7 @@ import {
   RatingGroup,
   HStack,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ADMIN_ROUTE } from "../../../../routes/admin/adminRoute";
 import productStore from "../../../../stores/productStore";
 import generalToast from "../../../utils/toaster";
@@ -18,12 +18,15 @@ import PrimaryButton from "../../../ui/PrimaryButton";
 import SecondaryButton from "../../../ui/SecondaryButton";
 
 const AdminShopAllAddProduct = () => {
-  const { products, getProducts, deleteProduct } = productStore();
+  const {category} = useParams()
+  const { products, getProductByCategory, getProducts, deleteProduct } = productStore();
   const navigate = useNavigate();
 
+  console.log(`la ${category}`)
+
   useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+    getProductByCategory(category as string);
+  }, [getProductByCategory, category]);
 
   const handleDeleteProduct = async (id: string) => {
     const response = await deleteProduct(id);
@@ -38,10 +41,15 @@ const AdminShopAllAddProduct = () => {
     }
   };
 
-  const handleNavigation = () => navigate(ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM);
+  const handleNavigation = () =>
+    navigate(
+      `${ADMIN_ROUTE.ADMIN}/${ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_BASED}/${ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_ADD}`
+    );
 
   const handleNavigationTOUpdateItemPage = (id: string) =>
-    navigate(`/admin/shop/${id}/update`);
+    navigate(
+      `${ADMIN_ROUTE.ADMIN}/${ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_BASED}/update/${id}`
+    );
 
   return (
     <Box w={"full"} h={"full"}>

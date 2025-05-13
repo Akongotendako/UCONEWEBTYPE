@@ -11,6 +11,7 @@ import { ADMIN_ROUTE } from "../../../../routes/admin/adminRoute";
 import { useNavigate } from "react-router-dom";
 import { getShopMenuItems } from "./shopMenuItems";
 import productStore from "../../../../stores/productStore";
+import { USER_ROUTES } from "../../../../routes/user/userRoute";
 
 interface ShopMenuContainerProps {
   role: "admin" | "user";
@@ -22,12 +23,20 @@ const ShopMenuContainer = (props: ShopMenuContainerProps) => {
 
   const shopMenuItems = getShopMenuItems(props.role);
 
+  const handleNavigation = () => {
+    navigate(
+      props.role === "admin"
+        ? `${ADMIN_ROUTE.ADMIN}/${ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_BASED}/All`
+        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/All`
+    );
+  };
+
   return (
     <Menu.Root>
       <Menu.Trigger>
         <HStack align="center" cursor="pointer">
           <ChakraLink
-            onClick={() => navigate(ADMIN_ROUTE.ADMIN_SHOP)}
+            onClick={handleNavigation}
             color="#FFF"
             textDecoration="none"
             _hover={{ color: "#94ADC7" }}

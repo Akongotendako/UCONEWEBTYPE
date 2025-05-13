@@ -20,6 +20,15 @@ const Login = () => {
   const handleSubmission = async () => {
     const response = await signIn();
 
+    if (!response.success) {
+      generalToast({
+        status: response.status,
+        message: response.message,
+        duration: 3000,
+      });
+      return;
+    }
+
     generalToast({
       status: response.status,
       message: response.message,

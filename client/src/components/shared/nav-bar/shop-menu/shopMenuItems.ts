@@ -7,41 +7,41 @@ export const getShopMenuItems = (role: string) => [
     text: "All",
     path:
       role === "admin"
-        ? ADMIN_ROUTE.ADMIN_SHOP_ALL
+        ? ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_BASED
         : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}`,
     role: ["admin", "user"],
   },
   {
-    value: "Lanyard",
-    text: "Lanyard",
+    value: "Apparel",
+    text: "Apparel",
     path:
       role === "admin"
-        ? ADMIN_ROUTE.ADMIN_SHOP_ALL
-        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/Lanyard`,
+        ? `${ADMIN_ROUTE.ADMIN}/${ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_BASED}/Apparel`
+        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/Apparel`,
     role: ["admin", "user"],
   },
   {
-    value: "T-Shirt",
-    text: "T-Shirt",
+    value: "Accessories",
+    text: "Accessories",
     path:
       role === "admin"
-        ? ADMIN_ROUTE.ADMIN_SHOP_ALL
-        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/T-Shirt`,
+        ? `${ADMIN_ROUTE.ADMIN}/${ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_BASED}/Accessories`
+        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/Accessories`,
     role: ["admin", "user"],
   },
   {
-    value: "Uniform",
-    text: "Uniform",
+    value: "Academic Materials",
+    text: "Academic Materials",
     path:
       role === "admin"
-        ? ADMIN_ROUTE.ADMIN_SHOP_ALL
-        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/Uniform`,
+        ? `${ADMIN_ROUTE.ADMIN}/${ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_BASED}/Academic Materials`
+        : `${USER_ROUTES.USER}/${USER_ROUTES.USER_SHOP}/Academic Materials`,
     role: ["admin", "user"],
   },
   {
     value: "Add Product",
     text: "Add Product",
-    path: ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM,
+    path: `${ADMIN_ROUTE.ADMIN}/${ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_BASED}/${ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_ADD}`,
     role: ["admin"],
   },
 ];

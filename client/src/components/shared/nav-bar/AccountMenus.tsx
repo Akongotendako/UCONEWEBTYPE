@@ -4,12 +4,14 @@ import { CiSearch } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { USER_ROUTES } from "../../../routes/user/userRoute";
+import { ADMIN_ROUTE } from "../../../routes/admin/adminRoute";
 
 const AccountMenus = () => {
+  const role = localStorage.getItem("role")
   const navigate = useNavigate();
 
   const handleNavigation = () => {
-    navigate(USER_ROUTES.USER_PROFILE);
+    navigate(role === "user" ? USER_ROUTES.USER_PROFILE : ADMIN_ROUTE.ADMIN_PROFILE);
   };
 
   return (

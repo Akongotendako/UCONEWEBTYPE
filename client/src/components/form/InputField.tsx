@@ -37,15 +37,15 @@ const InputField = <T, K extends keyof T>({
   const dropDownValues = [
     {
       id: 1,
-      label: "Lanyard",
+      label: "Apparel",
     },
     {
       id: 2,
-      label: "Uniform",
+      label: "Accessories",
     },
     {
       id: 3,
-      label: "T-Shirt",
+      label: "Academic Materials",
     },
   ];
 

@@ -1,10 +1,12 @@
 export const ADMIN_ROUTE ={
-    ADMIN: "admin",
+    ADMIN: "/admin",
     ADMIN_HOME: "",
-    ADMIN_SHOP: "shop",
-    ADMIN_SHOP_ADD_ITEM: "shop/add",
-    ADMIN_SHOP_UPDATE_ITEM: "shop/:id/update",
-    ADMIN_SHOP_ALL: "shop/all",
+    ADMIN_SHOP: {
+        ADMIN_SHOP_BASED: "shop",
+        ADMIN_SHOP_MAIN_PAGE: ":category",
+        ADMIN_SHOP_ADD: "add",
+        ADMIN_SHOP_UPDATE: "update/:id"
+    },
     ADMIN_PROFILE: "profile",
     ADMIN_STUDENT: {
         ADMIN_STUDENT_BASED: "student",

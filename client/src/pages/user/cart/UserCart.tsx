@@ -2,9 +2,9 @@ import { Flex, Stack } from "@chakra-ui/react";
 import cartStore from "../../../stores/cartStore";
 import { useEffect } from "react";
 import UserCartProductContainer from "../../../components/features/user/user-cart/product/UserCartProductContainer";
-import UserCartCheckOut from "../../../components/features/user/user-cart/check-out/UserCartCheckOut";
 import { Outlet, useLocation } from "react-router-dom";
 import { USER_ROUTES } from "../../../routes/user/userRoute";
+import UserCartCheckout from "./checkout/UserCartCheckout";
 
 const UserCart = () => {
   const userId = localStorage.getItem("userId");
@@ -30,7 +30,7 @@ const UserCart = () => {
   return (
     <Stack w={"full"} p={5}>
       <UserCartProductContainer cart={cart} />
-      {cart.length > 0 && <UserCartCheckOut />}
+      {cart.length > 0 && <UserCartCheckout />}
     </Stack>
   );
 };

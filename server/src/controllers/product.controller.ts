@@ -309,6 +309,8 @@ export const getProductByCategory = async (
   try {
     const { category } = req.params;
 
+    console.log(`categ ${category}`)
+
     if (!category) {
       errorResponse(res, "Request is empty", 404);
       return;

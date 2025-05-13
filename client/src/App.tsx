@@ -38,19 +38,25 @@ function App() {
         <Route index path={AUTH_ROUTE.LOGIN} element={<Login />} />
         {/** Sign up */}
         <Route path={AUTH_ROUTE.SIGNUP} element={<Signup />} />
+
+        {/** Admin */}
         <Route path={ADMIN_ROUTE.ADMIN} element={<AdminDashboard />}>
           <Route index element={<AdminHome />} />
-          <Route path={ADMIN_ROUTE.ADMIN_SHOP} element={<AdminShop />}>
+
+          {/** Admin Shop */}
+          <Route path={ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_BASED} element={<AdminShop />}>
             <Route
-              path={ADMIN_ROUTE.ADMIN_SHOP_ALL}
+              index
               element={<AdminShopAll />}
             />
+
+            <Route path={ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_MAIN_PAGE} element={<AdminShopAll/>}/>
             <Route
-              path={ADMIN_ROUTE.ADMIN_SHOP_ADD_ITEM}
+              path={ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_ADD}
               element={<AdminShopAddItem />}
             />
             <Route
-              path={ADMIN_ROUTE.ADMIN_SHOP_UPDATE_ITEM}
+              path={ADMIN_ROUTE.ADMIN_SHOP.ADMIN_SHOP_UPDATE}
               element={<AdminShopUpdateItem />}
             />
           </Route>
@@ -76,6 +82,8 @@ function App() {
             <Route index element={<AdminOrderMainContentContainer />} />
 
           </Route>
+
+          <Route path={ADMIN_ROUTE.ADMIN_PROFILE} element={<UserProfile/>}/>
         </Route>
         {/** User dashboard */}
         <Route path={USER_ROUTES.USER} element={<UserDashboard />}>
